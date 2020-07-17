@@ -1,4 +1,5 @@
 import 'package:artemisfood/src/components/RoundedButton.dart';
+import 'package:artemisfood/src/components/RowTxtButton.dart';
 import 'package:artemisfood/src/components/TextButton.dart';
 import 'package:artemisfood/src/components/TextFieldContainer.dart';
 import 'package:artemisfood/src/components/background.dart';
@@ -41,12 +42,23 @@ class Login extends StatelessWidget {
                       onChanged: (value) {},
                     ),
                   ),
+                  SizedBox(
+                    height: 15.0,
+                  ),
                   RoundedButton(
                     hintText: 'Login',
                     onPress: () {},
                   ),
                   TextButton(
                     hintText: 'Forgot Password?',
+                    onPress: () {},
+                  ),
+                  SizedBox(
+                    height: 70.0,
+                  ),
+                  RowTxtButton(
+                    hintText: 'New User?',
+                    hintTextButton: 'Sign Up',
                     onPress: () {},
                   ),
                 ],
