@@ -4,11 +4,11 @@ import 'package:artemisfood/src/components/TextButton.dart';
 import 'package:artemisfood/src/components/TextFieldContainer.dart';
 import 'package:artemisfood/src/components/background.dart';
 import 'package:artemisfood/src/components/rounded_input_field.dart';
-import 'package:artemisfood/src/pages/sign_up.dart';
+import 'package:artemisfood/src/pages/Login.dart';
 import 'package:flutter/material.dart';
 
-class Login extends StatelessWidget {
-  const Login({Key key}) : super(key: key);
+class SignUp extends StatelessWidget {
+  const SignUp({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +23,11 @@ class Login extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end, //Osea mientras voy añadiendo más cosas se va subiendo
                 children: <Widget>[
                   Text(
-                    'Welcome',
+                    'Create Account',
                     style: TextStyle( fontSize: 30.0, color: Colors.black, fontWeight: FontWeight.bold ) //Son el valor de las propiedades de la clase
                   ),
                   Text(
-                    'Login to continue',
+                    'Sign up to continue',
                   ),
                   TextFieldContainer(
                     child: RoundedInputField(
@@ -44,25 +44,21 @@ class Login extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 15.0,
+                    height: 25.0,
                   ),
                   RoundedButton(
-                    hintText: 'Login',
-                    onPress: () {},
-                  ),
-                  TextButton(
-                    hintText: 'Forgot Password?',
+                    hintText: 'Sign up',
                     onPress: () {},
                   ),
                   SizedBox(
-                    height: 70.0,
+                    height: 100.0,
                   ),
                   RowTxtButton(
-                    hintText: 'New User?',
-                    hintTextButton: 'Sign Up',//Si es no? es un botonsito
+                    hintText: 'Already have an account?',
+                    hintTextButton: 'Login',
                     onPress: () {
                       Navigator.pushNamed(
-                        context, 'sign_up'
+                        context, 'login'
                       );
                     },
                   ),
@@ -73,4 +69,4 @@ class Login extends StatelessWidget {
         ),
     );
   }
-} //Namas voy a hacer que pueda pasar a la pagina pulsando el boton, ya despues lo copio
+}
