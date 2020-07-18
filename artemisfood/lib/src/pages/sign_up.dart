@@ -60,7 +60,7 @@ class SignUp extends StatelessWidget {
                       Navigator.pushNamed(
                         context, 'login'
                       );
-                    },
+                    }, //dejo de compartir
                   ),
                 ],
               ),
