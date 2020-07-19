@@ -14,5 +14,6 @@ app.use(express.json());
 app.use('/usuarios', require('./routes/usuarios'))
 app.use('/producto', require('./routes/producto'))
 app.use('/orden', require('./routes/orden'))
+app.use('/login', require('./routes/login'))
 
 module.exports = app;

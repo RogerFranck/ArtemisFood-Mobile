@@ -27,11 +27,12 @@ usuariosCtrl.getUser = async (req, res) => {
 };
 
 usuariosCtrl.updateUser = async (req, res) => {
-  const { tipo, usuario, password } = req.body
+  const { tipo, usuario, password, favoritos} = req.body
   const nuevoUsuario = {
     tipo: tipo,
     usuario: usuario,
     password: password,
+    favoritos: favoritos,
   }
   const salt = await bcrypt.genSalt(10);
   nuevoUsuario.password = await bcrypt.hash(password, salt);

@@ -18,9 +18,7 @@ const productoSchema = new Schema({
         type: String,
         required: true,
     },
-    //favoritos:{
 
-    //}
 })
 
 module.exports = model('productoModel', productoSchema)

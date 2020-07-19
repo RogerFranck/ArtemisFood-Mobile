@@ -15,10 +15,12 @@ const usuarioSchema = new Schema({
     required: true,
     default: 1,
   },
-  //favoritos:{
-    
-  //}
-})
+  favoritos: {
+    type: Array,
+    required: false
+  }
+}
+)
 
 usuarioSchema.methods.encryptPassword = async (password) => {
   const salt = await bcrypt.genSalt(10);
