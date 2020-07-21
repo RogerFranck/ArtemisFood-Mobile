@@ -1,3 +1,4 @@
+import 'package:artemisfood/src/components/categories.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
 import 'search_field.dart';
@@ -58,6 +59,7 @@ class BodyHome extends StatelessWidget {
             ),
           ),
           ListViewFavoritos(),
+          Category(),
         ],
       ),
     );

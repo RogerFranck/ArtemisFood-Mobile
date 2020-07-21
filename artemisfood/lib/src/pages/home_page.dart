@@ -28,13 +28,14 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFF5F6FC),
       bottomNavigationBar: ClipRRect(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(17.0), topRight: Radius.circular(17.0)),
           child: BottomNavigationBar(
               currentIndex: _selectedIndex,
               onTap: _onItemTapped,
-              backgroundColor: Colors.grey[200],
+              backgroundColor: Colors.white,
               iconSize: 30.0,
               unselectedItemColor: Colors.black,
               items: <BottomNavigationBarItem>[

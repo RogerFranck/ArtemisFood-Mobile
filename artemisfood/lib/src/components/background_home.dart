@@ -13,7 +13,7 @@ class BackgroundHome extends StatelessWidget {
       //alignment: Alignment.center,
       children: <Widget>[
         ClipRRect(
-          borderRadius: BorderRadius.only( bottomLeft: Radius.circular(30.0), bottomRight: Radius.circular(30.0) ),
+         
           child: Container(
             width: double.infinity,
             height: 350.0,
