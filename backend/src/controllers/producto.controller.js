@@ -9,12 +9,13 @@ productosCtrl.getProducts = async(req, res) => {
 
 productosCtrl.createProduct = async(req, res) => {
     console.log(req.body);
-    const { nombre, cantidad, precio, foto } = req.body
+    const { nombre, cantidad, precio, foto, descripcion } = req.body
     const nuevoProducto = new productoModel({
         nombre: nombre,
         cantidad: cantidad,
         precio: precio,
         foto: foto,
+        descripcion:descripcion
     });
     await nuevoProducto.save();
     res.json({ message: 'Producto guardado' })
@@ -27,12 +28,13 @@ productosCtrl.getProduct = async(req, res) => {
 };
 
 productosCtrl.updateProduct = async(req, res) => {
-    const { nombre, cantidad, precio, foto } = req.body
+    const { nombre, cantidad, precio, foto,descripcion } = req.body
     const nuevoProducto = {
         nombre: nombre,
         cantidad: cantidad,
         precio: precio,
         foto: foto,
+        descripcion:descripcion
     }
     await productoModel.findOneAndUpdate({ _id: req.params.id }, nuevoProducto)
     res.json({ message: "Producto Actualizado" })
