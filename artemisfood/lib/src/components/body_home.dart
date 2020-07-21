@@ -42,7 +42,7 @@ class BodyHome extends StatelessWidget {
           SearchField(),
           SizedBox( height: 20.0 ),
           Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
             child: Row(
               children: <Widget>[
                 Icon(
@@ -74,9 +74,8 @@ class ListViewFavoritos extends StatelessWidget {
     return Container(
       width: size.width,
       height: 250,
-      child: ListView.separated(
+      child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        separatorBuilder: ( context, index ) => Container( width: 15.0 ,),
         itemCount: 5,
         itemBuilder: ( context, index ) {
           return ListaFavoritos();
@@ -98,6 +97,7 @@ class ListaFavoritos extends StatelessWidget {
 
     return Container(
       width: size.width * 0.88,
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -108,7 +108,7 @@ class ListaFavoritos extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 20,
+            bottom: 35,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: Container(
