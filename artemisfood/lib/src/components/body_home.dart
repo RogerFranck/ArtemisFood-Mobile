@@ -1,3 +1,4 @@
+import 'package:artemisfood/src/components/background_home.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
 import 'search_field.dart';
@@ -11,54 +12,56 @@ class BodyHome extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return SafeArea(
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  'ArtemisFood',
-                  style: primaryStyle,
-                ),
-              ),
-              FlatButton.icon(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.location_on,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                label: Text(
-                  'A208',
-                  style: primaryStyle,
-                ),
-              ),
-            ],
-          ),
-          SizedBox( height: 20.0 ),
-          SearchField(),
-          SizedBox( height: 20.0 ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Row(
+    return BackgroundHome(
+      child: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Icon(
-                  Icons.favorite,
-                  color: Colors.white,
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    'ArtemisFood',
+                    style: primaryStyle,
+                  ),
                 ),
-                SizedBox( width: 5.0, ),
-                Text(
-                  'Favorites',
-                  style: TextStyle( fontWeight: FontWeight.bold, color: Colors.white, fontSize: 22.0 ),
+                FlatButton.icon(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.location_on,
+                    color: Colors.white,
+                    size: 30.0,
+                  ),
+                  label: Text(
+                    'A208',
+                    style: primaryStyle,
+                  ),
                 ),
               ],
             ),
-          ),
-          ListViewFavoritos(),
-        ],
+            SizedBox( height: 20.0 ),
+            SearchField(),
+            SizedBox( height: 20.0 ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.favorite,
+                    color: Colors.white,
+                  ),
+                  SizedBox( width: 5.0, ),
+                  Text(
+                    'Favorites',
+                    style: TextStyle( fontWeight: FontWeight.bold, color: Colors.white, fontSize: 22.0 ),
+                  ),
+                ],
+              ),
+            ),
+            ListViewFavoritos(),
+          ],
+        ),
       ),
     );
   }
