@@ -1,4 +1,5 @@
 import 'package:artemisfood/src/components/background_home.dart';
+import 'package:artemisfood/src/models/lista_comidas.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
 import 'search_field.dart';
@@ -13,55 +14,117 @@ class BodyHome extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return BackgroundHome(
-      child: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    'ArtemisFood',
-                    style: primaryStyle,
-                  ),
-                ),
-                FlatButton.icon(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.location_on,
-                    color: Colors.white,
-                    size: 30.0,
-                  ),
-                  label: Text(
-                    'A208',
-                    style: primaryStyle,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox( height: 20.0 ),
-            SearchField(),
-            SizedBox( height: 20.0 ),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Row(
+      child: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Icon(
-                    Icons.favorite,
-                    color: Colors.white,
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      'ArtemisFood',
+                      style: primaryStyle,
+                    ),
                   ),
-                  SizedBox( width: 5.0, ),
-                  Text(
-                    'Favorites',
-                    style: TextStyle( fontWeight: FontWeight.bold, color: Colors.white, fontSize: 22.0 ),
+                  FlatButton.icon(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.location_on,
+                      color: Colors.white,
+                      size: 30.0,
+                    ),
+                    label: Text(
+                      'A208',
+                      style: primaryStyle,
+                    ),
                   ),
                 ],
               ),
-            ),
-            ListViewFavoritos(),
-          ],
+              SizedBox( height: 20.0 ),
+              SearchField(),
+              SizedBox( height: 20.0 ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.favorite,
+                      color: Colors.white,
+                    ),
+                    SizedBox( width: 5.0, ),
+                    Text(
+                      'Favorites',
+                      style: TextStyle( fontWeight: FontWeight.bold, color: Colors.white, fontSize: 22.0 ),
+                    ),
+                  ],
+                ),
+              ),
+              ListViewFavoritos(),
+              ListViewCategories(),
+              ListViewFoodSection(),
+            ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+class ListViewCategories extends StatelessWidget {
+  const ListViewCategories({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 5.0,),
+      width: size.width,
+      height: 150.0,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: listaComidas.length,
+        itemBuilder: (context, index) {
+          return CategoriesSection(
+            texto: listaComidas[index].nombre,
+            imagen: listaComidas[index].imagen,
+          );
+        },
+      ),
+    );
+  }
+}
+
+//List<String> lista = ['Hamburguesas', 'Tacos', 'Tortas', 'Spaghettis', 'Burritos', 'Enchiladas', 'Pizzas'];
+
+class CategoriesSection extends StatelessWidget {
+  final String texto;
+  final String imagen;
+  const CategoriesSection({Key key, @required this.texto, @required this.imagen}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100.0,
+      margin: EdgeInsets.only( top: 20.0 ),
+      child: Column(
+        children: <Widget>[
+          CircleAvatar(
+            radius: 35.0,
+            backgroundImage: NetworkImage(imagen),
+          ),
+          SizedBox( height: 7.0, ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0,),
+            child: Text(
+              texto,
+              style: TextStyle( fontWeight: FontWeight.bold, ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -77,9 +140,8 @@ class ListViewFavoritos extends StatelessWidget {
     return Container(
       width: size.width,
       height: 250,
-      child: ListView.separated(
+      child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        separatorBuilder: ( context, index ) => Container( width: 15.0 ,),
         itemCount: 5,
         itemBuilder: ( context, index ) {
           return ListaFavoritos();
@@ -101,6 +163,7 @@ class ListaFavoritos extends StatelessWidget {
 
     return Container(
       width: size.width * 0.88,
+      padding: EdgeInsets.symmetric(horizontal: 10.0,),
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -111,7 +174,7 @@ class ListaFavoritos extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 20,
+            bottom: 35,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: Container(
@@ -148,6 +211,94 @@ class ListaFavoritos extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ListViewFoodSection extends StatelessWidget {
+  const ListViewFoodSection({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    return Container(
+      width: size.width,
+      height: 220,
+      child: ListView.builder(
+        itemCount: listaComidas.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return FoodSection(
+            image: listaComidas[index].imagen,
+            nombre: listaComidas[index].nombre,
+            precio: listaComidas[index].precio,
+          );
+        },
+      ),
+    );
+  }
+}
+
+class FoodSection extends StatelessWidget {
+  final String image;
+  final String nombre;
+  final double precio;
+  const FoodSection(
+    {
+      Key key, 
+      this.image, 
+      this.nombre, 
+      this.precio
+    }
+  ) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.0,),
+      //width: 200.0,
+      child: Column(
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12.0),
+            child: Image(
+              image: NetworkImage(
+                image
+              ),
+              fit: BoxFit.cover,
+              height: 160.0,
+            ),
+          ),
+          SizedBox( height: 8.0, ),
+          Container(
+            width: 212.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                  width: 120.0,
+                  child: Text(
+                    nombre,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17.0,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Text(
+                  '$precio MXN',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17.0,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

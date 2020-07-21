@@ -21,6 +21,7 @@ class BackgroundHome extends StatelessWidget {
               color: primaryColor,
             ),
           ),
+          child,
         ],
       ),
     );
