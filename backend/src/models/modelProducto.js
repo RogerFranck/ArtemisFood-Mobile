@@ -6,7 +6,8 @@ const productoSchema = new Schema({
         required: true,
     },
     descripcion:{
-        type: String
+        type: String,
+        required: true,
     },
     cantidad: {
         type: Number,
