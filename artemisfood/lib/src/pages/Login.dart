@@ -4,7 +4,6 @@ import 'package:artemisfood/src/components/TextButton.dart';
 import 'package:artemisfood/src/components/TextFieldContainer.dart';
 import 'package:artemisfood/src/components/background.dart';
 import 'package:artemisfood/src/components/rounded_input_field.dart';
-import 'package:artemisfood/src/pages/sign_up.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatelessWidget {

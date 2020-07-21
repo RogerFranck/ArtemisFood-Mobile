@@ -1,10 +1,8 @@
 import 'package:artemisfood/src/components/RoundedButton.dart';
 import 'package:artemisfood/src/components/RowTxtButton.dart';
-import 'package:artemisfood/src/components/TextButton.dart';
 import 'package:artemisfood/src/components/TextFieldContainer.dart';
 import 'package:artemisfood/src/components/background.dart';
 import 'package:artemisfood/src/components/rounded_input_field.dart';
-import 'package:artemisfood/src/pages/Login.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatelessWidget {

@@ -1,7 +1,5 @@
-import 'package:artemisfood/src/components/bottom_navigation_bar.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
-import 'body_home.dart';
 
 class BackgroundHome extends StatelessWidget {
   final Widget child;
