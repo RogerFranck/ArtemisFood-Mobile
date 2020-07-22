@@ -60,6 +60,7 @@ class BodyHome extends StatelessWidget {
           ),
           ListViewFavoritos(),
           ListViewCategories(),
+          ListFood(),
         ],
       ),
     );
@@ -213,5 +214,66 @@ class CategoriesSection extends StatelessWidget {
   }
 }
 
+class ListFood extends StatelessWidget {
+  const ListFood({Key key}) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      width: size.width,
+      height: double.infinity,
+      child: ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: 5,
+        itemBuilder: ( context, index ) {
+          return FoodItem();
+        },
+      ),
+    );
+  }
+}
+
+class FoodItem extends StatelessWidget {
+  const FoodItem({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: ListTile(
+            title: Text(
+              'Pizza',
+              style: TextStyle(
+                fontSize: 17.0,
+                fontWeight: FontWeight.bold
+              ),
+            ),
+            leading: CircleAvatar(
+              radius: 25.0,
+                      backgroundImage: NetworkImage('https://placeralplato.com/files/2016/01/Pizza-con-pepperoni.jpg'),
+                    ),
+                    subtitle: Text(
+                      "Pizza de peporina al carbon de artemis"
+                    ),
+                    trailing: ClipRRect(
+                      borderRadius: BorderRadius.circular(15.0),
+                      child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "100 MXN",
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+        )
+        ),
+      );
+  }
+}
 
