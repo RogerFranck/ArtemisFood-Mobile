@@ -1,4 +1,5 @@
 import 'package:artemisfood/src/static/const.dart';
+import 'package:artemisfood/src/static/lista_temporal_categorias.dart';
 import 'package:flutter/material.dart';
 import 'search_field.dart';
 
@@ -58,6 +59,7 @@ class BodyHome extends StatelessWidget {
             ),
           ),
           ListViewFavoritos(),
+          ListViewCategories(),
         ],
       ),
     );
@@ -93,6 +95,7 @@ class ListaFavoritos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     Size size = MediaQuery.of(context).size;
 
     return Container(
@@ -145,6 +148,63 @@ class ListaFavoritos extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  
+}
+
+class ListViewCategories extends StatelessWidget {
+  const ListViewCategories({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 5.0,),
+      width: size.width,
+      height: 130.0,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: listaCategorias.length,
+        itemBuilder: (context, index) {
+          return CategoriesSection(
+            imagen: listaCategorias[index].imagen,
+            nombre: listaCategorias[index].nombre,
+          );
+        },
+      ),
+    );
+  }
+}
+
+class CategoriesSection extends StatelessWidget {
+  final String imagen;
+  final String nombre;
+  const CategoriesSection({Key key, @required this.imagen, @required this.nombre}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100.0,
+      margin: EdgeInsets.only( top: 10.0, ),
+      child: Column(
+        children: <Widget>[
+          CircleAvatar(
+            radius: 35.0,
+            backgroundImage: NetworkImage(imagen),
+          ),
+          SizedBox( height: 7.0 ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0,),
+            child: Text(
+              nombre,
+              style: TextStyle( fontWeight: FontWeight.bold ),
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],
