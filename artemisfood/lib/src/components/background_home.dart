@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'body_home.dart';
 
 class BackgroundHome extends StatelessWidget {
+  final Widget child;
   const BackgroundHome({
-    Key key,
+    Key key, 
+    @required this.child,
   }) : super(key: key);
 
   @override
@@ -21,7 +23,7 @@ class BackgroundHome extends StatelessWidget {
               color: primaryColor,
             ),
           ),
-          BodyHome(),
+          child,
         ],
       ),
     );

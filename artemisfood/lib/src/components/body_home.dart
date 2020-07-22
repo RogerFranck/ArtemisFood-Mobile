@@ -1,3 +1,4 @@
+import 'package:artemisfood/src/components/background_home.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:artemisfood/src/static/lista_temporal_categorias.dart';
 import 'package:flutter/material.dart';
@@ -12,56 +13,60 @@ class BodyHome extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return SafeArea(
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return BackgroundHome(
+      child: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
             children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      'ArtemisFood',
+                      style: primaryStyle,
+                    ),
+                  ),
+                  FlatButton.icon(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.location_on,
+                      color: Colors.white,
+                      size: 30.0,
+                    ),
+                    label: Text(
+                      'A208',
+                      style: primaryStyle,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox( height: 20.0 ),
+              SearchField(),
+              SizedBox( height: 20.0 ),
               Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  'ArtemisFood',
-                  style: primaryStyle,
+                padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
+                child: Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.favorite,
+                      color: Colors.white,
+                    ),
+                    SizedBox( width: 5.0, ),
+                    Text(
+                      'Favorites',
+                      style: TextStyle( fontWeight: FontWeight.bold, color: Colors.white, fontSize: 22.0 ),
+                    ),
+                  ],
                 ),
               ),
-              FlatButton.icon(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.location_on,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                label: Text(
-                  'A208',
-                  style: primaryStyle,
-                ),
-              ),
+              ListViewFavoritos(),
+              ListViewCategories(),
+              ListFood(),
             ],
           ),
-          SizedBox( height: 20.0 ),
-          SearchField(),
-          SizedBox( height: 20.0 ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
-            child: Row(
-              children: <Widget>[
-                Icon(
-                  Icons.favorite,
-                  color: Colors.white,
-                ),
-                SizedBox( width: 5.0, ),
-                Text(
-                  'Favorites',
-                  style: TextStyle( fontWeight: FontWeight.bold, color: Colors.white, fontSize: 22.0 ),
-                ),
-              ],
-            ),
-          ),
-          ListViewFavoritos(),
-          ListViewCategories(),
-          ListFood(),
-        ],
+        ),
       ),
     );
   }
@@ -222,8 +227,9 @@ class ListFood extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      height: double.infinity,
+      height: 5 * 110.0,
       child: ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
         itemCount: 5,
         itemBuilder: ( context, index ) {
@@ -256,21 +262,21 @@ class FoodItem extends StatelessWidget {
               radius: 25.0,
                       backgroundImage: NetworkImage('https://placeralplato.com/files/2016/01/Pizza-con-pepperoni.jpg'),
                     ),
-                    subtitle: Text(
-                      "Pizza de peporina al carbon de artemis"
-                    ),
-                    trailing: ClipRRect(
-                      borderRadius: BorderRadius.circular(15.0),
-                      child: Container(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "100 MXN",
-                          ),
-                        ),
-                      ),
-                    ),
+            subtitle: Text(
+              "Pizza de peporina al carbon de artemis"
+            ),
+            trailing: ClipRRect(
+              borderRadius: BorderRadius.circular(15.0),
+              child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "100 MXN",
                   ),
+                ),
+              ),
+            ),
+          ),
         )
         ),
       );
