@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
 
       case 1: return CartPage();
 
-      case 2: return UserPreferencesPage();
+      case 2: return SettingsBody();
 
       default:
         return HomePage();
