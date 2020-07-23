@@ -24,8 +24,6 @@ class App extends StatelessWidget {
         'login'   :     (BuildContext context) => Login(),
         'sign_up'   :     (BuildContext context) => SignUp(),
         'home'   :     (BuildContext context) => HomePage(),
-        'user_preferences' : (BuildContext context) => UserPreferencesPage(),
-        'cart_page'   :     (BuildContext context) => CartPage(),
       },
     );
   }

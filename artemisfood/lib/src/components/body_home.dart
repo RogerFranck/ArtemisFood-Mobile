@@ -394,7 +394,7 @@ class ListFood extends StatelessWidget {
       ),
       child: Container(
         width: size.width,
-        //height: listaComidas.length * 105.0,
+        height: listaComidas.length * 105.0,
         child: ListView.builder(
           physics: NeverScrollableScrollPhysics(),
           itemCount: listaComidas.length,
