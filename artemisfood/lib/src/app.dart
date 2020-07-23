@@ -1,6 +1,8 @@
 import 'package:artemisfood/src/pages/Login.dart';
+import 'package:artemisfood/src/pages/cart_page.dart';
 import 'package:artemisfood/src/pages/home_page.dart';
 import 'package:artemisfood/src/pages/sign_up.dart';
+import 'package:artemisfood/src/pages/user_preferences.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +24,11 @@ class App extends StatelessWidget {
         'login'   :     (BuildContext context) => Login(),
         'sign_up'   :     (BuildContext context) => SignUp(),
         'home'   :     (BuildContext context) => HomePage(),
+        'user_preferences' : (BuildContext context) => UserPreferencesPage(),
+        'cart_page'   :     (BuildContext context) => CartPage(),
       },
     );
   }
+
+  
 }

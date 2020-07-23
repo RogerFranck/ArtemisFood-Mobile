@@ -63,7 +63,8 @@ class BodyHome extends StatelessWidget {
               ),
               ListViewFavoritos(),
               ListViewCategories(),
-              ListViewFoodSection(),
+              //ListViewFoodSection(),
+              ListFood()
             ],
           ),
         ),
@@ -307,5 +308,108 @@ class FoodSection extends StatelessWidget {
   }
 }
 
+class FoodItem extends StatelessWidget {
+  final String nombre;
+  final String imagen;
+  final String descripcion;
+  final double precio;
+  const FoodItem(
+      {
+    Key key, 
+    @required this.nombre, 
+    @required this.imagen,
+    @required this.descripcion, 
+    @required this.precio
+    }
+  ) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: GestureDetector(
+        child: Card(
+          child: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: ClipRRect(
+              //borderRadius: BorderRadius.circular(10.0),
+              child: ListTile(
+                contentPadding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                title: Text(
+                  nombre,
+                  style: TextStyle(
+                    fontSize: 17.0,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+                leading: CircleAvatar(
+                  radius: 32.0,
+                  backgroundImage: NetworkImage(imagen),
+                ),
+                subtitle: Text(
+                  'Veniam minim tempor eiusmod laboris adipisicing commodo ut.',
+                  overflow: TextOverflow.ellipsis,
+                ),
+                trailing: ClipRRect(
+                  borderRadius: BorderRadius.circular(5.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 3.0,
+                        color: Colors.teal,
+                      )
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        '$precio MXN',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor,
+                          fontSize: 15.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ListFood extends StatelessWidget {
+  const ListFood({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        minHeight: size.height,
+      ),
+      child: Container(
+        width: size.width,
+        //height: listaComidas.length * 105.0,
+        child: ListView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: listaComidas.length,
+          itemBuilder: (context, index) {
+            return FoodItem(
+              nombre: listaComidas[index].nombre,
+              descripcion: listaComidas[index].descripcion,
+              precio: listaComidas[index].precio,
+              imagen: listaComidas[index].imagen,
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
 
 

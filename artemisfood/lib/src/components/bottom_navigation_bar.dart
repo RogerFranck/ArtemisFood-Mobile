@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 
-class NavigationBarBottom extends StatelessWidget {
+class NavigationBarBottom extends StatefulWidget {
   const NavigationBarBottom({
     Key key,
   }) : super(key: key);
+
+  @override
+  _NavigationBarBottomState createState() => _NavigationBarBottomState();
+}
+
+class _NavigationBarBottomState extends State<NavigationBarBottom> {
+
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +20,15 @@ class NavigationBarBottom extends StatelessWidget {
       child: Container(
         height: 90.0,
         child: BottomNavigationBar(
+          currentIndex: currentIndex,
           selectedItemColor: Colors.black,
           unselectedItemColor: Colors.black,
           backgroundColor: Colors.white,
+          onTap: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
           iconSize: 40.0,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
