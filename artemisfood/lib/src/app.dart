@@ -1,8 +1,6 @@
 import 'package:artemisfood/src/pages/Login.dart';
-import 'package:artemisfood/src/pages/cart_page.dart';
 import 'package:artemisfood/src/pages/home_page.dart';
 import 'package:artemisfood/src/pages/sign_up.dart';
-import 'package:artemisfood/src/pages/user_preferences.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
 
