@@ -1,5 +1,4 @@
 import 'package:artemisfood/src/static/const.dart';
-import 'package:artemisfood/src/static/settingsItem.dart';
 import 'package:flutter/material.dart';
 
 class UserPreferencesBackground extends StatelessWidget {
