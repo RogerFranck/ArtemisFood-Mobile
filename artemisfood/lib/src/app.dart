@@ -14,7 +14,7 @@ class App extends StatelessWidget {
     //Size size = MediaQuery.of(context).size;
     FlutterStatusbarcolor.setStatusBarColor(Colors.white);
     return MaterialApp(
-      initialRoute: 'Food',
+      initialRoute: 'home',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: primaryColor,

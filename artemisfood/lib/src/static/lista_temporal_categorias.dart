@@ -14,7 +14,7 @@ class Comidas {
 
 List<Comidas> listaCategorias = [
   Comidas(
-    nombre: 'Hamburguesas',
+    nombre: 'Hamburguesas qffqpoefqpoefkpqoekfpoqfek',
     precio: 110.0,
     imagen: 'https://s2.best-wallpaper.net/wallpaper/2880x1800/1808/Hamburger-meat-French-fries-fast-food_2880x1800.jpg'
   ),
