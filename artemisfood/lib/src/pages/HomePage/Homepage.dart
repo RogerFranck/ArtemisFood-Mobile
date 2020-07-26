@@ -17,55 +17,69 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       backgroundColor: backgroundHome,
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text('data'),
-              background: Container(
-                
-              ),
-            ),
-            pinned: true,
-            title: TitleAppBar(),
-            bottom: PreferredSize(
-              preferredSize: Size(size.width * 0.9, 60),
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 20.0),
-                child: SearchField(),
-              ),
-            ),
-            backgroundColor: Colors.white,
-            expandedHeight: 130.0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(10.0),)
+      body: BodyHome(size: size),
+    );
+  }
+}
+
+class BodyHome extends StatelessWidget {
+  const BodyHome({
+    Key key,
+    @required this.size,
+  }) : super(key: key);
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverAppBar(
+          flexibleSpace: FlexibleSpaceBar(
+            title: Text('data'),
+            background: Container(
+              
             ),
           ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
-                  child: Text(
-                    'Favoritos',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20.0
-                    ),
+          pinned: true,
+          title: TitleAppBar(),
+          bottom: PreferredSize(
+            preferredSize: Size(size.width * 0.9, 60),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: SearchField(),
+            ),
+          ),
+          backgroundColor: Colors.white,
+          expandedHeight: 130.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(10.0),)
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate(
+            [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+                child: Text(
+                  'Favoritos',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20.0
                   ),
                 ),
-                ListViewFavorites(),
-                SizedBox(
-                  height: 10.0,
-                ),
-                ListViewCategorias(),
-                BordeSeparador(),
-                ListViewFood(),
-              ],
-            ),
+              ),
+              ListViewFavorites(),
+              SizedBox(
+                height: 10.0,
+              ),
+              ListViewCategorias(),
+              BordeSeparador(),
+              ListViewFood(),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
