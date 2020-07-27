@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
         child: Container(
           height: 65,
           child: BottomNavigationBar(
+            backgroundColor: Colors.white,
             onTap: (index) {
               setState(() {
                 currentIndex = index;

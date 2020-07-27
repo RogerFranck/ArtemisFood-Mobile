@@ -1,5 +1,12 @@
+import 'package:artemisfood/src/components/RoundedButton.dart';
+import 'package:artemisfood/src/components/TextButton.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
+
+import 'components/Comentarios.dart';
+import 'components/Description.dart';
+import 'components/ImageFood.dart';
+import 'components/PriceFood.dart';
 
 class FoodPage extends StatelessWidget {
   const FoodPage({Key key}) : super(key: key);
@@ -9,60 +16,28 @@ class FoodPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundHome,
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20.0), bottomRight: Radius.circular(20.0)),
-              child: Container(
-                width: double.infinity,
-                height: 250.0,
-                decoration: BoxDecoration(
-                  color: Colors.amber
-                ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              ImageFood(),
+              Description(),
+              PriceFood(),
+              Comentarios(),
+              RoundedButton(
+                hintText: 'Añadir al carrito',
+                onPress: () {},
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 1.0,
-                  height: 100.0,
-                  decoration: BoxDecoration(
-                    color: Colors.white
-                  ),
-                ),
-              ),
-            ),
-             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 1.0,
-                  height: 100.0,
-                  decoration: BoxDecoration(
-                    color: Colors.white
-                  ),
-                ),
-              ),
-            ),
-             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 1.0,
-                  height: 150.0,
-                  decoration: BoxDecoration(
-                    color: Colors.white
-                  ),
-                ),
-              ),
-            ),
-          ],
+              TextButton(
+                hintText: 'Seguir buscando',
+                onPress: () {},
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
+
+
