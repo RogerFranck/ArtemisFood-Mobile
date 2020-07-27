@@ -55,5 +55,10 @@ productosCtrl.searchProducto = async(req, res) => {
     res.json( {message: 'hecho' } )
 }
 
+productosCtrl.categoryProducto = async(req, res) => {
+    const data_by_category = await productoModel.find( {"categoria" : req.params.categoria});
+    res.json(data_by_category)
+}
+
 
 module.exports = productosCtrl;
