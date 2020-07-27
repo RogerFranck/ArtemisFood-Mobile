@@ -47,4 +47,21 @@ usuariosCtrl.deleteUser = async (req, res) => {
 };
 
 
+//Trabajando en favoritos
+usuariosCtrl.updateFavoritos = async(req, res) => {
+  const idUser = req.body.user
+  const id_Producto = req.body.producto
+  const { favoritos } = await usuarioModel.findOne({_id: idUser})
+
+  const nuevoFavorito = {
+    favoritos: favoritos, id_Producto
+  
+  }
+  console.log(nuevoFavorito)
+
+  //await usuarioModel.findOneAndUpdate( {_id: idUser}, nuevoFavorito )
+  res.json( { message: "Nuevo producto agregado a favoritos" } )
+}
+
+
 module.exports = usuariosCtrl;
