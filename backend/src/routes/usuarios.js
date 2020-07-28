@@ -6,10 +6,12 @@ const {getUsers, createUser, getUser, updateUser, deleteUser, updateFavoritos} =
 router.route('/') // usuarios
   .get(getUsers) 
   .post(createUser)
-  .put(updateFavoritos)
 router.route('/:id') // usuarios/:id
   .get(getUser)
   .put(updateUser)
   .delete(deleteUser)
+router.route('/favoritos/:id')
+  .get(getUser)
+  .put(updateFavoritos)
 
 module.exports = router;
