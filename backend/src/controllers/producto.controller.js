@@ -50,9 +50,8 @@ productosCtrl.deleteProduct = async(req, res) => {
 
 
 productosCtrl.searchProducto = async(req, res) => {
-    const data = await productoModel.find( {"nombre": new RegExp( `/${req.params.nombre}/` , 'gi' ) } );
-    console.log(data)
-    res.json( {message: 'hecho' } )
+    const data = await productoModel.find( {"nombre": new RegExp( `${req.params.nombre}` , 'gi' ) } );
+    res.json( data )
 }
 
 productosCtrl.categoryProducto = async(req, res) => {
