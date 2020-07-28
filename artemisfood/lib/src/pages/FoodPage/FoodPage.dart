@@ -1,5 +1,6 @@
 import 'package:artemisfood/src/components/RoundedButton.dart';
 import 'package:artemisfood/src/components/TextButton.dart';
+import 'package:artemisfood/src/pages/FoodPage/components/ButtonRoudend.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class FoodPage extends StatelessWidget {
               Description(),
               PriceFood(),
               Comentarios(),
-              RoundedButton(
+              ButtonRoundend(
                 hintText: 'Añadir al carrito',
                 onPress: () {},
               ),
