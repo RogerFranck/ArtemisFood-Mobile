@@ -14,7 +14,7 @@ class PriceFood extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.0),
         child: Container(
           width: MediaQuery.of(context).size.width * 1.0,
-          height: 100.0,
+          height: 60.0,
           decoration: BoxDecoration(
             color: Colors.white
           ),

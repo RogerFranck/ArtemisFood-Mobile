@@ -12,10 +12,10 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Size size = MediaQuery.of(context).size;
-    //FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+    FlutterStatusbarcolor.setStatusBarColor(Colors.white);
     FlutterStatusbarcolor.setNavigationBarColor(Colors.white);
     return MaterialApp(
-      initialRoute: 'Food',
+      initialRoute: 'Home',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: primaryColor,
@@ -24,8 +24,8 @@ class App extends StatelessWidget {
       home: Login(),
       routes: {
         'login'   :     (BuildContext context) => Login(),
-        'sign_up'   :     (BuildContext context) => SignUp(),
-        'home'   :     (BuildContext context) => HomePage(),
+        'Sign_up'   :     (BuildContext context) => SignUp(),
+        'Home'   :     (BuildContext context) => HomePage(),
         'Food' :  (BuildContext context) => FoodPage(),
       },
     );
