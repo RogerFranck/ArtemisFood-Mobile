@@ -1,3 +1,4 @@
+import 'package:artemisfood/src/pages/SettingsPage/settings_page.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +65,7 @@ class _HomePageState extends State<HomePage> {
     switch (paginaActual) {
       case 0: return BodyHome();
       case 1: return Scaffold(appBar: AppBar(),);
-      case 2: return Scaffold(appBar: AppBar(),);
+      case 2: return SettingsPage();
         
       default:
         return BodyHome();
@@ -72,4 +73,8 @@ class _HomePageState extends State<HomePage> {
   }
 
 }
+
+
+
+
 

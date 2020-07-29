@@ -1,9 +1,12 @@
 import 'package:artemisfood/src/components/TextButton.dart';
+import 'package:artemisfood/src/static/lista_temporal_categorias.dart';
 import 'package:flutter/material.dart';
 
 class ListViewCategorias extends StatelessWidget {
+  final String texto;
   const ListViewCategorias({
-    Key key,
+    Key key, 
+    this.texto,
   }) : super(key: key);
 
   @override
@@ -17,10 +20,10 @@ class ListViewCategorias extends StatelessWidget {
         width: double.infinity,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: 10,
+          itemCount: listaCategorias.length,
           itemBuilder: (context, index) {
             return TextButton(
-              hintText: 'Categorías',
+              hintText: listaCategorias[index].categoria,
               color: Colors.black,
               fontWeight: FontWeight.w300,
               fontSize: 20.0,

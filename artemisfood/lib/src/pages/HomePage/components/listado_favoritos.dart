@@ -3,29 +3,26 @@ import 'package:artemisfood/src/static/lista_temporal_categorias.dart';
 import 'package:flutter/material.dart';
 
 class ListViewFavorites extends StatelessWidget {
-  const ListViewFavorites({Key key}) : super(key: key);
+  const ListViewFavorites({
+    Key key,
+  }) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        minHeight: 200.0,
-        maxHeight: 225.0
-      ),
-      child: Container(
-        width: double.infinity,
-        //height: 200.0,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: listaCategorias.length,
-          itemBuilder: (context, index) {
-            return FavoriteItem(
-              imagen: listaCategorias[index].imagen,
-              nombre: listaCategorias[index].nombre,
-              precio: listaCategorias[index].precio,
-            );
-          },
-        ),
+    final Size size = MediaQuery.of(context).size;
+
+    return Container(
+      width: size.width,
+      height: 220.0,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: listaCategorias.length,
+        itemBuilder: (_, index) => FavoriteItem(
+          imagen: listaCategorias[index].imagen,
+          precio: listaCategorias[index].precio,
+          nombre: listaCategorias[index].nombre,
+        )
       ),
     );
   }
@@ -44,60 +41,93 @@ class FavoriteItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: Column(
-        children: <Widget>[
-          Container(
+      child: Container(
+        width: size.width * 0.65,
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 10.0),
+          child: Container(
             decoration: BoxDecoration(
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 10.0,
-                  spreadRadius: 1.0,
-                  offset: Offset(4.0, 7.0)
-                ),
-              ],
+              borderRadius: BorderRadius.circular(10.0),
+              // boxShadow: <BoxShadow>[
+              //   BoxShadow(
+              //     color: Colors.black26,
+              //     blurRadius: 10.0,
+              //     spreadRadius: 1.0,
+              //     offset: Offset(4.0, 7.0)
+              //   ),
+              // ],
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15.0),
-              child: Container(
-                height: 175.0,
-                child: Image(
-                  image: NetworkImage(imagen),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          Container(
-            width: 250.0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
               children: <Widget>[
-                Expanded(
-                  flex: 2,
-                  child: Text(
-                    nombre,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                Stack(
+                  children: <Widget>[
+                    FractionallySizedBox(
+                      widthFactor: 1,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: Container(
+                          height: 150.0,
+                          child: Image( 
+                            image: NetworkImage(imagen),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 5,
+                      right: 10.0,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.favorite,
+                          color: Colors.red,
+                          size: 30.0,
+                        ),
+                        onPressed: () {},
+                        splashColor: primaryColor,
+                      )
+                    )
+                  ],
                 ),
                 Expanded(
-                  flex: 1,
-                  child: Text(
-                    '$precio MXN',
-                    style: TextStyle(fontWeight: FontWeight.bold, color: primaryColor, fontSize: 15.0),
-                    overflow: TextOverflow.ellipsis,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Flexible(
+                          flex: 7,
+                          child: Text(
+                            nombre,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Flexible(
+                          flex: 3,
+                          child: Text(
+                            '\$$precio',
+                            style: TextStyle(
+                              color: primaryColor,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                )
+                ),
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

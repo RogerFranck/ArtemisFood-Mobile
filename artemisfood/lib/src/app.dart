@@ -12,7 +12,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Size size = MediaQuery.of(context).size;
-    FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+    FlutterStatusbarcolor.setStatusBarColor(Colors.black);
     FlutterStatusbarcolor.setNavigationBarColor(Colors.white);
     return MaterialApp(
       initialRoute: 'Home',

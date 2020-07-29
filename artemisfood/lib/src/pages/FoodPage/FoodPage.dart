@@ -1,9 +1,7 @@
-import 'package:artemisfood/src/components/RoundedButton.dart';
 import 'package:artemisfood/src/components/TextButton.dart';
 import 'package:artemisfood/src/pages/FoodPage/components/ButtonRoudend.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
-
 import 'components/Comentarios.dart';
 import 'components/Description.dart';
 import 'components/ImageFood.dart';
