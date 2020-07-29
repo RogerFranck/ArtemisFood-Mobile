@@ -4,7 +4,7 @@ const productoModel = require('../models/modelProducto')
 
 productosCtrl.getProducts = async(req, res) => {
     const productos = await productoModel.find()
-    res.json(productos)
+    res.json({Producto:productos})
 };
 
 productosCtrl.createProduct = async(req, res) => {

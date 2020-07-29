@@ -1,24 +1,50 @@
 import 'package:artemisfood/src/static/const.dart';
-import 'package:artemisfood/src/static/lista_temporal_categorias.dart';
 import 'package:flutter/material.dart';
 
-class ListViewFood extends StatelessWidget {
+import 'package:http/http.dart' as http ;
+
+import 'dart:convert';
+
+class ListViewFood extends StatefulWidget {
   const ListViewFood({
     Key key,
   }) : super(key: key);
 
   @override
+  _ListViewFoodState createState() => _ListViewFoodState();
+}
+
+class _ListViewFoodState extends State<ListViewFood> {
+
+  Map data;
+  List productdata;
+
+  getProduct() async {
+    http.Response res = await http.get('http://192.168.1.67:4000/producto');
+    data = json.decode(res.body);
+    setState(() {
+      productdata = data["Producto"];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getProduct();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
-      height: 275.0 * listaCategorias.length,
+      height: 275.0 * productdata.length,
       child: ListView.builder(
         physics: NeverScrollableScrollPhysics(),
-        itemCount: listaCategorias.length,
+        itemCount: productdata.length,
         itemBuilder:  (_, index) {
           return FoodItem(
-            imagen: listaCategorias[index].imagen,
-            nombre: listaCategorias[index].nombre,
-            precio: listaCategorias[index].precio,
+            imagen: productdata[index]["foto"],
+            nombre: productdata[index]["nombre"],
+            precio: productdata[index]["precio"],
           );
         }
       ),
@@ -29,7 +55,7 @@ class ListViewFood extends StatelessWidget {
 class FoodItem extends StatelessWidget {
   final String imagen;
   final String nombre;
-  final double precio;
+  final int precio;
   const FoodItem({
     Key key, 
     this.imagen, 

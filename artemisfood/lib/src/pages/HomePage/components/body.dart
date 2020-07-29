@@ -1,9 +1,10 @@
 import 'package:artemisfood/src/components/borde_separador.dart';
 import 'package:artemisfood/src/components/search_field.dart';
 import 'package:flutter/material.dart';
+import 'Category.dart';
 import 'custom_app_bar.dart';
 import 'food.dart';
-import 'listado_categorias.dart';
+//import 'listado_categorias.dart';
 import 'listado_favoritos.dart';
 
 class BodyHome extends StatelessWidget {
@@ -11,10 +12,8 @@ class BodyHome extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
-    
     return CustomScrollView(
       slivers: <Widget>[
         CustomAppBar(
@@ -24,13 +23,11 @@ class BodyHome extends StatelessWidget {
           delegate: SliverChildListDelegate(
             [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 20.0, horizontal: 10.0),
                 child: Text(
                   'Favoritos',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20.0
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0),
                 ),
               ),
               //ListViewFavorites(),
@@ -38,7 +35,18 @@ class BodyHome extends StatelessWidget {
               SizedBox(
                 height: 10.0,
               ),
-              ListViewCategorias(),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: <Widget>[
+                    CategoryTitle(title: "All", active: true),
+                    CategoryTitle(title: "Italian"),
+                    CategoryTitle(title: "Asian"),
+                    CategoryTitle(title: "Chinese"),
+                    CategoryTitle(title: "Burgers"),
+                  ],
+                ),
+              ),
               BordeSeparador(),
               ListViewFood(),
             ],
@@ -48,10 +56,3 @@ class BodyHome extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
