@@ -20,7 +20,7 @@ class _ListViewFoodState extends State<ListViewFood> {
   List productdata;
 
   getProduct() async {
-    http.Response res = await http.get('http://192.168.0.15:4000/producto');
+    http.Response res = await http.get('https://artemisfoodapi.herokuapp.com/producto');
     data = json.decode(res.body);
     setState(() {
       productdata = data["Producto"];
@@ -39,7 +39,7 @@ class _ListViewFoodState extends State<ListViewFood> {
       height: 275.0 * productdata.length,
       child: ListView.builder(
         physics: NeverScrollableScrollPhysics(),
-        itemCount: productdata.length,
+        itemCount: productdata.length == null ? 0:productdata.length,
         itemBuilder:  (_, index) {
           return FoodItem(
             imagen: productdata[index]["foto"],

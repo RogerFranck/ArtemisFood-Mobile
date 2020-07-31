@@ -1,3 +1,4 @@
+import 'package:artemisfood/src/pages/CartPage/cartPage.dart';
 import 'package:artemisfood/src/pages/SettingsPage/settings_page.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/cupertino.dart';
@@ -64,7 +65,7 @@ class _HomePageState extends State<HomePage> {
   Widget _paginaActual(int paginaActual) {
     switch (paginaActual) {
       case 0: return BodyHome();
-      case 1: return Scaffold(appBar: AppBar(),);
+      case 1: return CartPage();
       case 2: return SettingsPage();
         
       default:
