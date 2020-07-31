@@ -20,6 +20,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primaryColor: primaryColor,
         scaffoldBackgroundColor: Colors.white,
+        fontFamily: 'Avenir',
       ),
       home: Login(),
       routes: {

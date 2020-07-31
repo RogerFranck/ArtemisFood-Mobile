@@ -20,7 +20,7 @@ class _ListViewFoodState extends State<ListViewFood> {
   List productdata;
 
   getProduct() async {
-    http.Response res = await http.get('http://192.168.1.67:4000/producto');
+    http.Response res = await http.get('http://192.168.0.15:4000/producto');
     data = json.decode(res.body);
     setState(() {
       productdata = data["Producto"];
@@ -105,7 +105,7 @@ class FoodItem extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Flexible(
@@ -145,7 +145,7 @@ class FoodItem extends StatelessWidget {
                             '\$$precio',
                             style: TextStyle(
                               color: primaryColor,
-                              fontSize: 15.0,
+                              fontSize: 18.0,
                               fontWeight: FontWeight.bold
                             ),
                           ),
