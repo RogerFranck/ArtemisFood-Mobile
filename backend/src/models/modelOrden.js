@@ -14,7 +14,7 @@ const ordenSchema = new Schema({
         required: true,
     },
     id_producto: {
-        type: String,
+        type: Array,
         required: true,
     },
     cantidad: {
@@ -30,6 +30,10 @@ const ordenSchema = new Schema({
         required: true,
         default: Date.now(),
     },
+    precio_final: {
+        type: Number,
+        required: true,
+    }
 
 })
 

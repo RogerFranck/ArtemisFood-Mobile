@@ -1,6 +1,7 @@
 const ordenesCtrl = {};
 
 const ordenModel = require('../models/modelOrden')
+const productoModel = require('../models/modelUsuario')
 
 ordenesCtrl.getOrdenes = async(req, res) => {
     const ordenes = await ordenModel.find()
@@ -8,8 +9,9 @@ ordenesCtrl.getOrdenes = async(req, res) => {
 };
 
 ordenesCtrl.createOrden = async(req, res) => {
-    console.log(req.body);
-    const { id_usuario, fecha, activa, id_producto, cantidad, lugar, tiempo } = req.body
+    
+    const { id_usuario, fecha, activa, id_producto, cantidad, lugar, tiempo, precio_final } = req.body
+
     const nuevoOrden = new ordenModel({
         id_usuario: id_usuario, //5f137df2b2d0dd1ea0f92a4a
         fecha: fecha,
@@ -18,6 +20,7 @@ ordenesCtrl.createOrden = async(req, res) => {
         cantidad: cantidad,
         lugar: lugar,
         tiempo: tiempo,
+        precio_final: precio_final
     });
     await nuevoOrden.save();
     res.json({ message: 'Orden guardada' })
@@ -49,6 +52,7 @@ ordenesCtrl.deleteOrden = async(req, res) => {
     await ordenModel.findOneAndDelete({ _id: req.params.id })
     res.json({ message: 'Orden borrada' })
 };
+
 
 
 module.exports = ordenesCtrl;
