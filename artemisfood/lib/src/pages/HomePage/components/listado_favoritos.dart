@@ -71,8 +71,9 @@ class FavoriteItem extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10.0),
                         child: Container(
                           height: 150.0,
-                          child: Image( 
+                          child: FadeInImage( 
                             image: NetworkImage(imagen),
+                            placeholder: NetworkImage('https://media1.tenor.com/images/c7cce308690c435002dfedee6889d135/tenor.gif?itemid=15742167'),
                             fit: BoxFit.cover,
                           ),
                         ),

@@ -19,35 +19,48 @@ class _ListViewFoodState extends State<ListViewFood> {
   Map data;
   List productdata;
 
-  getProduct() async {
+  Future getProduct(Map data, List productData) async {
     http.Response res = await http.get('https://artemisfoodapi.herokuapp.com/producto');
     data = json.decode(res.body);
-    setState(() {
-      productdata = data["Producto"];
-    });
+    productdata = data["Producto"];
+    return productdata;
   }
 
   @override
   void initState() {
     super.initState();
-    getProduct();
+    getProduct(data, productdata);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 275.0 * productdata.length,
-      child: ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: productdata.length == null ? 0:productdata.length,
-        itemBuilder:  (_, index) {
-          return FoodItem(
-            imagen: productdata[index]["foto"],
-            nombre: productdata[index]["nombre"],
-            precio: productdata[index]["precio"],
+    return FutureBuilder(
+      future: getProduct(data, productdata),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Container(
+            height: 275.0 * productdata.length,
+            child: ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: productdata.length == null ? 0:productdata.length,
+              itemBuilder:  (_, index) {
+                return FoodItem(
+                  imagen: productdata[index]["foto"],
+                  nombre: productdata[index]["nombre"],
+                  precio: productdata[index]["precio"],
+                );
+              }
+            ),
+          );
+        } else {
+          return Container(
+            margin: EdgeInsets.only(top: 20.0),
+            child: Center(
+              child: CircularProgressIndicator()
+            ),
           );
         }
-      ),
+      },
     );
   }
 }
