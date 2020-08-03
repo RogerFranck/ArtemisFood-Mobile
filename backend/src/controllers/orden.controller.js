@@ -54,5 +54,12 @@ ordenesCtrl.deleteOrden = async(req, res) => {
 };
 
 
+// Historial de Entregas
+ordenesCtrl.getEntregas = async(req, res) => {
+    const data = await ordenModel.find({ 'activa': `${req.params.activa}` })
+    res.json(data);
+};
+
+
 
 module.exports = ordenesCtrl;
