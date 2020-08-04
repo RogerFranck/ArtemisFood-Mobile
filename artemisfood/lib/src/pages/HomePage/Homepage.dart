@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
   Widget _paginaActual(int paginaActual) {
     switch (paginaActual) {
       case 0: return BodyHome();
-      case 1: return CartPage();
+      case 1: return CartPage2();
       case 2: return SettingsPage();
         
       default:
