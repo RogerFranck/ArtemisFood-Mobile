@@ -78,8 +78,8 @@ class FoodItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      onPressed: (){},
+    return GestureDetector(
+      onTap: (){},
       child: Padding(
         padding: EdgeInsets.only(bottom: 20),
         child: Container(
