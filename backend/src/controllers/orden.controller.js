@@ -10,20 +10,27 @@ ordenesCtrl.getOrdenes = async(req, res) => {
 
 ordenesCtrl.createOrden = async(req, res) => {
     
-    const { id_usuario, fecha, activa, id_producto, cantidad, lugar, tiempo, precio_final } = req.body
+    const { id_usuario, fecha, activa, productos, lugar, tiempo, precio_final } = req.body
+    const bandera = false;
+    //console.log(productos[1])
+    if (bandera == false){
 
-    const nuevoOrden = new ordenModel({
-        id_usuario: id_usuario, //5f137df2b2d0dd1ea0f92a4a
-        fecha: fecha,
-        activa: activa,
-        id_producto: id_producto, //5f13884468521e4ec81df4ee
-        cantidad: cantidad,
-        lugar: lugar,
-        tiempo: tiempo,
-        precio_final: precio_final
-    });
-    await nuevoOrden.save();
-    res.json({ message: 'Orden guardada' })
+        const nuevoOrden = new ordenModel({
+            id_usuario: id_usuario, 
+            fecha: fecha,
+            activa: activa,
+            productos: productos, 
+            lugar: lugar,
+            tiempo: tiempo,
+            precio_final: precio_final
+        });
+
+        await nuevoOrden.save();
+        res.json({ message: 'Orden guardada' })
+    }
+    else{
+        res.json({message: "Orden rechazada" })
+    }
 }
 
 
@@ -33,15 +40,15 @@ ordenesCtrl.getOrden = async(req, res) => {
 };
 
 ordenesCtrl.updateOrden = async(req, res) => {
-    const { id_usuario, fecha, activa, id_producto, cantidad, lugar, tiempo } = req.body
+    const { id_usuario, fecha, activa, productos, lugar, tiempo, precio_final } = req.body
     const nuevoOrden = {
-        id_usuario: id_usuario,
+        id_usuario: id_usuario, 
         fecha: fecha,
         activa: activa,
-        id_producto: id_producto,
-        cantidad: cantidad,
+        productos: productos, 
         lugar: lugar,
         tiempo: tiempo,
+        precio_final: precio_final
     }
     await ordenModel.findOneAndUpdate({ _id: req.params.id }, nuevoOrden)
     res.json({ message: "Orden Actualizada" })

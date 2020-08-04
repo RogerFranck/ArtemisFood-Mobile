@@ -13,12 +13,8 @@ const ordenSchema = new Schema({
         type: Boolean,
         required: true,
     },
-    id_producto: {
+    productos: {
         type: Array,
-        required: true,
-    },
-    cantidad: {
-        type: Number,
         required: true,
     },
     lugar: {
