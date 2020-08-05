@@ -1,26 +1,34 @@
 const ordenesCtrl = {};
 
 const ordenModel = require('../models/modelOrden')
-const productoModel = require('../models/modelUsuario')
+const productoModel = require('../models/modelProducto')
+
 
 ordenesCtrl.getOrdenes = async(req, res) => {
     const ordenes = await ordenModel.find()
     res.json(ordenes)
 };
 
-function validador(data){
+async function validador(data){
+    var tamaño = data.length;
+    for (let x = 0; tamaño > x; x++ ){
+        var { id_producto, cantidad_producto } = data[x]
+        var  {cantidad}  = await productoModel.findOne({"_id" : id_producto})
+        //console.log(cantidad)
+        if (cantidad < cantidad_producto){
+            return false;
+        }
+    }
     return true;
 }
 
 ordenesCtrl.createOrden = async(req, res) => {
     
     const { id_usuario, fecha, activa, productos, lugar, tiempo, precio_final } = req.body
-    const bandera = validador(productos);
-
-    //for(var x = 0; x < 7;x++){
+    //console.log(id_usuario)
+    const bandera = await validador(productos);
     console.log(bandera)
-    
-    if (bandera == false){
+    if (bandera == true){
 
         const nuevoOrden = new ordenModel({
             id_usuario: id_usuario, 

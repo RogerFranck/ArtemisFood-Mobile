@@ -1,3 +1,4 @@
+import 'package:artemisfood/Auth.dart';
 import 'package:artemisfood/src/pages/FoodPage/FoodPage.dart';
 import 'package:artemisfood/src/pages/HomePage/Homepage.dart';
 import 'package:artemisfood/src/pages/Login.dart';
@@ -15,15 +16,15 @@ class App extends StatelessWidget {
     FlutterStatusbarcolor.setStatusBarColor(Colors.black);
     FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
     return MaterialApp(
-      initialRoute: 'Home',
+      initialRoute: 'Auth',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: primaryColor,
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Avenir',
       ),
-      home: Login(),
       routes: {
+        'Auth' :  (BuildContext context) => Auth(),
         'login'   :     (BuildContext context) => Login(),
         'Sign_up'   :     (BuildContext context) => SignUp(),
         'Home'   :     (BuildContext context) => HomePage(),
