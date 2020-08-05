@@ -32,7 +32,7 @@ class _CartPage2State extends State<CartPage2> {
     }
     else{
       iconoSelect = Icon(Icons.attach_money);
-    };
+    }
   }
 
   @override

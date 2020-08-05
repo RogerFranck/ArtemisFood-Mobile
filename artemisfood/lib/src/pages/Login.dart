@@ -6,8 +6,17 @@ import 'package:artemisfood/src/components/background.dart';
 import 'package:artemisfood/src/components/rounded_input_field.dart';
 import 'package:flutter/material.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   const Login({Key key}) : super(key: key);
+
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+
+  String username = null;
+  String password = null;
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +41,23 @@ class Login extends StatelessWidget {
                     child: RoundedInputField(
                       hintText: 'Username',
                       icon: Icons.person,
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        setState(() {
+                          username = value;
+                        });
+                      },
                     ),
                   ),
                   TextFieldContainer(
                     child: RoundedInputField(
                       hintText: 'Password',
+                      passtype: true,
                       icon: Icons.vpn_key,
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        setState(() {
+                          password = value;
+                        });
+                      },
                     ),
                   ),
                   SizedBox(
@@ -47,7 +65,7 @@ class Login extends StatelessWidget {
                   ),
                   RoundedButton(
                     hintText: 'Login',
-                    onPress: () {},
+                    onPress: () => signIn(username,password),
                   ),
                   TextButton(
                     hintText: 'Forgot Password?',
@@ -61,7 +79,7 @@ class Login extends StatelessWidget {
                     hintTextButton: 'Sign Up',//Si es no? es un botonsito
                     onPress: () {
                       Navigator.pushNamed(
-                        context, 'sign_up'
+                        context, 'Sign_up'
                       );
                     },
                   ),
@@ -73,3 +91,8 @@ class Login extends StatelessWidget {
     );
   }
 } //Namas voy a hacer que pueda pasar a la pagina pulsando el boton, ya despues lo copio
+
+signIn(String username, password) {
+  print(username);
+  print(password);
+}
