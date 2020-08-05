@@ -9,14 +9,19 @@ ordenesCtrl.getOrdenes = async(req, res) => {
 };
 
 function validador(data){
-    return true;
+    var tamaño = data.length;
+    for (let x = 0; tamaño > x; x++ ){
+        var { id_producto, cantidad } = data[x]
+        console.log(id_producto, cantidad)
+    }
+    return false;
 }
 
 ordenesCtrl.createOrden = async(req, res) => {
     
     const { id_usuario, fecha, activa, productos, lugar, tiempo, precio_final } = req.body
     const bandera = validador(productos);
-    console.log(bandera)
+    //console.log(bandera)
     if (bandera == true){
 
         const nuevoOrden = new ordenModel({
