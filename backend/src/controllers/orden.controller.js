@@ -20,6 +20,25 @@ async function validador(data){
         }
     }
     return true;
+};
+
+async function actualizarProductos(data){
+    var tamaño = data.length;
+    
+    for (let x = 0; tamaño > x; x++ ){
+        var { id_producto, cantidad_producto } = data[x]
+        const { nombre, cantidad, precio, foto,descripcion, categoria} = await productoModel.findOne({"_id" : id_producto})
+        
+        const nuevoProducto = {
+            nombre: nombre,
+            cantidad: cantidad - cantidad_producto,
+            precio: precio,
+            foto: foto,
+            descripcion:descripcion,
+            categoria:categoria
+        }
+        await productoModel.findOneAndUpdate({"_id" : id_producto}, nuevoProducto)
+}
 }
 
 ordenesCtrl.createOrden = async(req, res) => {
@@ -41,6 +60,7 @@ ordenesCtrl.createOrden = async(req, res) => {
         });
 
         await nuevoOrden.save();
+        await actualizarProductos(productos);
         res.json({ message: 'Orden guardada' })
     }
     else{
