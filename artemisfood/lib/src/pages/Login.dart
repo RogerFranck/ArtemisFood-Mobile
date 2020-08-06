@@ -4,7 +4,11 @@ import 'package:artemisfood/src/components/TextButton.dart';
 import 'package:artemisfood/src/components/TextFieldContainer.dart';
 import 'package:artemisfood/src/components/background.dart';
 import 'package:artemisfood/src/components/rounded_input_field.dart';
+import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Login extends StatefulWidget {
   const Login({Key key}) : super(key: key);
@@ -15,8 +19,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
 
-  String username = null;
-  String password = null;
+  String username;
+  String password;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +96,14 @@ class _LoginState extends State<Login> {
   }
 } //Namas voy a hacer que pueda pasar a la pagina pulsando el boton, ya despues lo copio
 
-signIn(String username, password) {
-  print(username);
-  print(password);
+signIn(String username, password) async {
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  Map data = {
+    'usuario': username,
+    'password': password
+  };
+  // ignore: unused_local_variable
+  //var jsonResponse;
+  //var response = await http.post('$server/login', body: data);
+  //jsonResponse = json.decode(response.body);
 }

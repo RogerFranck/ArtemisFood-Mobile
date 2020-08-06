@@ -20,7 +20,7 @@ class _ListViewFoodState extends State<ListViewFood> {
   List productdata;
 
   Future getProduct(Map data, List productData) async {
-    http.Response res = await http.get('https://artemisfoodapi.herokuapp.com/producto');
+    http.Response res = await http.get('$server/producto');
     data = json.decode(res.body);
     productdata = data["Producto"];
     return productdata;
