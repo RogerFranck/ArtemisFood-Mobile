@@ -24,6 +24,10 @@ class _AuthState extends State<Auth> {
       Navigator.pushNamed(
         context, 'login'
       );
+    }else{
+      Navigator.pushNamed(
+        context, 'Home'
+      );
     }
   }
 

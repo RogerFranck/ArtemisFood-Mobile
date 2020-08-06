@@ -17,6 +17,11 @@ int currentIndex = 0;
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    super.initState();
+    currentIndex = 0;
+  }
+  @override
   Widget build(BuildContext context) {
 
     return Scaffold(

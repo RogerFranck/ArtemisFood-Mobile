@@ -69,7 +69,7 @@ class _LoginState extends State<Login> {
                   ),
                   RoundedButton(
                     hintText: 'Login',
-                    onPress: () => signIn(username,password),
+                    onPress: () => signIn(username,password,context),
                   ),
                   TextButton(
                     hintText: 'Forgot Password?',
@@ -96,14 +96,15 @@ class _LoginState extends State<Login> {
   }
 } //Namas voy a hacer que pueda pasar a la pagina pulsando el boton, ya despues lo copio
 
-signIn(String username, password) async {
+signIn(String username, String password, BuildContext context) async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   Map data = {
     'usuario': username,
     'password': password
   };
-  // ignore: unused_local_variable
-  //var jsonResponse;
-  //var response = await http.post('$server/login', body: data);
-  //jsonResponse = json.decode(response.body);
+  Map jsonResponse;
+  http.Response response = await http.post('$server/login', body: data);
+  jsonResponse = json.decode(response.body);
+  sharedPreferences.setString("token", jsonResponse['token']);
+  Navigator.pushNamed(context, 'Home');
 }
