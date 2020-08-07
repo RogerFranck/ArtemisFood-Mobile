@@ -24,6 +24,7 @@ class App extends StatelessWidget {
         fontFamily: 'Avenir',
       ),
       routes: {
+        //'Carga' :  (BuildContext context) => PantallaCarga(),
         'Auth' :  (BuildContext context) => Auth(),
         'login'   :     (BuildContext context) => Login(),
         'Sign_up'   :     (BuildContext context) => SignUp(),

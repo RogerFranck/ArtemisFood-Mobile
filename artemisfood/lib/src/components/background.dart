@@ -29,7 +29,7 @@ class Background extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Text( //deja experimento con algo, chingada madre no quiere nomas xd, se fue
-                      'Artemis\n     Food',
+                      'Artemis\n    Food',
                       style: TextStyle( fontWeight: FontWeight.bold, fontSize: 41.0, color: Colors.white),
                     ),
                   ],
