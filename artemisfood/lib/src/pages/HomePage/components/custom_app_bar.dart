@@ -12,6 +12,7 @@ class CustomAppBar extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
 
     return SliverAppBar(
+      automaticallyImplyLeading: false,
       flexibleSpace: FlexibleSpaceBar(
         title: Text('data'),
         background: Container(),

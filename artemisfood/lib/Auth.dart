@@ -33,12 +33,12 @@ class _AuthState extends State<Auth> with SingleTickerProviderStateMixin {
   checkLoginEstatus() async {
     sharedPreferences = await SharedPreferences.getInstance(); //Similar al localstorage
     if(sharedPreferences.getString("token") == null) {
-      Navigator.pushNamed(
+      Navigator.pushReplacementNamed(
         context, 
         'login',
       );
     }else{
-      Navigator.pushNamed(
+      Navigator.pushReplacementNamed(
         context, 
         'Home',
       );
