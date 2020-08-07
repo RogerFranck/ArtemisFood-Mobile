@@ -4,12 +4,12 @@ import 'package:artemisfood/src/pages/HomePage/components/custom_app_bar.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
 
-class CartPage extends StatefulWidget {
+class CartPage2 extends StatefulWidget {
   @override
-  _CartPageState createState() => _CartPageState();
+  _CartPage2State createState() => _CartPage2State();
 }
 
-class _CartPageState extends State<CartPage> {
+class _CartPage2State extends State<CartPage2> {
 
   List<DropdownMenuItem<String>> _metodoPago = [
      DropdownMenuItem(
@@ -24,14 +24,14 @@ class _CartPageState extends State<CartPage> {
 
   String opcionSeleccionada ;
   
-  Icon iconoSelect = Icon(Icons.attach_money);
+  Icon iconoSelect = Icon(Icons.attach_money, size: 35, color: Colors.grey[600],);
 
   void _seleccionarIcono(valor){
     if (valor == 'tarjeta'){
-      iconoSelect = Icon(Icons.credit_card);
+      iconoSelect = Icon(Icons.credit_card, size: 35, color: Colors.grey[600],);
     }
     else{
-      iconoSelect = Icon(Icons.attach_money);
+      iconoSelect = Icon(Icons.attach_money, size: 35, color: Colors.grey[600],);
     }
   }
 
@@ -42,33 +42,37 @@ class _CartPageState extends State<CartPage> {
         //constraints: BoxConstraints(maxHeight:200, minHeight: 200,  ),
         height: 220,
         alignment: Alignment.bottomCenter,
-        child: Card(
-          child: ListView(
-            children: <Widget>[
-               ListTile(
-                 leading: Icon(Icons.monetization_on),
-                 title: Text('Cantidad a pagar:'),
-                 trailing: Text('\$100'),
-               ),
-               ListTile(
-                 leading: iconoSelect,
-                 title: Text('Metodo de pago:'),
-                 trailing: DropdownButton(items: _metodoPago, value: opcionSeleccionada, onChanged: (opcion){
+        child: Column(
+          mainAxisAlignment:MainAxisAlignment.spaceAround ,
+          children: <Widget>[
+            SizedBox(height: 10,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Icon(Icons.monetization_on, size: 35, color: Colors.grey[600],),
+                Text('Cantidad a Pagar', style: TextStyle(fontSize: 20, color:Colors.grey[600], fontFamily: 'Avenir')),
+                SizedBox(width: 60,),
+                Text('\$100', style: TextStyle(fontSize: 20, color:Colors.grey[600], fontFamily: '')),
+              ],
+            ),
+            SizedBox(height: 20,),
+             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                iconoSelect,
+                Text('Método de Pago', style: TextStyle(fontSize: 20, color:Colors.grey[600], fontFamily: 'Avenir')),
+                SizedBox(width: 25,),
+                DropdownButton(items: _metodoPago, value: opcionSeleccionada, onChanged: (opcion){
                    setState(() {
                      opcionSeleccionada = opcion;
                      _seleccionarIcono(opcion);
                    });
-                 }),
-                 //trailing:,
-               ),
-               Container(
-                 margin: EdgeInsets.only(bottom: 50),
-                 child: Center(
-                   child: RoundedButton(hintText: 'Proceder al pago', onPress: (){},),
-                 ),
-               ),
-            ],
-          ),
+                 })
+              ],
+            ),
+            RoundedButton(hintText: 'Proceder al pago', onPress: (){},),
+            SizedBox(height: 10,)
+          ],
         ),
       ),
       body: CustomScrollView(

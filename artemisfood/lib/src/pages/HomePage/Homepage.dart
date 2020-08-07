@@ -1,4 +1,5 @@
 import 'package:artemisfood/src/pages/CartPage/cartPage.dart';
+import 'package:artemisfood/src/pages/CartPage/components/cartpage2.dart';
 import 'package:artemisfood/src/pages/SettingsPage/settings_page.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/cupertino.dart';

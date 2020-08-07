@@ -34,8 +34,8 @@ class _AuthState extends State<Auth> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-        child: Text("Cargando..."),
+      child: Scaffold(
+        body: Center(child: Image.asset('lib/assets/img/dino_carga.png'),),
       ),
     );
   }
