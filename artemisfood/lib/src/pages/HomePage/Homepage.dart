@@ -15,6 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 int currentIndex = 0;
+List<bool> selectedIndex = [true, false, false];
 
 class _HomePageState extends State<HomePage> {
   @override
@@ -22,6 +23,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     currentIndex = 0;
   }
+  
   @override
   Widget build(BuildContext context) {
 
@@ -37,27 +39,35 @@ class _HomePageState extends State<HomePage> {
             onTap: (index) {
               setState(() {
                 currentIndex = index;
+                for (var i = 0; i < selectedIndex.length; i++) {
+                  if (i == currentIndex) {
+                    selectedIndex[i] = true;
+                  } else {
+                    selectedIndex[i] = false;
+                  }
+                }
               });
             },
             currentIndex: currentIndex,
-            iconSize: 35.0,
-            unselectedItemColor: Colors.black,
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home
+                icon: Image(
+                  image: AssetImage('lib/assets/icons/home_icon.png'),
+                  color: selectedIndex[0] ? primaryColor : Colors.black,
                 ),
                 title: Container(),
               ),
               BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.receipt
+                icon: Image(
+                  image: AssetImage('lib/assets/icons/receipt.png'),
+                  color: selectedIndex[1] ? primaryColor : Colors.black,
                 ),
                 title: Container(),
               ),
               BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.person
+                icon: Image(
+                  image: AssetImage('lib/assets/icons/user.png'),
+                  color: selectedIndex[2] ? primaryColor : Colors.black,
                 ),
                 title: Container(),
               ),

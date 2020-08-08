@@ -106,5 +106,5 @@ signIn(String username, String password, BuildContext context) async {
   http.Response response = await http.post('$server/login', body: data);
   jsonResponse = json.decode(response.body);
   sharedPreferences.setString("token", jsonResponse['token']);
-  Navigator.pushNamed(context, 'Home');
+  Navigator.pushReplacementNamed(context, 'Home');
 }

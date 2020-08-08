@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,42 +11,55 @@ class Auth extends StatefulWidget {
 class _AuthState extends State<Auth> with SingleTickerProviderStateMixin {
 
   SharedPreferences sharedPreferences;
-  // AnimationController controller;
-  // Animation<double> opacidad;
+  int seconds = 1;
+  AnimationController controller;
+  Animation<double> opacidad;
 
   @override
   void initState() {
-    // controller =  AnimationController(vsync: this, duration: Duration(seconds: 2));
-    // opacidad = Tween(begin: 1.0, end: 0.0).animate(controller);
-    // controller.forward();
+    controller =  AnimationController(vsync: this, duration: Duration(seconds: seconds));
+    opacidad = Tween(begin: 1.0, end: 0.7).animate(controller);
+    controller.forward();
     super.initState();
-    checkLoginEstatus();
+    checkLoginEstatus().then((token) {
+      if (token) {
+        Navigator.pushReplacementNamed(
+          context, 
+          'Home',
+        );
+      } else {
+        Navigator.pushReplacementNamed(
+          context, 
+          'login',
+        );
+      }
+    });
   }
 
   @override
   void dispose() { 
-    // controller.dispose();
+    controller.dispose();
     super.dispose();
   }
 
-  checkLoginEstatus() async {
+  Future<bool> checkLoginEstatus() async {
+    await Future.delayed(Duration(seconds: seconds), () {});
     sharedPreferences = await SharedPreferences.getInstance(); //Similar al localstorage
     if(sharedPreferences.getString("token") == null) {
-      Navigator.pushReplacementNamed(
-        context, 
-        'login',
-      );
+
+      return false;
     }else{
-      Navigator.pushReplacementNamed(
-        context, 
-        'Home',
-      );
+
+      return true;
     }
   }
   
   @override
   Widget build(BuildContext context) {
-    return PantallaCarga();
+    return FadeTransition(
+      opacity: opacidad,
+      child: PantallaCarga()
+    );
   }
 }
 

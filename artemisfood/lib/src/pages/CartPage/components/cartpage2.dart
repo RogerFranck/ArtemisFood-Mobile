@@ -24,24 +24,24 @@ class _CartPage2State extends State<CartPage2> {
 
   String opcionSeleccionada;
 
-  Icon iconoSelect = Icon(
-    Icons.attach_money,
-    size: 35,
-    color: Colors.grey[600],
+  Widget iconoSelect = Image(
+    image: AssetImage('$iconPath/money.png'),
+    width: iconSize,
+    height: iconSize,
   );
 
   void _seleccionarIcono(valor) {
     if (valor == 'tarjeta') {
-      iconoSelect = Icon(
-        Icons.credit_card,
-        size: 35,
-        color: Colors.grey[600],
+      iconoSelect = Image(
+        image: AssetImage('$iconPath/credit_card.png'),
+        width: iconSize,
+        height: iconSize,
       );
     } else {
-      iconoSelect = Icon(
-        Icons.attach_money,
-        size: 35,
-        color: Colors.grey[600],
+      iconoSelect = Image(
+        image: AssetImage('$iconPath/money.png'),
+        width: iconSize,
+        height: iconSize,
       );
     }
   }
@@ -62,10 +62,10 @@ class _CartPage2State extends State<CartPage2> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Icon(
-                  Icons.monetization_on,
-                  size: 35,
-                  color: Colors.grey[600],
+                Image(
+                  image: AssetImage('$iconPath/wallet.png'),
+                  width: iconSize,
+                  height: iconSize,
                 ),
                 Text('Cantidad a Pagar',
                     style: TextStyle(
@@ -141,7 +141,12 @@ class _CartPage2State extends State<CartPage2> {
                  child: Card(                 
                  child: IconSlideAction(
                    caption: 'Borrar',
-                   icon: Icons.delete,
+                   iconWidget: Image(
+                    image: AssetImage('$iconPath/delete.png'),
+                    color: Colors.white,
+                    width: iconSize,
+                    height: iconSize,
+                  ),
                    color: Colors.red,
                  ),
                ),
@@ -154,7 +159,12 @@ class _CartPage2State extends State<CartPage2> {
               secondaryActions: <Widget>[
                 IconSlideAction(
                    caption: 'Borrar',
-                   icon: Icons.delete,
+                   iconWidget: Image(
+                    image: AssetImage('$iconPath/delete.png'),
+                    color: Colors.white,
+                    width: iconSize,
+                    height: iconSize,
+                  ),
                    color: Colors.red,
                  )
               ],

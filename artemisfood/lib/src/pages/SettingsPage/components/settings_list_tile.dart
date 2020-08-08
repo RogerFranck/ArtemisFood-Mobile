@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class SettingListTile extends StatelessWidget {
   final String texto;
-  final IconData leadingIcon;
+  final Widget icon;
   final Function onTap;
   const SettingListTile({
     Key key, 
     this.texto, 
-    this.leadingIcon, 
+    this.icon, 
     this.onTap,
   }) : super(key: key);
 
@@ -19,11 +19,7 @@ class SettingListTile extends StatelessWidget {
       child: Column(
         children: <Widget>[
           ListTile(
-            leading: Icon(
-              leadingIcon,
-              color: Colors.black,
-              size: 35.0,
-            ),
+            leading: icon,
             title: Text(
               texto,
               style: TextStyle(

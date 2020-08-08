@@ -11,6 +11,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Size size = MediaQuery.of(context).size;
+    final double size = 35;
     SharedPreferences sharedPreferences;
     return CustomScrollView(
       slivers: <Widget>[
@@ -47,22 +48,38 @@ class SettingsPage extends StatelessWidget {
                 ),
               ),
               SettingListTile(
-                leadingIcon: Icons.person_outline,
+                icon: Image(
+                  image: AssetImage('lib/assets/icons/user_settings.png'),
+                  height: size,
+                  width: size,
+                ),
                 texto: 'Account',
                 onTap: () {},
               ),
               SettingListTile(
-                leadingIcon: Icons.notifications_none,
+                icon: Icon(
+                  Icons.notifications_none,
+                  color: Colors.black.withOpacity(.65),
+                  size: size,
+                ),
                 texto: 'Notifications',
                 onTap: () {},
               ),
               SettingListTile(
-                leadingIcon: Icons.headset_mic,
+                icon: Image(
+                  image: AssetImage('lib/assets/icons/help_support.png'),
+                  height: size,
+                  width: size,
+                ),
                 texto: 'Help and Support',
                 onTap: () {},
               ),
               SettingListTile(
-                leadingIcon: Icons.help_outline,
+               icon: Image(
+                  image: AssetImage('lib/assets/icons/about.png'),
+                  height: size,
+                  width: size,
+                ),
                 texto: 'About',
                 onTap: () {},
               ),
