@@ -30,7 +30,7 @@ class _AuthState extends State<Auth> with SingleTickerProviderStateMixin {
       } else {
         Navigator.pushReplacementNamed(
           context, 
-          'login',
+          'Home',
         );
       }
     });

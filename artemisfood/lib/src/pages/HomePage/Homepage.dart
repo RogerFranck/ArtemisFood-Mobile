@@ -52,22 +52,28 @@ class _HomePageState extends State<HomePage> {
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Image(
-                  image: AssetImage('lib/assets/icons/home_icon.png'),
+                  image: AssetImage('$iconPath/home_icon.png'),
                   color: selectedIndex[0] ? primaryColor : Colors.black,
+                  width: 24,
+                  height: 24,
                 ),
                 title: Container(),
               ),
               BottomNavigationBarItem(
                 icon: Image(
-                  image: AssetImage('lib/assets/icons/receipt.png'),
+                  image: AssetImage('$iconPath/receipt.png'),
                   color: selectedIndex[1] ? primaryColor : Colors.black,
+                  width: 24,
+                  height: 24,
                 ),
                 title: Container(),
               ),
               BottomNavigationBarItem(
                 icon: Image(
-                  image: AssetImage('lib/assets/icons/user.png'),
+                  image: AssetImage('$iconPath/user.png'),
                   color: selectedIndex[2] ? primaryColor : Colors.black,
+                  width: 24,
+                  height: 24,
                 ),
                 title: Container(),
               ),

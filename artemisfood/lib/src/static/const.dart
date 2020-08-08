@@ -7,6 +7,6 @@ TextStyle primaryTitle = TextStyle( fontWeight: FontWeight.bold, fontSize: 20.0 
 TextStyle primarySubtitle = TextStyle( fontSize: 12.0 );
 String imgPath = 'lib/assets/img';
 String iconPath = 'lib/assets/icons';
-double iconSize = 35;
+double iconSize = 30;
 
 String server = "https://artemisfoodapi.herokuapp.com";
