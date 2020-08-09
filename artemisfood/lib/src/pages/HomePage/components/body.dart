@@ -9,16 +9,8 @@ import 'Category.dart';
 import 'custom_app_bar.dart';
 import 'food.dart';
 import 'listado_favoritos.dart';
-import 'package:http/http.dart' as http ;
 
 class BodyHome extends StatelessWidget {
-
-  void requestSearch(String text) async {
-    final url = '${server}search/?query=$text'; // TODO: backend de search imaginario, es un ejemplo
-    final response = await http.get(url);
-    final data = jsonDecode(response.body);
-    print(data);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,12 +56,44 @@ class BodyHome extends StatelessWidget {
                 ),
               ),
               BordeSeparador(),
-              // appBloc.searchText.isEmpty ? ListViewFood() : Container(),
-              ListViewFood(),
+              appBloc.searchText.isEmpty ? ListViewFood() 
+                                         : appBloc.listadoBusqueda.length == null || appBloc.listadoBusqueda.length == 0 ? SinResultados() : SearchedFood(),
+              // ListViewFood(),
             ],
           ),
         ),
       ],
+    );
+  }
+}
+
+class SinResultados extends StatelessWidget {
+  const SinResultados({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final appBloc = Provider.of<AppBloc>(context, listen: false);
+
+    return Padding(
+      padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+      child: Column(
+        children: <Widget>[
+          FractionallySizedBox(
+            widthFactor: .4,
+            child: Image.asset('$imgPath/dino_triste.png')
+           ),
+           SizedBox(height: 10.0,),
+           Text(
+             'Si tan sólo tuviéramos ese \nproducto compa...',
+             style: TextStyle(
+               color: appBloc.isDarkMode ? Colors.white : Colors.black,
+             ),
+             textAlign: TextAlign.center,
+           )
+        ],
+      ),
     );
   }
 }

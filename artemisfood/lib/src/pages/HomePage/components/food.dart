@@ -68,6 +68,48 @@ class _ListViewFoodState extends State<ListViewFood> {
   }
 }
 
+class SearchedFood extends StatefulWidget {
+  SearchedFood({Key key}) : super(key: key);
+
+  @override
+  _SearchedFoodState createState() => _SearchedFoodState();
+}
+
+class _SearchedFoodState extends State<SearchedFood> {
+  @override
+  Widget build(BuildContext context) {
+    final appBloc = Provider.of<AppBloc>(context, listen: false);
+    return FutureBuilder(
+      future: appBloc.requestSearch(appBloc.searchText),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Container(
+            height: 275.0 * appBloc.listadoBusqueda.length,
+            child: ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: appBloc.listadoBusqueda.length == null ? 0: appBloc.listadoBusqueda.length,
+              itemBuilder:  (_, index) {
+                return FoodItem(
+                  imagen: appBloc.listadoBusqueda[index]["foto"],
+                  nombre: appBloc.listadoBusqueda[index]["nombre"],
+                  precio: appBloc.listadoBusqueda[index]["precio"],
+                );
+              }
+            ),
+          );
+        } else {
+          return Container(
+            margin: EdgeInsets.only(top: 20.0),
+            child: Center(
+              child: CircularProgressIndicator()
+            ),
+          );
+        }
+      },
+    );
+  }
+}
+
 class FoodItem extends StatelessWidget {
   final String imagen;
   final String nombre;
