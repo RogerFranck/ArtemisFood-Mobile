@@ -1,9 +1,11 @@
 import 'package:artemisfood/src/pages/CartPage/cartPage.dart';
 import 'package:artemisfood/src/pages/CartPage/components/cartpage2.dart';
 import 'package:artemisfood/src/pages/SettingsPage/settings_page.dart';
+import 'package:artemisfood/src/providers/dark_mode.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'components/body.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,16 +28,16 @@ class _HomePageState extends State<HomePage> {
   
   @override
   Widget build(BuildContext context) {
-
+    final appBloc = Provider.of<AppBloc>(context, listen: false);
     return Scaffold(
-      backgroundColor: backgroundHome,
+      backgroundColor: appBloc.isDarkMode ? backgroundHomeDark : backgroundHome,
       body: _paginaActual(currentIndex),
       bottomNavigationBar: ClipRRect(
         borderRadius: BorderRadius.vertical(top: Radius.circular(25.0),),
         child: Container(
           height: 65,
           child: BottomNavigationBar(
-            backgroundColor: Colors.white,
+            backgroundColor: appBloc.isDarkMode ? Colors.black : Colors.white,
             onTap: (index) {
               setState(() {
                 currentIndex = index;
@@ -53,7 +55,7 @@ class _HomePageState extends State<HomePage> {
               BottomNavigationBarItem(
                 icon: Image(
                   image: AssetImage('$iconPath/home_icon.png'),
-                  color: selectedIndex[0] ? primaryColor : Colors.black,
+                  color: selectedIndex[0] ? primaryColor : appBloc.isDarkMode ? Colors.white : Colors.black,
                   width: 24,
                   height: 24,
                 ),
@@ -62,7 +64,7 @@ class _HomePageState extends State<HomePage> {
               BottomNavigationBarItem(
                 icon: Image(
                   image: AssetImage('$iconPath/receipt.png'),
-                  color: selectedIndex[1] ? primaryColor : Colors.black,
+                  color: selectedIndex[1] ? primaryColor : appBloc.isDarkMode ? Colors.white : Colors.black,
                   width: 24,
                   height: 24,
                 ),
@@ -71,7 +73,7 @@ class _HomePageState extends State<HomePage> {
               BottomNavigationBarItem(
                 icon: Image(
                   image: AssetImage('$iconPath/user.png'),
-                  color: selectedIndex[2] ? primaryColor : Colors.black,
+                  color: selectedIndex[2] ? primaryColor : appBloc.isDarkMode ? Colors.white : Colors.black,
                   width: 24,
                   height: 24,
                 ),

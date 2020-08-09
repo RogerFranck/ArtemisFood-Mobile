@@ -1,5 +1,7 @@
+import 'package:artemisfood/src/providers/dark_mode.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SettingListTile extends StatelessWidget {
   final String texto;
@@ -14,6 +16,8 @@ class SettingListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appBloc = Provider.of<AppBloc>(context, listen: false);
+    
     return FractionallySizedBox(
       widthFactor: 0.9,
       child: Column(
@@ -23,14 +27,14 @@ class SettingListTile extends StatelessWidget {
             title: Text(
               texto,
               style: TextStyle(
-                color: primaryColor,
+                color: appBloc.isDarkMode ? Colors.white : primaryColor,
                 fontWeight: FontWeight.w400,
                 fontSize: 20.0
               ),
             ),
             trailing: Icon(
               Icons.arrow_forward_ios,
-              color: Colors.black,
+              color: appBloc.isDarkMode ? Colors.white :  Colors.black,
               size: 30.0
             ),
             onTap: onTap,
@@ -38,7 +42,7 @@ class SettingListTile extends StatelessWidget {
           FractionallySizedBox(
             widthFactor: 0.9,
             child: Divider(
-              color: Colors.black,
+              color: appBloc.isDarkMode ? Colors.white :  Colors.black,
               height: 30.0,
             ),
           ),

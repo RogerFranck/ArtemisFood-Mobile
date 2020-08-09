@@ -1,9 +1,12 @@
+import 'package:artemisfood/src/providers/dark_mode.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http ;
 
 import 'dart:convert';
+
+import 'package:provider/provider.dart';
 
 class ListViewFood extends StatefulWidget {
   const ListViewFood({
@@ -78,6 +81,8 @@ class FoodItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appBloc = Provider.of<AppBloc>(context, listen: false);
+    
     return GestureDetector(
       onTap: (){},
       child: Padding(
@@ -88,7 +93,7 @@ class FoodItem extends StatelessWidget {
             widthFactor: 0.9,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: appBloc.isDarkMode ? Color(0xFF949494) : Colors.white,
                 borderRadius: BorderRadius.circular(20.0),
                 boxShadow: <BoxShadow>[
                   BoxShadow(
@@ -132,7 +137,8 @@ class FoodItem extends StatelessWidget {
                                 nombre,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 18.0
+                                  fontSize: 18.0,
+                                  color: appBloc.isDarkMode ? Colors.white : Colors.black,
                                 ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -143,7 +149,7 @@ class FoodItem extends StatelessWidget {
                               Text(
                                 'Con pepinillos, salsa de tomate, vegetales, etc.',
                                 style: TextStyle(
-                                  color: Colors.grey,
+                                  color: appBloc.isDarkMode ? Colors.white.withOpacity(0.8) : Colors.grey,
                                   fontSize: 10.0
                                 ),
                                 maxLines: 2,
@@ -159,7 +165,7 @@ class FoodItem extends StatelessWidget {
                             child: Text(
                               '\$$precio',
                               style: TextStyle(
-                                color: primaryColor,
+                                color: appBloc.isDarkMode ? Colors.white : primaryColor,
                                 fontSize: 18.0,
                                 fontWeight: FontWeight.bold
                               ),

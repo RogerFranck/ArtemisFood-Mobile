@@ -1,5 +1,7 @@
+import 'package:artemisfood/src/providers/dark_mode.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CategoryTitle extends StatelessWidget {
   final String title;
@@ -12,12 +14,14 @@ class CategoryTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appBloc = Provider.of<AppBloc>(context, listen: false);
+    
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 25),
       child: Text(
         title,
         style: Theme.of(context).textTheme.button.copyWith(
-          color: active ? primaryColor : Colors.black.withOpacity(.4),
+          color: active ? primaryColor : appBloc.isDarkMode ? Colors.white : Colors.black.withOpacity(.4),
         ),
       ),
     );

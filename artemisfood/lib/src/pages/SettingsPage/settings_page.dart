@@ -1,6 +1,8 @@
 import 'package:artemisfood/src/pages/HomePage/components/custom_app_bar.dart';
+import 'package:artemisfood/src/providers/dark_mode.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'components/settings_list_tile.dart';
 
@@ -13,6 +15,7 @@ class SettingsPage extends StatelessWidget {
     //Size size = MediaQuery.of(context).size;
     final double size = 30;
     SharedPreferences sharedPreferences;
+    final appBloc = Provider.of<AppBloc>(context, listen: false);
     return CustomScrollView(
       slivers: <Widget>[
         CustomAppBar(
@@ -41,6 +44,7 @@ class SettingsPage extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 20.0,
+                      color: appBloc.isDarkMode ? Colors.white :  Colors.black
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -52,6 +56,7 @@ class SettingsPage extends StatelessWidget {
                   image: AssetImage('$iconPath/user_settings.png'),
                   height: size,
                   width: size,
+                  color: appBloc.isDarkMode ? Colors.white :  Colors.black,
                 ),
                 texto: 'Account',
                 onTap: () {},
@@ -61,6 +66,7 @@ class SettingsPage extends StatelessWidget {
                   image: AssetImage('$iconPath/notification_regular.png'),
                   height: size,
                   width: size,
+                  color: appBloc.isDarkMode ? Colors.white :  Colors.black,
                 ),
                 texto: 'Notifications',
                 onTap: () {},
@@ -70,6 +76,7 @@ class SettingsPage extends StatelessWidget {
                   image: AssetImage('$iconPath/help_support.png'),
                   height: size,
                   width: size,
+                  color: appBloc.isDarkMode ? Colors.white :  Colors.black,
                 ),
                 texto: 'Help and Support',
                 onTap: () {},
@@ -79,12 +86,30 @@ class SettingsPage extends StatelessWidget {
                   image: AssetImage('$iconPath/about.png'),
                   height: size,
                   width: size,
+                  color: appBloc.isDarkMode ? Colors.white :  Colors.black,
                 ),
                 texto: 'About',
                 onTap: () {},
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    'Weeeyyyy noooo... Daark mooode',
+                    style: TextStyle(
+                      color: appBloc.isDarkMode ? Colors.white : Colors.black
+                    ),
+                  ),
+                  Switch(
+                    value: appBloc.isDarkMode,
+                    onChanged: (val) {
+                      appBloc.onThemeUpdated(val);
+                    },
+                  )
+                ],
+              ),
+              FractionallySizedBox(
+                widthFactor: 0.6,
                 child: Container(
                   margin: EdgeInsets.only( top: 25.0 ),
                   decoration: BoxDecoration(
@@ -95,7 +120,7 @@ class SettingsPage extends StatelessWidget {
                     onPressed: () async {
                       sharedPreferences = await SharedPreferences.getInstance();
                       sharedPreferences.remove("token");
-                      Navigator.pushNamed(
+                      Navigator.pushReplacementNamed(
                         context, 'login'
                       );
                     } ,

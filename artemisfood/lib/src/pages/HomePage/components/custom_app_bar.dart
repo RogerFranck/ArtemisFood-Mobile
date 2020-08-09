@@ -1,5 +1,7 @@
 import 'package:artemisfood/src/components/title_app_bar.dart';
+import 'package:artemisfood/src/providers/dark_mode.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CustomAppBar extends StatelessWidget {
   final Widget bottomBody;
@@ -10,11 +12,11 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-
+    final appBloc = Provider.of<AppBloc>(context, listen: false);
     return SliverAppBar(
       automaticallyImplyLeading: false,
       flexibleSpace: FlexibleSpaceBar(
-        title: Text('data'),
+        // title: Text('data'),
         background: Container(),
       ),
       pinned: true,
@@ -26,7 +28,7 @@ class CustomAppBar extends StatelessWidget {
           child: bottomBody,
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor:  appBloc.isDarkMode ? Colors.black : Colors.white,
       expandedHeight: 130.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(10.0),)
