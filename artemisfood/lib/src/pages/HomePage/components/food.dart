@@ -1,4 +1,4 @@
-import 'package:artemisfood/src/providers/dark_mode.dart';
+import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
 
@@ -56,12 +56,7 @@ class _ListViewFoodState extends State<ListViewFood> {
             ),
           );
         } else {
-          return Container(
-            margin: EdgeInsets.only(top: 20.0),
-            child: Center(
-              child: CircularProgressIndicator()
-            ),
-          );
+          return loadingCircular;
         }
       },
     );
@@ -87,7 +82,7 @@ class _SearchedFoodState extends State<SearchedFood> {
             height: 275.0 * appBloc.listadoBusqueda.length,
             child: ListView.builder(
               physics: NeverScrollableScrollPhysics(),
-              itemCount: appBloc.listadoBusqueda.length == null ? 0: appBloc.listadoBusqueda.length,
+              itemCount: appBloc.listadoBusqueda == null ? 0 : appBloc.listadoBusqueda.length,
               itemBuilder:  (_, index) {
                 return FoodItem(
                   imagen: appBloc.listadoBusqueda[index]["foto"],
@@ -98,12 +93,7 @@ class _SearchedFoodState extends State<SearchedFood> {
             ),
           );
         } else {
-          return Container(
-            margin: EdgeInsets.only(top: 20.0),
-            child: Center(
-              child: CircularProgressIndicator()
-            ),
-          );
+          return loadingCircular;
         }
       },
     );
@@ -126,7 +116,9 @@ class FoodItem extends StatelessWidget {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
     
     return GestureDetector(
-      onTap: (){},
+      onTap: (){
+        Navigator.pushNamed(context, 'Food');
+      },
       child: Padding(
         padding: EdgeInsets.only(bottom: 20),
         child: Container(

@@ -24,6 +24,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         body: SingleChildScrollView(
           child: Background(
@@ -106,5 +107,5 @@ signIn(String username, String password, BuildContext context) async {
   http.Response response = await http.post('$server/login', body: data);
   jsonResponse = json.decode(response.body);
   sharedPreferences.setString("token", jsonResponse['token']);
-  Navigator.pushReplacementNamed(context, 'Home');
+  Navigator.popAndPushNamed(context, 'Home');
 }

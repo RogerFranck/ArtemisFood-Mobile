@@ -24,9 +24,9 @@ class AppBloc extends ChangeNotifier {
   }
 
   Future requestSearch(String text) async {
-    final url = '$server/producto/find/$text';
-    final response = await http.get(url);
-    final data = jsonDecode(response.body);
+    String url = "$server/producto/find/$text";
+    http.Response response = await http.get(url);
+    dynamic data = jsonDecode(response.body);
     listadoBusqueda = data;
     notifyListeners();
     return data;

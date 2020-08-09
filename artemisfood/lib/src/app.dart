@@ -3,7 +3,7 @@ import 'package:artemisfood/src/pages/FoodPage/FoodPage.dart';
 import 'package:artemisfood/src/pages/HomePage/Homepage.dart';
 import 'package:artemisfood/src/pages/Login.dart';
 import 'package:artemisfood/src/pages/sign_up.dart';
-import 'package:artemisfood/src/providers/dark_mode.dart';
+import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';

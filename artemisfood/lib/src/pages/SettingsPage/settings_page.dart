@@ -1,5 +1,5 @@
 import 'package:artemisfood/src/pages/HomePage/components/custom_app_bar.dart';
-import 'package:artemisfood/src/providers/dark_mode.dart';
+import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

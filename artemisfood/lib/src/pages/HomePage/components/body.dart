@@ -1,7 +1,6 @@
-import 'dart:convert';
 import 'package:artemisfood/src/components/borde_separador.dart';
 import 'package:artemisfood/src/components/search_field.dart';
-import 'package:artemisfood/src/providers/dark_mode.dart';
+import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +56,9 @@ class BodyHome extends StatelessWidget {
               ),
               BordeSeparador(),
               appBloc.searchText.isEmpty ? ListViewFood() 
-                                         : appBloc.listadoBusqueda.length == null || appBloc.listadoBusqueda.length == 0 ? SinResultados() : SearchedFood(),
+                                         : appBloc.listadoBusqueda == null ? loadingCircular 
+                                         : appBloc.listadoBusqueda.length == 0 ? SinResultados() 
+                                         : SearchedFood(),
               // ListViewFood(),
             ],
           ),
@@ -86,7 +87,7 @@ class SinResultados extends StatelessWidget {
            ),
            SizedBox(height: 10.0,),
            Text(
-             'Si tan sólo tuviéramos ese \nproducto compa...',
+             'Si tan sólo tuviéramos ese \nproducto pana...',
              style: TextStyle(
                color: appBloc.isDarkMode ? Colors.white : Colors.black,
              ),
