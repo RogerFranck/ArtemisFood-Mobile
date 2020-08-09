@@ -50,8 +50,12 @@ productosCtrl.deleteProduct = async(req, res) => {
 
 
 productosCtrl.searchProducto = async(req, res) => {
-    const data = await productoModel.find( {"nombre": new RegExp( `${req.params.nombre}` , 'gi' ) } );
-    res.json( data )
+    const data1 = await productoModel.find( { "nombre": new RegExp( `^${req.params.nombre}`, 'i') } );
+    const data2 = await productoModel.find( {"nombre": new RegExp( `${req.params.nombre}` , 'gi' ) } );
+    const tamaño1 = data1.length;
+    const tamaño2 = data2.length;
+
+    res.json( data1 )
 }
 
 productosCtrl.categoryProducto = async(req, res) => {
