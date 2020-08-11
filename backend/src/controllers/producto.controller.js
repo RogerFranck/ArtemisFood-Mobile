@@ -49,13 +49,28 @@ productosCtrl.deleteProduct = async(req, res) => {
 };
 
 
+function Organizar(data1, data2){
+    var bandera = 0;
+    const data = data1;
+    for(let i = 0; data2.length > i; i++){
+        bandera = 0;
+        for (let j = 0; data1.length > j; j++){
+            if (data2[i].id == data1[j].id){
+                bandera = bandera + 1;
+            }
+        }
+        if (bandera == 0){
+            data.push(data2[i])
+        }
+    }
+    return data;
+};
+
 productosCtrl.searchProducto = async(req, res) => {
     const data1 = await productoModel.find( { "nombre": new RegExp( `^${req.params.nombre}`, 'i') } );
     const data2 = await productoModel.find( {"nombre": new RegExp( `${req.params.nombre}` , 'gi' ) } );
-    const tamaño1 = data1.length;
-    const tamaño2 = data2.length;
-
-    res.json( data1 )
+    const data = Organizar(data1, data2);
+    res.json( data )
 }
 
 productosCtrl.categoryProducto = async(req, res) => {
