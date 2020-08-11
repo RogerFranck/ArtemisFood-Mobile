@@ -1,4 +1,6 @@
+import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PriceFood extends StatelessWidget {
   const PriceFood({
@@ -7,6 +9,7 @@ class PriceFood extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appBloc = Provider.of<AppBloc>(context, listen: false);
     return Padding(
       padding: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0 ),
       //padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -16,7 +19,7 @@ class PriceFood extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 1.0,
           height: 60.0,
           decoration: BoxDecoration(
-            color: Colors.white
+             color: appBloc.isDarkMode ? Colors.white.withOpacity(0.85) : Colors.white
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
