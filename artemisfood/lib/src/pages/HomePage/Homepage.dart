@@ -1,5 +1,4 @@
 import 'package:artemisfood/src/pages/CartPage/cartPage.dart';
-import 'package:artemisfood/src/pages/CartPage/components/cartpage2.dart';
 import 'package:artemisfood/src/pages/SettingsPage/settings_page.dart';
 import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
@@ -89,7 +88,7 @@ class _HomePageState extends State<HomePage> {
   Widget _paginaActual(int paginaActual) {
     switch (paginaActual) {
       case 0: return BodyHome();
-      case 1: return CartPage2();
+      case 1: return CartPage();
       case 2: return SettingsPage();
         
       default:
