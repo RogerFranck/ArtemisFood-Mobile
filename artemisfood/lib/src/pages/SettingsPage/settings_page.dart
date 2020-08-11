@@ -1,4 +1,9 @@
+import 'package:artemisfood/src/pages/AboutPage/about_page.dart';
+import 'package:artemisfood/src/pages/AccountPage/account_page.dart';
+import 'package:artemisfood/src/pages/AppearancePage/appearance_page.dart';
+import 'package:artemisfood/src/pages/HelpSupportPage/help_support_page.dart';
 import 'package:artemisfood/src/pages/HomePage/components/custom_app_bar.dart';
+import 'package:artemisfood/src/pages/NotificationsPage/notifications_page.dart';
 import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +64,14 @@ class SettingsPage extends StatelessWidget {
                   color: appBloc.isDarkMode ? Colors.white :  Colors.black,
                 ),
                 texto: 'Account',
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context, 
+                    MaterialPageRoute(
+                      builder: (context) => AccountPage(),
+                    )
+                  );
+                },
               ),
               SettingListTile(
                 icon: Image(
@@ -69,7 +81,14 @@ class SettingsPage extends StatelessWidget {
                   color: appBloc.isDarkMode ? Colors.white :  Colors.black,
                 ),
                 texto: 'Notifications',
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context, 
+                    MaterialPageRoute(
+                      builder: (context) => NotificationsPage(),
+                    )
+                  );
+                },
               ),
               SettingListTile(
                 icon: Image(
@@ -79,7 +98,14 @@ class SettingsPage extends StatelessWidget {
                   color: appBloc.isDarkMode ? Colors.white :  Colors.black,
                 ),
                 texto: 'Help and Support',
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context, 
+                    MaterialPageRoute(
+                      builder: (context) => HelpSupportPage()
+                    )
+                  );
+                },
               ),
               SettingListTile(
                icon: Image(
@@ -89,29 +115,36 @@ class SettingsPage extends StatelessWidget {
                   color: appBloc.isDarkMode ? Colors.white :  Colors.black,
                 ),
                 texto: 'About',
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context, 
+                    MaterialPageRoute(
+                      builder: (context) => AboutPage()
+                    )
+                  );
+                },
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'Weeeyyyy noooo... Daark mooode',
-                    style: TextStyle(
-                      color: appBloc.isDarkMode ? Colors.white : Colors.black
-                    ),
-                  ),
-                  Switch(
-                    value: appBloc.isDarkMode,
-                    onChanged: (val) {
-                      appBloc.onThemeUpdated(val);
-                    },
-                  )
-                ],
+              SettingListTile(
+               icon: Image(
+                  image: AssetImage('$iconPath/visibility.png'),
+                  height: size,
+                  width: size,
+                  color: appBloc.isDarkMode ? Colors.white :  Colors.black,
+                ),
+                texto: 'Appearance',
+                onTap: () {
+                  Navigator.push(
+                    context, 
+                    MaterialPageRoute(
+                      builder: (context) => AppearancePage()
+                    )
+                  );
+                },
               ),
               FractionallySizedBox(
                 widthFactor: 0.6,
                 child: Container(
-                  margin: EdgeInsets.only( top: 25.0 ),
+                  margin: EdgeInsets.symmetric( vertical: 25.0 ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
                     color: Colors.red[900]

@@ -18,7 +18,7 @@ class BodyHome extends StatelessWidget {
       slivers: <Widget>[
         CustomAppBar(
           bottomBody: SearchField(
-            onChanged: appBloc.onChangedText,
+            onSubmitted: appBloc.onChangedText,
           ),
         ),
         SliverList(
