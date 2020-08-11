@@ -1,5 +1,7 @@
+import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Description extends StatelessWidget {
   const Description({
@@ -8,6 +10,7 @@ class Description extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appBloc = Provider.of<AppBloc>(context, listen: false);
     return Padding(
       //padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
       padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
@@ -16,7 +19,7 @@ class Description extends StatelessWidget {
         child: Container(
           width: MediaQuery.of(context).size.width * 1.0,
           height: 150.0,
-          decoration: BoxDecoration(color: Colors.white),
+          decoration: BoxDecoration(color: appBloc.isDarkMode ? Colors.white.withOpacity(0.85) : Colors.white),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Padding(

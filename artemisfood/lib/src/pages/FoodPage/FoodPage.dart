@@ -1,7 +1,9 @@
 import 'package:artemisfood/src/components/TextButton.dart';
 import 'package:artemisfood/src/pages/FoodPage/components/ButtonRoudend.dart';
+import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'components/Comentarios.dart';
 import 'components/Description.dart';
 import 'components/ImageFood.dart';
@@ -12,8 +14,10 @@ class FoodPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appBloc = Provider.of<AppBloc>(context, listen: false);
+    final _color =  appBloc.isDarkMode ? backgroundHomeDark : backgroundHome;
     return Scaffold(
-      backgroundColor: backgroundHome,
+      backgroundColor: _color,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -28,7 +32,9 @@ class FoodPage extends StatelessWidget {
               ),
               TextButton(
                 hintText: 'Seguir buscando',
-                onPress: () {},
+                onPress: () {
+                  Navigator.pop(context);
+                },
               )
             ],
           ),

@@ -1,3 +1,4 @@
+import 'package:artemisfood/src/components/RoundedButton.dart';
 import 'package:artemisfood/src/components/custom_bottom_body.dart';
 import 'package:artemisfood/src/pages/HomePage/components/custom_app_bar.dart';
 import 'package:artemisfood/src/providers/app_bloc.dart';
@@ -13,9 +14,36 @@ class AppearancePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
+    final _color =  appBloc.isDarkMode ? backgroundHomeDark : backgroundHome;
 
     return Scaffold(
-      backgroundColor: appBloc.isDarkMode ? backgroundHomeDark : backgroundHome,
+      backgroundColor: _color,
+      bottomSheet: DecoratedBox(
+        decoration: BoxDecoration(
+          color: _color,
+          border: Border(
+            top: BorderSide(
+              color: _color,
+              width: 0.0
+            ),
+          ),
+        ),
+        child: FractionallySizedBox(
+          widthFactor: 1,
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 20.0),
+            child: FractionallySizedBox(
+              widthFactor: 0.6,
+              child: RoundedButton(
+                hintText: 'Regresar', 
+                onPress: () {
+                  Navigator.pop(context);
+                }
+              ,),
+            ),
+          ),
+        ),
+      ),
       body: CustomScrollView(
         slivers: [
           CustomAppBar(
