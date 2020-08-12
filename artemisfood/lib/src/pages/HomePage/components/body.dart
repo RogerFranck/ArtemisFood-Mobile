@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:artemisfood/src/components/borde_separador.dart';
 import 'package:artemisfood/src/components/search_field.dart';
 import 'package:artemisfood/src/providers/app_bloc.dart';
@@ -8,8 +10,39 @@ import 'Category.dart';
 import 'custom_app_bar.dart';
 import 'food.dart';
 import 'listado_favoritos.dart';
+import 'package:http/http.dart' as http ;
 
-class BodyHome extends StatelessWidget {
+class BodyHome extends StatefulWidget {
+
+  @override
+  _BodyHomeState createState() => _BodyHomeState();
+}
+
+class _BodyHomeState extends State<BodyHome> {
+  List<dynamic> categoryData;
+  final List<String> category = ['All'];
+
+  @override
+  void initState() { 
+    super.initState();
+    getCategory();
+  }
+
+  void getCategory() async {
+    http.Response response = await http.get('$server/producto');
+    var data = jsonDecode(response.body);
+    categoryData = data["Producto"];
+    for (var i = 0; i < categoryData.length; i++) {
+      if (!category.contains(categoryData[i]["categoria"])) {
+        setState(() {
+          category.add(categoryData[i]["categoria"]);
+        });
+      } else {
+        continue;
+      }
+    }
+    print('Recibí categoría');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,17 +75,20 @@ class BodyHome extends StatelessWidget {
               SizedBox(
                 height: 10.0,
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: <Widget>[
-                    CategoryTitle(title: "All", active: true),
-                    CategoryTitle(title: "Italian"),
-                    CategoryTitle(title: "Asian"),
-                    CategoryTitle(title: "Chinese"),
-                    CategoryTitle(title: "Burgers"),
-                  ],
-                ),
+              // SingleChildScrollView(
+              //   scrollDirection: Axis.horizontal,
+              //   child: Row(
+              //     children: <Widget>[
+              //       CategoryTitle(title: "All", active: true),
+              //       CategoryTitle(title: "Italian"),
+              //       CategoryTitle(title: "Asian"),
+              //       CategoryTitle(title: "Chinese"),
+              //       CategoryTitle(title: "Burgers"),
+              //     ],
+              //   ),
+              // ),
+              CategoryTitle(
+                category: category,
               ),
               BordeSeparador(),
               appBloc.searchText.isEmpty ? ListViewFood() 

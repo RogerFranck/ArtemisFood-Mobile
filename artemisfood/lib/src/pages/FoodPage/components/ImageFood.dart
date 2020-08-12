@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ImageFood extends StatelessWidget {
+  final String imagen;
   const ImageFood({
-    Key key,
+    Key key, this.imagen,
   }) : super(key: key);
 
   @override
@@ -14,7 +15,7 @@ class ImageFood extends StatelessWidget {
         height: 250.0,
         child: Image(
           fit: BoxFit.cover,
-          image: NetworkImage('https://s2.best-wallpaper.net/wallpaper/2880x1800/1808/Hamburger-meat-French-fries-fast-food_2880x1800.jpg')
+          image: NetworkImage(imagen)
         ),
       ),
     );

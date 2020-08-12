@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PriceFood extends StatelessWidget {
+  final int precio;
   const PriceFood({
-    Key key,
+    Key key, this.precio,
   }) : super(key: key);
 
   @override
@@ -27,7 +28,7 @@ class PriceFood extends StatelessWidget {
               Icon(Icons.local_atm,size: 35.0,),
               SizedBox(width: 10.0),
               Text(
-                "100 MXN", 
+                "${precio.toDouble()} MXN", 
                 style: TextStyle(
                   fontSize: 25.0,
                 ),

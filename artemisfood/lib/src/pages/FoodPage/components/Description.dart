@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Description extends StatelessWidget {
+  final String nombre;
   const Description({
     Key key,
+    this.nombre,
   }) : super(key: key);
 
   @override
@@ -30,7 +32,7 @@ class Description extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        "Hambuerguesa",
+                        nombre,
                         style: TextStyle(
                             color: primaryColor,
                             fontWeight: FontWeight.bold,

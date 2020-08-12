@@ -71,14 +71,15 @@ class CartCard extends StatelessWidget {
                       child: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(
                       fontFamily: 'Avenir',
                       fontSize: 16,
-                      color: _color                   
+                      color: _color,
+                      fontWeight: FontWeight.w700                   
                       ),), 
                     ),
                     Text(description, softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontFamily: 'Avenir',
                       fontSize: 11,
-                      color: _colorSubtitle
+                      color: _colorSubtitle,
                     ),),     
                     ],
                   ),
@@ -98,6 +99,7 @@ class CartCard extends StatelessWidget {
                           fontFamily: 'Avenir',
                           color: appBloc.isDarkMode ? Colors.white : primaryColor,
                           fontSize: 14,
+                          fontWeight: FontWeight.w700
                         )
                       ),
                     ),

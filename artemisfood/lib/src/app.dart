@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 
 class App extends StatelessWidget {
   const App({Key key}) : super(key: key);
-
+ 
   @override
   Widget build(BuildContext context) {
     //Size size = MediaQuery.of(context).size;
@@ -30,7 +30,6 @@ class App extends StatelessWidget {
               fontFamily: 'Avenir',
             ),
             routes: {
-              //'Carga' :  (BuildContext context) => PantallaCarga(),
               'Auth' :  (BuildContext context) => Auth(),
               'login'   :     (BuildContext context) => Login(),
               'Sign_up'   :     (BuildContext context) => SignUp(),

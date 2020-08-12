@@ -16,15 +16,23 @@ class FoodPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
     final _color =  appBloc.isDarkMode ? backgroundHomeDark : backgroundHome;
+    final Map<String, dynamic> comida = ModalRoute.of(context).settings.arguments;
+    
     return Scaffold(
       backgroundColor: _color,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              ImageFood(),
-              Description(),
-              PriceFood(),
+              ImageFood(
+                imagen: comida["imagen"],
+              ),
+              Description(
+                nombre: comida["nombre"],
+              ),
+              PriceFood(
+                precio: comida["precio"],
+              ),
               Comentarios(),
               ButtonRoundend(
                 hintText: 'Añadir al carrito',

@@ -19,11 +19,11 @@ class TitleAppBar extends StatelessWidget {
           children: <Widget>[
             Text(
               'Artemis',
-              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: appBloc.isDarkMode ? Colors.white : Colors.black,),
+              style: TextStyle(fontSize: 20.0, color: appBloc.isDarkMode ? Colors.white : Colors.black,),
             ),
             Text(
               'Food',
-              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: primaryColor,),
+              style: TextStyle(fontSize: 20.0, color: primaryColor,),
             ),
           ],
         ),

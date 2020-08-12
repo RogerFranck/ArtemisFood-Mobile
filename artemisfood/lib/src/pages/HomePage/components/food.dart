@@ -114,10 +114,16 @@ class FoodItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
+    Map<String, dynamic> comida = {
+      "imagen" : imagen,
+      "nombre" : nombre,
+      "precio" : precio
+    };
+
     
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context, 'Food');
+        Navigator.pushNamed(context, 'Food', arguments: comida);
       },
       child: Padding(
         padding: EdgeInsets.only(bottom: 20),

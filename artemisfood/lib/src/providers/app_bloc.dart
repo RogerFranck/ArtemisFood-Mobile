@@ -9,6 +9,12 @@ class AppBloc extends ChangeNotifier {
   bool isDarkMode = false;
   String searchText = '';
   List<dynamic> listadoBusqueda;
+  String selected = 'All';
+
+  void onCategoryUpdated(List category, int index) {
+    selected = category[index];
+    notifyListeners();
+  }
 
   void onThemeUpdated(bool isDark) {
     isDarkMode = isDark;
@@ -17,9 +23,7 @@ class AppBloc extends ChangeNotifier {
 
   void onChangedText(String text) {
     searchText = text;
-    debouncer.run(() {
-      requestSearch(searchText);
-    });
+    requestSearch(text);
     notifyListeners();
   }
 
@@ -29,6 +33,9 @@ class AppBloc extends ChangeNotifier {
     dynamic data = jsonDecode(response.body);
     listadoBusqueda = data;
     notifyListeners();
+    // print('recibí info');
     return data;
   }
+
 }
+

@@ -77,6 +77,10 @@ flutter:
     - family: Avenir
       fonts:
         - asset: lib\assets\fonts\AvenirLTStd-Medium 600.otf
+        - asset: lib\assets\fonts\AvenirLTStd-Black.otf
+          weight: 700
+        - asset: lib\assets\fonts\AvenirLTStd-Book.otf
+          weight: 300
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
