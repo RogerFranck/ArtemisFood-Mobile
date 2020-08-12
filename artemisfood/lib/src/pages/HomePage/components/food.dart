@@ -1,17 +1,18 @@
+import 'package:artemisfood/src/model/producto.dart';
 import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
-
-import 'package:http/http.dart' as http ;
-
-import 'dart:convert';
-
 import 'package:provider/provider.dart';
 
 class ListViewFood extends StatefulWidget {
-  const ListViewFood({
+  
+  ListViewFood({
     Key key,
+    @required this.productos, @required this.getProducts,
   }) : super(key: key);
+
+  final List<Producto> productos;
+  final Future<List<Producto>> getProducts;
 
   @override
   _ListViewFoodState createState() => _ListViewFoodState();
@@ -19,39 +20,24 @@ class ListViewFood extends StatefulWidget {
 
 class _ListViewFoodState extends State<ListViewFood> {
 
-  Map data;
-  List productdata;
-
-  Future getProduct(Map data, List productData) async {
-    http.Response res = await http.get('$server/producto');
-    data = json.decode(res.body);
-    productdata = data["Producto"];
-    return productdata;
-  }
-
   @override
   void initState() {
     super.initState();
-    getProduct(data, productdata);
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getProduct(data, productdata),
+      future: widget.getProducts,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Container(
-            height: 275.0 * productdata.length,
+            height: 275.0 * widget.productos.length,
             child: ListView.builder(
               physics: NeverScrollableScrollPhysics(),
-              itemCount: productdata.length == null ? 0:productdata.length,
+              itemCount: widget.productos == null ? 0: widget.productos.length,
               itemBuilder:  (_, index) {
-                return FoodItem(
-                  imagen: productdata[index]["foto"],
-                  nombre: productdata[index]["nombre"],
-                  precio: productdata[index]["precio"],
-                );
+                return _foodItem(widget.productos[index].foto, widget.productos[index].nombre, widget.productos[index].descripcion, widget.productos[index].precio);
               }
             ),
           );
@@ -61,58 +47,8 @@ class _ListViewFoodState extends State<ListViewFood> {
       },
     );
   }
-}
 
-class SearchedFood extends StatefulWidget {
-  SearchedFood({Key key}) : super(key: key);
-
-  @override
-  _SearchedFoodState createState() => _SearchedFoodState();
-}
-
-class _SearchedFoodState extends State<SearchedFood> {
-  @override
-  Widget build(BuildContext context) {
-    final appBloc = Provider.of<AppBloc>(context, listen: false);
-    return FutureBuilder(
-      future: appBloc.requestSearch(appBloc.searchText),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Container(
-            height: 275.0 * appBloc.listadoBusqueda.length,
-            child: ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: appBloc.listadoBusqueda == null ? 0 : appBloc.listadoBusqueda.length,
-              itemBuilder:  (_, index) {
-                return FoodItem(
-                  imagen: appBloc.listadoBusqueda[index]["foto"],
-                  nombre: appBloc.listadoBusqueda[index]["nombre"],
-                  precio: appBloc.listadoBusqueda[index]["precio"],
-                );
-              }
-            ),
-          );
-        } else {
-          return loadingCircular;
-        }
-      },
-    );
-  }
-}
-
-class FoodItem extends StatelessWidget {
-  final String imagen;
-  final String nombre;
-  final int precio;
-  const FoodItem({
-    Key key, 
-    this.imagen, 
-    this.nombre, 
-    this.precio,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _foodItem(String imagen, String nombre, String descripcion, int precio) {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
     Map<String, dynamic> comida = {
       "imagen" : imagen,
@@ -120,7 +56,6 @@ class FoodItem extends StatelessWidget {
       "precio" : precio
     };
 
-    
     return GestureDetector(
       onTap: (){
         Navigator.pushNamed(context, 'Food', arguments: comida);
@@ -187,7 +122,7 @@ class FoodItem extends StatelessWidget {
                                 height: 3.0,
                               ),
                               Text(
-                                'Con pepinillos, salsa de tomate, vegetales, etc.',
+                                descripcion,
                                 style: TextStyle(
                                   color: appBloc.isDarkMode ? Colors.white.withOpacity(0.8) : Colors.grey,
                                   fontSize: 10.0
@@ -222,5 +157,60 @@ class FoodItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+}
+
+// class SearchedFood extends StatefulWidget {
+//   SearchedFood({Key key}) : super(key: key);
+
+//   @override
+//   _SearchedFoodState createState() => _SearchedFoodState();
+// }
+
+// class _SearchedFoodState extends State<SearchedFood> {
+//   @override
+//   Widget build(BuildContext context) {
+//     final appBloc = Provider.of<AppBloc>(context, listen: false);
+//     return FutureBuilder(
+//       future: appBloc.requestSearch(appBloc.searchText),
+//       builder: (context, snapshot) {
+//         if (snapshot.hasData) {
+//           return Container(
+//             height: 275.0 * appBloc.listadoBusqueda.length,
+//             child: ListView.builder(
+//               physics: NeverScrollableScrollPhysics(),
+//               itemCount: appBloc.listadoBusqueda == null ? 0 : appBloc.listadoBusqueda.length,
+//               itemBuilder:  (_, index) {
+//                 return FoodItem(
+//                   imagen: appBloc.listadoBusqueda[index]["foto"],
+//                   nombre: appBloc.listadoBusqueda[index]["nombre"],
+//                   precio: appBloc.listadoBusqueda[index]["precio"],
+//                 );
+//               }
+//             ),
+//           );
+//         } else {
+//           return loadingCircular;
+//         }
+//       },
+//     );
+//   }
+// }
+
+class FoodItem extends StatelessWidget {
+  final String imagen;
+  final String nombre;
+  final int precio;
+  const FoodItem({
+    Key key, 
+    this.imagen, 
+    this.nombre, 
+    this.precio,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    
   }
 }

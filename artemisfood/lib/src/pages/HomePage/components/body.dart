@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:artemisfood/src/components/borde_separador.dart';
 import 'package:artemisfood/src/components/search_field.dart';
+import 'package:artemisfood/src/model/producto.dart';
 import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
@@ -21,11 +22,24 @@ class BodyHome extends StatefulWidget {
 class _BodyHomeState extends State<BodyHome> {
   List<dynamic> categoryData;
   final List<String> category = ['All'];
+  List<Producto> _productos = List<Producto>();
+  List<Producto> _productosMostrados = List<Producto>();
 
-  @override
-  void initState() { 
-    super.initState();
-    getCategory();
+  Future<List<Producto>> getProducts() async {
+    var url = '$server/producto';
+    var response = await http.get(url);
+
+    var productos = List<Producto>();
+
+    if (response.statusCode == 200) {
+      var productsJson = jsonDecode(response.body);
+      for (var i in productsJson["Producto"]) {
+        productos.add(Producto.fromJson(i));
+      }
+
+    }
+
+    return productos;
   }
 
   void getCategory() async {
@@ -45,13 +59,35 @@ class _BodyHomeState extends State<BodyHome> {
   }
 
   @override
+  void initState() { 
+    super.initState();
+    getCategory();
+    getProducts().then((value) {
+      setState(() {
+        _productos.addAll(value);
+        _productosMostrados = _productos;
+        print('recibí los productos');
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
     return CustomScrollView(
       slivers: <Widget>[
         CustomAppBar(
           bottomBody: SearchField(
-            onSubmitted: appBloc.onChangedText,
+            onChanged: (val) {
+              val = val.toLowerCase();
+              setState(() {
+                _productosMostrados = _productos.where((producto) {
+                  var productoNombre = producto.nombre.toLowerCase();
+                  return productoNombre.contains(val);
+                }).toList();
+                print(_productosMostrados);
+              });
+            },
           ),
         ),
         SliverList(
@@ -91,11 +127,14 @@ class _BodyHomeState extends State<BodyHome> {
                 category: category,
               ),
               BordeSeparador(),
-              appBloc.searchText.isEmpty ? ListViewFood() 
-                                         : appBloc.listadoBusqueda == null ? loadingCircular 
-                                         : appBloc.listadoBusqueda.length == 0 ? SinResultados() 
-                                         : SearchedFood(),
-              // ListViewFood(),
+              // appBloc.searchText.isEmpty ? ListViewFood() 
+              //                            : appBloc.listadoBusqueda == null ? loadingCircular 
+              //                            : appBloc.listadoBusqueda.length == 0 ? SinResultados() 
+              //                            : SearchedFood(),
+              _productosMostrados.length == 0 ? SinResultados() : ListViewFood(
+                                                                    productos: _productosMostrados,
+                                                                    getProducts: getProducts(),
+                                                                  ),
             ],
           ),
         ),

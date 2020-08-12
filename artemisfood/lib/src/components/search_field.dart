@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SearchField extends StatelessWidget {
-  final ValueChanged<String> onSubmitted;
+  final ValueChanged<String> onChanged;
   const SearchField({
     Key key,
-    this.onSubmitted
+    this.onChanged
   }) : super(key: key);
 
 
@@ -31,7 +31,7 @@ class SearchField extends StatelessWidget {
               ),
               border: InputBorder.none
             ),
-            onSubmitted: onSubmitted,
+            onChanged: onChanged,
           ),
         ),
       ),
