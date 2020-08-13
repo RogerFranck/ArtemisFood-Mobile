@@ -12,7 +12,6 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
-    double size = 20.0;
     final Orientation orientation = MediaQuery.of(context).orientation;
     
     return Scaffold(

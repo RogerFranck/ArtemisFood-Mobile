@@ -8,11 +8,8 @@ class ListViewFood extends StatefulWidget {
   
   ListViewFood({
     Key key,
-    @required this.productos, @required this.getProducts,
   }) : super(key: key);
 
-  final List<Producto> productos;
-  final Future<List<Producto>> getProducts;
 
   @override
   _ListViewFoodState createState() => _ListViewFoodState();
@@ -27,38 +24,25 @@ class _ListViewFoodState extends State<ListViewFood> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: widget.getProducts,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Container(
-            height: 275.0 * widget.productos.length,
-            child: ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: widget.productos == null ? 0: widget.productos.length,
-              itemBuilder:  (_, index) {
-                return _foodItem(widget.productos[index].foto, widget.productos[index].nombre, widget.productos[index].descripcion, widget.productos[index].precio);
-              }
-            ),
-          );
-        } else {
-          return loadingCircular;
+    final appBloc = Provider.of<AppBloc>(context, listen: false);
+    return Container(
+      height: 275.0 * appBloc.productosMostrados.length,
+      child: ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: appBloc.productosMostrados == null ? 0: appBloc.productosMostrados.length,
+        itemBuilder:  (_, index) {
+          return _foodItem(appBloc.productosMostrados[index]);
         }
-      },
+      ),
     );
   }
 
-  Widget _foodItem(String imagen, String nombre, String descripcion, int precio) {
+  Widget _foodItem(Producto producto) {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
-    Map<String, dynamic> comida = {
-      "imagen" : imagen,
-      "nombre" : nombre,
-      "precio" : precio
-    };
 
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context, 'Food', arguments: comida);
+        Navigator.pushNamed(context, 'Food', arguments: producto);
       },
       child: Padding(
         padding: EdgeInsets.only(bottom: 20),
@@ -87,8 +71,9 @@ class _ListViewFoodState extends State<ListViewFood> {
                       borderRadius: BorderRadius.vertical(top: Radius.circular(20.0),),
                       child: Container(
                         height: 175.0,
-                        child: Image( 
-                          image: NetworkImage(imagen),
+                        child: FadeInImage( 
+                          image: NetworkImage(producto.foto),
+                          placeholder: NetworkImage('https://media1.tenor.com/images/c7cce308690c435002dfedee6889d135/tenor.gif?itemid=15742167'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -109,7 +94,7 @@ class _ListViewFoodState extends State<ListViewFood> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                nombre,
+                                producto.nombre,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18.0,
@@ -122,7 +107,7 @@ class _ListViewFoodState extends State<ListViewFood> {
                                 height: 3.0,
                               ),
                               Text(
-                                descripcion,
+                                producto.descripcion,
                                 style: TextStyle(
                                   color: appBloc.isDarkMode ? Colors.white.withOpacity(0.8) : Colors.grey,
                                   fontSize: 10.0
@@ -138,7 +123,7 @@ class _ListViewFoodState extends State<ListViewFood> {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              '\$$precio',
+                              '\$${producto.precio.toDouble()}',
                               style: TextStyle(
                                 color: appBloc.isDarkMode ? Colors.white : primaryColor,
                                 fontSize: 18.0,
@@ -197,20 +182,3 @@ class _ListViewFoodState extends State<ListViewFood> {
 //     );
 //   }
 // }
-
-class FoodItem extends StatelessWidget {
-  final String imagen;
-  final String nombre;
-  final int precio;
-  const FoodItem({
-    Key key, 
-    this.imagen, 
-    this.nombre, 
-    this.precio,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    
-  }
-}

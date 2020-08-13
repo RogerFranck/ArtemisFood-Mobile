@@ -1,5 +1,3 @@
-import 'package:http/http.dart' as http;
-
 class Producto {
   int cantidad;
   String id;

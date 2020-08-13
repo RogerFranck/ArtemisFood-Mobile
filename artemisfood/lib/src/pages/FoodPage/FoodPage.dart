@@ -1,4 +1,5 @@
 import 'package:artemisfood/src/components/TextButton.dart';
+import 'package:artemisfood/src/model/producto.dart';
 import 'package:artemisfood/src/pages/FoodPage/components/ButtonRoudend.dart';
 import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
@@ -16,7 +17,7 @@ class FoodPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
     final _color =  appBloc.isDarkMode ? backgroundHomeDark : backgroundHome;
-    final Map<String, dynamic> comida = ModalRoute.of(context).settings.arguments;
+    final Producto producto = ModalRoute.of(context).settings.arguments;
     
     return Scaffold(
       backgroundColor: _color,
@@ -25,13 +26,13 @@ class FoodPage extends StatelessWidget {
           child: Column(
             children: <Widget>[
               ImageFood(
-                imagen: comida["imagen"],
+                imagen: producto.foto,
               ),
               Description(
-                nombre: comida["nombre"],
+                nombre: producto.nombre,
               ),
               PriceFood(
-                precio: comida["precio"],
+                precio: producto.precio,
               ),
               Comentarios(),
               ButtonRoundend(

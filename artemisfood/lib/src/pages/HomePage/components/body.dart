@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:artemisfood/src/components/borde_separador.dart';
 import 'package:artemisfood/src/components/search_field.dart';
-import 'package:artemisfood/src/model/producto.dart';
 import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +8,6 @@ import 'Category.dart';
 import 'custom_app_bar.dart';
 import 'food.dart';
 import 'listado_favoritos.dart';
-import 'package:http/http.dart' as http ;
 
 class BodyHome extends StatefulWidget {
 
@@ -21,54 +17,72 @@ class BodyHome extends StatefulWidget {
 
 class _BodyHomeState extends State<BodyHome> {
   List<dynamic> categoryData;
-  final List<String> category = ['All'];
-  List<Producto> _productos = List<Producto>();
-  List<Producto> _productosMostrados = List<Producto>();
 
-  Future<List<Producto>> getProducts() async {
-    var url = '$server/producto';
-    var response = await http.get(url);
+  // Future<List<Producto>> getProducts() async {
+  //   var url = '$server/producto';
+  //   var response = await http.get(url);
 
-    var productos = List<Producto>();
+  //   var productos = List<Producto>();
 
-    if (response.statusCode == 200) {
-      var productsJson = jsonDecode(response.body);
-      for (var i in productsJson["Producto"]) {
-        productos.add(Producto.fromJson(i));
-      }
+  //   if (response.statusCode == 200) {
+  //     var productsJson = jsonDecode(response.body);
+  //     for (var i in productsJson["Producto"]) {
+  //       productos.add(Producto.fromJson(i));
+  //     }
 
-    }
+  //   }
 
-    return productos;
-  }
+  //   return productos;
+  // }
 
-  void getCategory() async {
-    http.Response response = await http.get('$server/producto');
-    var data = jsonDecode(response.body);
-    categoryData = data["Producto"];
-    for (var i = 0; i < categoryData.length; i++) {
-      if (!category.contains(categoryData[i]["categoria"])) {
-        setState(() {
-          category.add(categoryData[i]["categoria"]);
-        });
-      } else {
-        continue;
-      }
-    }
-    print('Recibí categoría');
-  }
+  // void getAllCategories() async {
+  //   http.Response response = await http.get('$server/categoria');
+  //   var data = jsonDecode(response.body);
+  //   categoryData = data;
+  //   for (var i = 0; i < categoryData.length; i++) {
+  //     setState(() {
+  //         category.add(categoryData[i]["categoria"]);
+  //     });
+  //   }
+  //   print('Recibí categoría');
+  // }
+
+  // Future<List<Producto>> getProductsPerCategory(String categoriaSeleccionada) async {
+  //   var productos = List<Producto>();
+
+  //   if (categoriaSeleccionada == 'All') {
+  //     getProducts().then((value) {
+  //       setState(() {
+  //         productos.addAll(value);
+  //         print('recibí los productos');
+  //       });
+  //     });
+      
+  //     return productos;
+  //   }
+
+  //   var url = '$server/producto/categoria/$categoriaSeleccionada';
+  //   var response = await http.get(url);
+
+  //   if (response.statusCode == 200) {
+  //     var productsJson = jsonDecode(response.body);
+  //     for (var i in productsJson) {
+  //       productos.add(Producto.fromJson(i));
+  //     }
+
+  //   }
+
+  //   return productos;
+
+  // }
 
   @override
   void initState() { 
     super.initState();
-    getCategory();
-    getProducts().then((value) {
-      setState(() {
-        _productos.addAll(value);
-        _productosMostrados = _productos;
-        print('recibí los productos');
-      });
-    });
+    Provider.of<AppBloc>(context, listen: false).getAllCategories();
+    if (Provider.of<AppBloc>(context, listen: false).productosMostrados == null) {
+      Provider.of<AppBloc>(context, listen: false).getProducts();
+    }
   }
 
   @override
@@ -80,13 +94,7 @@ class _BodyHomeState extends State<BodyHome> {
           bottomBody: SearchField(
             onChanged: (val) {
               val = val.toLowerCase();
-              setState(() {
-                _productosMostrados = _productos.where((producto) {
-                  var productoNombre = producto.nombre.toLowerCase();
-                  return productoNombre.contains(val);
-                }).toList();
-                print(_productosMostrados);
-              });
+              appBloc.onChanged(val);
             },
           ),
         ),
@@ -123,18 +131,13 @@ class _BodyHomeState extends State<BodyHome> {
               //     ],
               //   ),
               // ),
-              CategoryTitle(
-                category: category,
-              ),
+              CategoryTitle(),
               BordeSeparador(),
               // appBloc.searchText.isEmpty ? ListViewFood() 
               //                            : appBloc.listadoBusqueda == null ? loadingCircular 
               //                            : appBloc.listadoBusqueda.length == 0 ? SinResultados() 
               //                            : SearchedFood(),
-              _productosMostrados.length == 0 ? SinResultados() : ListViewFood(
-                                                                    productos: _productosMostrados,
-                                                                    getProducts: getProducts(),
-                                                                  ),
+              appBloc.productosMostrados == null ? loadingCircular : appBloc.productosMostrados.length == 0 ? SinResultados() : ListViewFood(),
             ],
           ),
         ),
