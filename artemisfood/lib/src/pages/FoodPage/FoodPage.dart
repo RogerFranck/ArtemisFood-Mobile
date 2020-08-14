@@ -10,14 +10,20 @@ import 'components/Description.dart';
 import 'components/ImageFood.dart';
 import 'components/PriceFood.dart';
 
-class FoodPage extends StatelessWidget {
+class FoodPage extends StatefulWidget {
   const FoodPage({Key key}) : super(key: key);
 
+  @override
+  _FoodPageState createState() => _FoodPageState();
+}
+
+class _FoodPageState extends State<FoodPage> {
   @override
   Widget build(BuildContext context) {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
     final _color =  appBloc.isDarkMode ? backgroundHomeDark : backgroundHome;
     final Producto producto = ModalRoute.of(context).settings.arguments;
+    
     
     return Scaffold(
       backgroundColor: _color,
@@ -27,6 +33,7 @@ class FoodPage extends StatelessWidget {
             children: <Widget>[
               ImageFood(
                 imagen: producto.foto,
+                hero:'food_item${producto.id}',
               ),
               Description(
                 nombre: producto.nombre,
@@ -37,7 +44,91 @@ class FoodPage extends StatelessWidget {
               Comentarios(),
               ButtonRoundend(
                 hintText: 'Añadir al carrito',
-                onPress: () {},
+                onPress: () {
+                  return showDialog(
+                    context: context,
+                    barrierColor: Colors.black.withOpacity(0.5),
+                    builder: (_) {
+                      int _elementoSeleccionado = 1;
+                      return Dialog(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                        child: Container(
+                          height: 300.0,
+                          child: SingleChildScrollView(
+                            child: Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: Column(
+                                children: [
+                                  FractionallySizedBox(
+                                    widthFactor: .5,
+                                    child: Image(
+                                      image: AssetImage('$imgPath/space_dinosaur.png')
+                                    ),
+                                  ),
+                                  Text(
+                                    producto.nombre,
+                                    style: TextStyle(color: primaryColor, fontSize: 20.0, fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(height: 10.0),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text('Cantidad deseada', style: TextStyle(fontSize: 16.0),),
+                                      DropdownButton(
+                                        value: _elementoSeleccionado,
+                                        onChanged: (val) {
+                                          setState(() {
+                                            _elementoSeleccionado = val;
+                                          });
+                                          print(_elementoSeleccionado);
+                                        },
+                                        items: [
+                                          _customDropdown('1', 1),
+                                          _customDropdown('2', 2),
+                                          _customDropdown('3', 3),
+                                          _customDropdown('4', 4),
+                                          _customDropdown('5', 5),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10.0,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text('Costo', style: TextStyle(fontSize: 16.0),),
+                                      Text('\$${(producto.precio * _elementoSeleccionado).toDouble()}', style: TextStyle(fontSize: 16.0, color: primaryColor, fontWeight: FontWeight.bold),)
+                                    ],
+                                  ),
+                                   SizedBox(height: 10.0,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      FlatButton(
+                                        onPressed: () {
+                                          appBloc.pushToCart(producto);
+                                          Navigator.pop(context);
+                                        }, 
+                                        child: Text('Aceptar', style: TextStyle(color: Colors.green[400]),),
+                                      ),
+                                      FlatButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        }, 
+                                        child: Text('Cancelar', style: TextStyle(color: Colors.red[400]),),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  );
+                  // print(appBloc.carrito);
+                },
               ),
               TextButton(
                 hintText: 'Seguir buscando',
@@ -49,6 +140,15 @@ class FoodPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  DropdownMenuItem _customDropdown(String text, int value) {
+    
+    return DropdownMenuItem(
+      child: Text(text),
+      value: value,
+      onTap: () {},
     );
   }
 }

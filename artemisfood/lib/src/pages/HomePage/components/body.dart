@@ -79,7 +79,9 @@ class _BodyHomeState extends State<BodyHome> {
   @override
   void initState() { 
     super.initState();
-    Provider.of<AppBloc>(context, listen: false).getAllCategories();
+    if (Provider.of<AppBloc>(context, listen: false).category.length == 1) {
+      Provider.of<AppBloc>(context, listen: false).getAllCategories();
+    }
     if (Provider.of<AppBloc>(context, listen: false).productosMostrados == null) {
       Provider.of<AppBloc>(context, listen: false).getProducts();
     }

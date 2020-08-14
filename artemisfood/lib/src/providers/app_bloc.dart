@@ -12,6 +12,7 @@ class AppBloc extends ChangeNotifier {
   List<dynamic> listadoBusqueda;
   List<Producto> productosActual;
   List<Producto> productosMostrados;
+  List<Producto> carrito = [];
   String selected = 'All';
   List<String> category = ['All'];
   List<dynamic> categoryData;
@@ -100,6 +101,11 @@ class AppBloc extends ChangeNotifier {
   void onChangedText(String text) {
     searchText = text;
     requestSearch(text);
+    notifyListeners();
+  }
+
+  void pushToCart(Producto producto) {
+    carrito.add(producto);
     notifyListeners();
   }
 

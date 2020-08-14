@@ -71,10 +71,13 @@ class _ListViewFoodState extends State<ListViewFood> {
                       borderRadius: BorderRadius.vertical(top: Radius.circular(20.0),),
                       child: Container(
                         height: 175.0,
-                        child: FadeInImage( 
-                          image: NetworkImage(producto.foto),
-                          placeholder: NetworkImage('https://media1.tenor.com/images/c7cce308690c435002dfedee6889d135/tenor.gif?itemid=15742167'),
-                          fit: BoxFit.cover,
+                        child: Hero(
+                          tag: 'food_item${producto.id}',
+                          child: FadeInImage( 
+                            image: NetworkImage(producto.foto),
+                            placeholder: NetworkImage('https://media1.tenor.com/images/c7cce308690c435002dfedee6889d135/tenor.gif?itemid=15742167'),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),

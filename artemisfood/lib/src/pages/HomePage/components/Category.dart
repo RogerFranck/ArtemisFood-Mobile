@@ -2,12 +2,9 @@ import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:artemisfood/src/model/producto.dart';
 
 class CategoryTitle extends StatefulWidget {
-  List<Producto> productos;
-  List<Producto> productosMostrados;
-  CategoryTitle({Key key, this.productosMostrados, this.productos}) : super(key: key);
+  CategoryTitle({Key key}) : super(key: key);
 
   @override
   _CategoryTitleState createState() => _CategoryTitleState();
