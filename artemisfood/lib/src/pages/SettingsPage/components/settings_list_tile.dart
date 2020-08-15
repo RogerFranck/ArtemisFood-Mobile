@@ -28,7 +28,6 @@ class SettingListTile extends StatelessWidget {
               texto,
               style: TextStyle(
                 color: appBloc.isDarkMode ? Colors.white : primaryColor,
-                fontWeight: FontWeight.w400,
                 fontSize: 20.0
               ),
             ),

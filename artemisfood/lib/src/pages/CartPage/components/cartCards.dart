@@ -38,7 +38,7 @@ class CartCard extends StatelessWidget {
               color: Colors.transparent,
               border: Border(
                 bottom: BorderSide(
-                  width: .5,
+                  width: .2,
                   color: primaryColor
                 ),
               ),
@@ -64,7 +64,7 @@ class CartCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Flexible(
+              Expanded(
                 flex: 4,
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -74,25 +74,34 @@ class CartCard extends StatelessWidget {
                     children: [
                     Container(
                       alignment: Alignment.centerLeft,
-                      child: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(
-                      fontFamily: 'Avenir',
-                      fontSize: 16,
-                      color: _color,
-                      fontWeight: FontWeight.w700                   
-                      ),), 
+                      child: Text(
+                        title, maxLines: 1, 
+                        overflow: TextOverflow.ellipsis, 
+                        style: TextStyle(
+                          fontFamily: 'Avenir',
+                          fontSize: 16,
+                          color: _color,
+                          fontWeight: FontWeight.w700                   
+                        ),
+                      ), 
                     ),
-                    Text(description, softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontFamily: 'Avenir',
-                      fontSize: 11,
-                      color: _colorSubtitle,
-                    ),),     
+                    Text(
+                      description, 
+                      softWrap: true, 
+                      maxLines: 2, 
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontFamily: 'Avenir',
+                          fontSize: 11,
+                          color: _colorSubtitle,
+                        ),
+                      ),     
                     ],
                   ),
                 ),
               ),
               Flexible(
-                flex: 2,
+                flex: 3,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,

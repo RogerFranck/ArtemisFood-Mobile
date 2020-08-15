@@ -7,6 +7,7 @@ import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatelessWidget {
@@ -17,6 +18,7 @@ class App extends StatelessWidget {
     //Size size = MediaQuery.of(context).size;
     FlutterStatusbarcolor.setStatusBarColor(Colors.black);
     FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
+    
     return ChangeNotifierProvider(
       create: (_) => AppBloc(),
       child: Consumer<AppBloc>(
@@ -27,7 +29,8 @@ class App extends StatelessWidget {
             theme: ThemeData(
               primaryColor: primaryColor,
               scaffoldBackgroundColor: Provider.of<AppBloc>(context).isDarkMode ? backgroundHomeDark : backgroundHome,
-              fontFamily: 'Avenir',
+              textTheme: GoogleFonts.montserratTextTheme(),
+              // fontFamily: 'Avenir',
             ),
             routes: {
               'Auth' :  (BuildContext context) => Auth(),

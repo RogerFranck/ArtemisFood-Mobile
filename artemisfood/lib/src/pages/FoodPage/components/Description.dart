@@ -4,15 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Description extends StatelessWidget {
+  final String descripcion;
   final String nombre;
   const Description({
     Key key,
-    this.nombre,
+    this.nombre, this.descripcion,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
+    
     return Padding(
       //padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
       padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
@@ -26,27 +28,31 @@ class Description extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        nombre,
-                        style: TextStyle(
-                            color: primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
-                            fontFamily: "Avenir"),
-                      ),
-                      Icon(Icons.star_border)
-                    ],
-                  ),
-                  SizedBox(height: 12.0),
-                  Text(
-          "Lorem Ipsum is simply dummy text of the printing and typesettingtly with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-                  ),
-                ],
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          nombre,
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
+                              fontFamily: "Avenir"),
+                        ),
+                        Icon(Icons.star_border)
+                      ],
+                    ),
+                    SizedBox(height: 12.0),
+                    Text(
+                     descripcion
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

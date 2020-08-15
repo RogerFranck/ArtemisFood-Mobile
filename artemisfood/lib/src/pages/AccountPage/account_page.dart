@@ -34,12 +34,12 @@ class AccountPage extends StatelessWidget {
                         icon: '$iconPath/receipt.png',
                         onTap: () {},
                       ),
+                      SizedBox(height: 20.0),
                       AccountCard(
                         img: '$imgPath/comida.jpg',
                         title: 'Tus Favoritos',
                         icon: '$iconPath/love_bubble.png',
                         onTap: () {},
-                        margin: false,
                       ),
                       FractionallySizedBox(
                         widthFactor: orientation == Orientation.portrait ? 0.6 : 0.4,
@@ -67,9 +67,8 @@ class AccountCard extends StatelessWidget {
   final String title;
   final String img;
   final Function onTap;
-  final bool margin;
   const AccountCard({
-    Key key, this.icon, this.title, this.img, this.onTap, this.margin = true,
+    Key key, this.icon, this.title, this.img, this.onTap
   }) : super(key: key);
 
 
@@ -81,10 +80,11 @@ class AccountCard extends StatelessWidget {
 
     return FractionallySizedBox(
       widthFactor: orientation == Orientation.portrait ? 0.9 : 0.75,
-      child: GestureDetector(
+      child: InkWell(
         onTap: onTap,
+        borderRadius: BorderRadius.circular(20.0),
+        splashColor: Theme.of(context).primaryColor,
         child: Container(
-          margin: margin ? EdgeInsets.only(bottom: 20.0) : null,
           height: 250.0,
           decoration: BoxDecoration(
             border: appBloc.isDarkMode ? null : Border.all(width: .1),
