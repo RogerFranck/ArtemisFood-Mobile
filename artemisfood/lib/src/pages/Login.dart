@@ -26,6 +26,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Background(
             child: Container(

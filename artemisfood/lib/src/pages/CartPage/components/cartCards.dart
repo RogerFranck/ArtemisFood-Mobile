@@ -64,6 +64,7 @@ class CartCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Column(   
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,               
                     children: [
                     Container(
@@ -226,7 +227,7 @@ class CartCard2 extends StatelessWidget {
                       ),
                       Container(
                         padding: EdgeInsets.fromLTRB(15, 8, 8,8),
-                        child: Text('\$$price MXN', 
+                        child: Text('\$${price.toDouble()} MXN', 
                         style: TextStyle(
                           fontFamily: 'Avenir',
                           color: Colors.grey[600],
@@ -243,12 +244,13 @@ class CartCard2 extends StatelessWidget {
                     children: [
                       Container(
                         width: 160,
+                        color: Colors.green,
                         padding: EdgeInsets.fromLTRB(4, 0, 0,0),
                         //padding: EdgeInsets.all(2),
                         child: Text(description, softWrap: true, maxLines: 3, overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontFamily: 'Avenir',
-                            fontSize: 14,                            
+                            fontSize: 16,                            
                             color: Colors.grey[500]
                           ),
                         ), 

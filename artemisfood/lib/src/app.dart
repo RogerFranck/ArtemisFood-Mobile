@@ -26,7 +26,7 @@ class App extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               primaryColor: primaryColor,
-              scaffoldBackgroundColor: Colors.white,
+              scaffoldBackgroundColor: Provider.of<AppBloc>(context).isDarkMode ? backgroundHomeDark : backgroundHome,
               fontFamily: 'Avenir',
             ),
             routes: {

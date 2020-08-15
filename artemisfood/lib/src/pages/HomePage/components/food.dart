@@ -26,8 +26,9 @@ class _ListViewFoodState extends State<ListViewFood> {
   Widget build(BuildContext context) {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
     return Container(
-      height: 275.0 * appBloc.productosMostrados.length,
+      height: 273.0 * appBloc.productosMostrados.length,
       child: ListView.builder(
+        padding: EdgeInsets.only(top: 20, bottom: 0),
         physics: NeverScrollableScrollPhysics(),
         itemCount: appBloc.productosMostrados == null ? 0: appBloc.productosMostrados.length,
         itemBuilder:  (_, index) {
