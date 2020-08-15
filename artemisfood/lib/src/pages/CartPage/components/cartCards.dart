@@ -33,10 +33,15 @@ class CartCard extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(8),
         child: Container(
-          height: 100,
+          height: 120,
           decoration: BoxDecoration(
               color: Colors.transparent,
-              borderRadius: BorderRadius.circular(20.0),
+              border: Border(
+                bottom: BorderSide(
+                  width: .5,
+                  color: primaryColor
+                ),
+              ),
               // boxShadow: <BoxShadow>[
               //   BoxShadow(
               //       color: Colors.black26,
