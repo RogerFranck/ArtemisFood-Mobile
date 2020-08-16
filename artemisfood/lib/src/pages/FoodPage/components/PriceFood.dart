@@ -1,3 +1,4 @@
+import 'package:artemisfood/src/animations/shake_transition.dart';
 import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,18 +23,21 @@ class PriceFood extends StatelessWidget {
           decoration: BoxDecoration(
              color: appBloc.isDarkMode ? Colors.white.withOpacity(0.85) : Colors.white
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(Icons.local_atm,size: 35.0,),
-              SizedBox(width: 10.0),
-              Text(
-                "${precio.toDouble()} MXN", 
-                style: TextStyle(
-                  fontSize: 25.0,
-                ),
-              )
-            ],
+          child: ShakeTransition(
+            axis: Axis.vertical,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.local_atm,size: 35.0,),
+                SizedBox(width: 10.0),
+                Text(
+                  "${precio.toDouble()} MXN", 
+                  style: TextStyle(
+                    fontSize: 25.0,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
         ),

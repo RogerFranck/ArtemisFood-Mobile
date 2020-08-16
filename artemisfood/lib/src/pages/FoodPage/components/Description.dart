@@ -1,3 +1,4 @@
+import 'package:artemisfood/src/animations/shake_transition.dart';
 import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
@@ -30,28 +31,31 @@ class Description extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          nombre,
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.0,
-                              fontFamily: "Avenir"),
-                        ),
-                        Icon(Icons.star_border)
-                      ],
-                    ),
-                    SizedBox(height: 12.0),
-                    Text(
-                     descripcion
-                    ),
-                  ],
+                child: ShakeTransition(
+                  axis: Axis.vertical,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            nombre,
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0,
+                                fontFamily: "Avenir"),
+                          ),
+                          Icon(Icons.star_border)
+                        ],
+                      ),
+                      SizedBox(height: 12.0),
+                      Text(
+                       descripcion
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

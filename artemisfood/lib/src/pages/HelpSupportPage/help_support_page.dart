@@ -6,6 +6,7 @@ import 'package:artemisfood/src/pages/HomePage/components/custom_app_bar.dart';
 import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class HelpSupportPage extends StatelessWidget {
@@ -16,6 +17,7 @@ class HelpSupportPage extends StatelessWidget {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
     final _separador = SizedBox(height: 20.0,);
     final Orientation orientation = MediaQuery.of(context).orientation; //landscape, portrait
+    final _color = appBloc.isDarkMode ? Colors.white : Colors.black;
     
     return Scaffold(
       backgroundColor: appBloc.isDarkMode? backgroundHomeDark : backgroundHome,
@@ -46,33 +48,33 @@ class HelpSupportPage extends StatelessWidget {
                           'Estamos comprometidos a escuchar tus opiniones sobre la aplicación de ArtemisFood Mobile',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: appBloc.isDarkMode ? Colors.white : Colors.black,
+                            color: _color,
                             fontSize: 16.0
                           ),
                         ),
                       ),
                       _separador,
-                      // RichText(
-                      //   textAlign: TextAlign.center,
-                      //   text: TextSpan(
-                      //     children: <TextSpan>[
-                      //       TextSpan(
-                      //         text: 'Escribe tú ',
-                      //         style: TextStyle(
-                      //           color: appBloc.isDarkMode ? Colors.white : Colors.black,
-                      //           fontSize: _titleSize,
-                      //         )
-                      //       ),
-                      //       TextSpan(
-                      //         text: 'Comentario',
-                      //         style: TextStyle(
-                      //           color: primaryColor,
-                      //           fontSize: _titleSize,
-                      //         )
-                      //       ),
-                      //     ]
-                      //   ),
-                      // )
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'Escribe tu ',
+                              style: GoogleFonts.mrDeHaviland(
+                                color: _color,
+                                fontSize: 50.0
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'Comentario',
+                              style: GoogleFonts.mrDeHaviland(
+                                color: primaryColor,
+                                fontSize: 50.0
+                              ),
+                            ),
+                          ]
+                        ),
+                      ),
                       Comentarios(),
                       // Padding(
                       //   padding: const EdgeInsets.symmetric(horizontal : 20.0, vertical: 5.0),

@@ -109,6 +109,11 @@ class AppBloc extends ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteInCart(Producto producto) {
+    carrito.remove(producto);
+    notifyListeners();
+  }
+
   Future requestSearch(String text) async {
     String url = "$server/producto/find/$text";
     http.Response response = await http.get(url);

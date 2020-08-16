@@ -1,5 +1,6 @@
 import 'package:artemisfood/src/components/TextButton.dart';
 import 'package:artemisfood/src/components/custom_bottom_body.dart';
+import 'package:artemisfood/src/model/producto.dart';
 import 'package:artemisfood/src/pages/CartPage/components/cartCards.dart';
 import 'package:artemisfood/src/pages/HomePage/components/custom_app_bar.dart';
 import 'package:artemisfood/src/providers/app_bloc.dart';
@@ -14,6 +15,7 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   
+  String _metodoDePago = 'efectivo';
   ValueNotifier<bool> notifierPagoVisible = ValueNotifier(false);
   String opcionSeleccionada;
   Widget iconoSelect = Image(
@@ -21,27 +23,15 @@ class _CartPageState extends State<CartPage> {
     width: iconSize,
     height: iconSize,
   );
+  double _total = 0.00;
 
-  // void _seleccionarIcono(valor, BuildContext context) {
-  //   final appBloc = Provider.of<AppBloc>(context, listen: false);
-  //   final Color _color = appBloc.isDarkMode ? Colors.white : Colors.black;
-
-  //   if (valor == 'tarjeta') {
-  //     iconoSelect = Image(
-  //       image: AssetImage('$iconPath/credit_card.png'),
-  //       width: iconSize,
-  //       height: iconSize,
-  //       color: _color,
-  //     );
-  //   } else {
-  //     iconoSelect = Image(
-  //       image: AssetImage('$iconPath/money.png'),
-  //       width: iconSize,
-  //       height: iconSize,
-  //       color: _color,
-  //     );
-  //   }
-  // }
+  @override
+  void initState() { 
+    setState(() {
+      _total = _getTotal(Provider.of<AppBloc>(context, listen: false).carrito);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +61,11 @@ class _CartPageState extends State<CartPage> {
               children: [
                 Column(
                   children: [
+                    // Expanded(
+                    //   child: appBloc.carrito.length == 0 ? _nadaCarrito() : _listadoCarrito(),
+                    // ),
                     Expanded(
-                      child: appBloc.carrito.length == 0 ? _nadaCarrito() : _listadoCarrito(),
+                      child: appBloc.carrito.length == 0 ? _nadaCarrito() : _listadoCarrito2(),
                     ),
                     
                   ],
@@ -85,6 +78,21 @@ class _CartPageState extends State<CartPage> {
       ),
     );
 
+  }
+
+  Widget _listadoCarrito2() {
+    final appBloc = Provider.of<AppBloc>(context, listen: false);
+
+    return ListView.builder(
+      physics: BouncingScrollPhysics(),
+      padding: EdgeInsets.symmetric(vertical: 0),
+      itemCount: appBloc.carrito.length,
+      itemBuilder: (_, index) {
+        return CartItem(
+          producto: appBloc.carrito[index],
+        );
+      }
+    );
   }
   
   Widget _nadaCarrito() {
@@ -112,28 +120,10 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  Widget _listadoCarrito() {
-    final appBloc = Provider.of<AppBloc>(context, listen: false);
-
-    return ListView.builder(
-      physics: BouncingScrollPhysics(),
-      padding: EdgeInsets.symmetric(vertical: 0),
-      itemCount: appBloc.carrito.length,
-      itemBuilder: (_, index) {
-      return CartCard(
-        title: appBloc.carrito[index].nombre,
-        description: appBloc.carrito[index].descripcion,
-        image: appBloc.carrito[index].foto,
-        quantity: appBloc.carrito[index].cantidad,
-        price: appBloc.carrito[index].precio,
-        comment: true,
-      );
-    });
-  }
-
   Widget _pagoPositioned() {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
-    final double barSize = MediaQuery.of(context).size.height * 0.3;
+    final _color = appBloc.isDarkMode ? Colors.white : Colors.black;
+    final double barSize = MediaQuery.of(context).size.height * 0.5;
     final double iconSize = 35.0;
 
     return ValueListenableBuilder<bool>(
@@ -141,9 +131,21 @@ class _CartPageState extends State<CartPage> {
       child: Container(
         decoration: BoxDecoration(
           color: appBloc.isDarkMode ? backgroundHomeDark : Colors.white,
-          border: Border(
-          top: BorderSide(color: primaryColor),
-        ),
+          borderRadius: BorderRadius.circular(20.0),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              blurRadius: 10.0,
+              spreadRadius: 2.0,
+              color: Colors.black26,
+              offset: Offset(10, 2.0)
+            ),
+            BoxShadow(
+              blurRadius: 10.0,
+              spreadRadius: 2.0,
+              color: Colors.black26,
+              offset: Offset(2.0, 10)
+            )
+          ] 
         ),
         child: Padding(
           padding: EdgeInsets.all(15.0),
@@ -177,7 +179,7 @@ class _CartPageState extends State<CartPage> {
                     Expanded(
                       flex: 3,
                       child: Text(
-                        '\$100.00',
+                        '\$$_total',
                         style: TextStyle(
                             color: appBloc.isDarkMode ? Colors.white : primaryColor,
                             fontSize: 18.0,
@@ -194,10 +196,10 @@ class _CartPageState extends State<CartPage> {
                     Expanded(
                       flex: 2,
                       child: Image.asset(
-                        '$iconPath/money.png',
+                        _metodoDePago == 'efectivo' ? '$iconPath/money.png' : '$iconPath/credit_card.png',
                         width: iconSize,
                         height: iconSize,
-                        color: appBloc.isDarkMode ? Colors.white : Colors.black,
+                        color: _color,
                       ),
                     ),
                     Expanded(
@@ -207,7 +209,7 @@ class _CartPageState extends State<CartPage> {
                         child: Text(
                           'Método de pago',
                           style: TextStyle(
-                            color: appBloc.isDarkMode ? Colors.white : Colors.black,
+                            color: _color,
                             fontSize: 18.0,
                           ),
                         ),
@@ -215,15 +217,67 @@ class _CartPageState extends State<CartPage> {
                     ),
                     Expanded(
                       flex: 3,
-                      child: Text(
-                        '\$100.00',
-                        style: TextStyle(
-                            color: appBloc.isDarkMode ? Colors.white : primaryColor,
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold
+                      child: DropdownButton(
+                        dropdownColor: appBloc.isDarkMode ? Colors.blueGrey : null,
+                        isExpanded: true,
+                        value: _metodoDePago,
+                        onChanged: (val) {},
+                        items: [
+                          DropdownMenuItem(
+                            child: Text('Efectivo', style: TextStyle(color: _color),),
+                            onTap: () {
+                              setState(() {
+                                _metodoDePago = 'efectivo';
+                              });
+                            },
+                            value: 'efectivo',
                           ),
-                      )
+                          DropdownMenuItem(
+                            value: 'tarjeta',
+                            child: Text('Tarjeta', style: TextStyle(color: _color)),
+                            onTap: () {
+                              setState(() {
+                                _metodoDePago = 'tarjeta';
+                              });
+                            },
+                          ),
+                        ],
+                      ),
                     )
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Image.asset(
+                      '$iconPath/location_user.png',
+                      width: iconSize,
+                      height: iconSize,
+                      color: _color,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'A208',
+                          style: TextStyle(
+                            color: _color,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        SizedBox(width: 10.0),
+                        InkWell(
+                          onTap: () {},
+                          child: Image.asset(
+                            '$iconPath/edit.png',
+                            width: iconSize / 3,
+                            height: iconSize / 3,
+                            color: _color,
+                          ),
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -258,15 +312,25 @@ class _CartPageState extends State<CartPage> {
       ),
       builder: (context, value, child) {
         return AnimatedPositioned(
-          duration: const Duration(milliseconds: 450),
-          bottom: value ? 0 : -barSize,
-          left: 0,
-          right: 0,
+          duration: const Duration(milliseconds: 600),
+          curve: Curves.bounceOut,
+          bottom: value ? barSize / 5 : -( barSize + 20 ),
+          left: 20,
+          right: 20,
           height: barSize,
           child: child,
         );
       }
     );
+  }
+
+  double _getTotal(List<Producto> carrito) {
+    double _suma = 0.00;
+
+    for (var i = 0; i < carrito.length; i++) {
+      _suma = _suma + carrito[i].precio;
+    }
+    return _suma;
   }
 
   Widget _customFloatingButton() {

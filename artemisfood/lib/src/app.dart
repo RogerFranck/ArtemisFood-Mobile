@@ -28,10 +28,11 @@ class App extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               primaryColor: primaryColor,
-              scaffoldBackgroundColor: Provider.of<AppBloc>(context).isDarkMode ? backgroundHomeDark : backgroundHome,
+              scaffoldBackgroundColor: bloc.isDarkMode ? backgroundHomeDark : backgroundHome,
               textTheme: GoogleFonts.montserratTextTheme(),
               // fontFamily: 'Avenir',
             ),
+            // theme: bloc.isDarkMode ? ThemeData.dark() : ThemeData.light(),
             routes: {
               'Auth' :  (BuildContext context) => Auth(),
               'login'   :     (BuildContext context) => Login(),
