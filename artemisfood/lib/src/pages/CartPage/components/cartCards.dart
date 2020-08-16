@@ -5,6 +5,7 @@ import 'package:artemisfood/src/static/const.dart';
 import 'package:artemisfood/src/widgets/custom_dialog_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class CartItem extends StatelessWidget {
@@ -34,7 +35,7 @@ class CartItem extends StatelessWidget {
               ),
               title: Text(
                 producto.nombre,
-                style: TextStyle(
+                style: GoogleFonts.montserrat(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
                   color: _color
@@ -42,9 +43,10 @@ class CartItem extends StatelessWidget {
               ),
               subtitle: Text(
                 producto.descripcion,
-                style: TextStyle(
-                  fontSize: 11.0,
-                  color: _color.withOpacity(0.7)
+                style: GoogleFonts.montserrat(
+                  fontSize: 10.0,
+                  color: _color.withOpacity(0.7),
+                  fontWeight: FontWeight.w400
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -55,7 +57,7 @@ class CartItem extends StatelessWidget {
                   Flexible(
                     child: Text(
                       '\$${producto.precio.toDouble()} MXN',
-                      style: TextStyle(
+                      style: GoogleFonts.montserrat(
                         color: primaryColor,
                         fontWeight: FontWeight.bold,
                         fontSize: 16.0
@@ -63,17 +65,45 @@ class CartItem extends StatelessWidget {
                     ),
                   ),
                   Flexible(
-                    child: IconButton(
-                      splashRadius: 24.0,
-                      icon: Icon(Icons.message, size: 20.0, color: _color ),
-                      onPressed: () {
-                        return showDialog(
-                          context: context,
-                          builder: (context) {
-                            return CustomDialogComment();
-                          }
-                        );
-                      }
+                    child: FittedBox(
+                      child: Row(
+                        children: [
+                          IconButton(
+                            splashRadius: 24.0,
+                            icon: Icon(Icons.message, size: 30.0, color: _color ),
+                            onPressed: () {
+                              return showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CustomDialogComment();
+                                }
+                              );
+                            }
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                'X ${producto.cantidad}',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  color : _color,
+                                ),
+                              ),
+                              SizedBox(width: 5.0,),
+                              Text(
+                                'quant.',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color : _color,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -109,15 +139,7 @@ class CartItem extends StatelessWidget {
       ),
     );
   }
-
-  _getTotal(List<Producto> carrito) {
-    double _suma = 0.0;
-
-    for (var i = 0; i < carrito.length; i++) {
-      _suma = _suma + carrito[i].precio;
-    }
-    print(_suma);
-  }
+  
 }
 
 

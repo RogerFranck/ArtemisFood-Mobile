@@ -6,6 +6,7 @@ import 'package:artemisfood/src/pages/HomePage/components/custom_app_bar.dart';
 import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class CartPage extends StatefulWidget {
@@ -18,11 +19,6 @@ class _CartPageState extends State<CartPage> {
   String _metodoDePago = 'efectivo';
   ValueNotifier<bool> notifierPagoVisible = ValueNotifier(false);
   String opcionSeleccionada;
-  Widget iconoSelect = Image(
-    image: AssetImage('$iconPath/money.png'),
-    width: iconSize,
-    height: iconSize,
-  );
   double _total = 0.00;
 
   @override
@@ -36,20 +32,10 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
-
-    // List<DropdownMenuItem<String>> _metodoPago = [
-    //   DropdownMenuItem(
-    //     child: Text('Efectivo', style: TextStyle(color: Colors.white),),
-    //     value: 'efectivo',
-    //   ),
-    //   DropdownMenuItem(
-    //     child: Text('Tarjeta', style: TextStyle(color: Colors.white),),
-    //     value: 'tarjeta',
-    //   )
-    // ];
-
+    final Color bgColor = appBloc.isDarkMode ? backgroundHomeDark : backgroundHome;
+    
     return Scaffold(
-      backgroundColor: appBloc.isDarkMode ? backgroundHomeDark : backgroundHome,
+      backgroundColor: bgColor,
       floatingActionButton: notifierPagoVisible.value ? null : appBloc.carrito.length == 0 ? null: _customFloatingButton(),
       body: CustomScrollView(
         slivers: [
@@ -61,13 +47,9 @@ class _CartPageState extends State<CartPage> {
               children: [
                 Column(
                   children: [
-                    // Expanded(
-                    //   child: appBloc.carrito.length == 0 ? _nadaCarrito() : _listadoCarrito(),
-                    // ),
                     Expanded(
-                      child: appBloc.carrito.length == 0 ? _nadaCarrito() : _listadoCarrito2(),
+                      child: appBloc.carrito.length == 0 ? _nadaCarrito() : _listadoCarrito(),
                     ),
-                    
                   ],
                 ),
                 _pagoPositioned()
@@ -80,7 +62,7 @@ class _CartPageState extends State<CartPage> {
 
   }
 
-  Widget _listadoCarrito2() {
+  Widget _listadoCarrito() {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
 
     return ListView.builder(
@@ -122,9 +104,9 @@ class _CartPageState extends State<CartPage> {
 
   Widget _pagoPositioned() {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
+    final double barSize = (MediaQuery.of(context).size.height * 0.5) + 30;
+    final double _iconSize = 45.0;
     final _color = appBloc.isDarkMode ? Colors.white : Colors.black;
-    final double barSize = MediaQuery.of(context).size.height * 0.5;
-    final double iconSize = 35.0;
 
     return ValueListenableBuilder<bool>(
       valueListenable: notifierPagoVisible,
@@ -132,18 +114,19 @@ class _CartPageState extends State<CartPage> {
         decoration: BoxDecoration(
           color: appBloc.isDarkMode ? backgroundHomeDark : Colors.white,
           borderRadius: BorderRadius.circular(20.0),
+          border: Border.all(color: primaryColor, width: 3),
           boxShadow: <BoxShadow>[
             BoxShadow(
               blurRadius: 10.0,
               spreadRadius: 2.0,
               color: Colors.black26,
-              offset: Offset(10, 2.0)
+              offset: Offset(10, - 2.0)
             ),
             BoxShadow(
               blurRadius: 10.0,
               spreadRadius: 2.0,
               color: Colors.black26,
-              offset: Offset(2.0, 10)
+              offset: Offset(- 2.0, 10)
             )
           ] 
         ),
@@ -152,89 +135,105 @@ class _CartPageState extends State<CartPage> {
           child: Column(
             children: [
               Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Tu carrito',
+                        style: GoogleFonts.montserrat(
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.bold,
+                          color: _color,
+                        ),
+                      ),
+                      SizedBox(width: 20.0,),
+                      Image.asset(
+                        '$imgPath/shopping_cart_cash.png',
+                        width: _iconSize - 10,
+                        height: _iconSize - 10,
+                        color: _color,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
                 child: Row(
                   children: [
-                    Expanded(
-                      flex: 2,
-                      child: Image.asset(
-                        '$iconPath/wallet.png',
-                        width: iconSize,
-                        height: iconSize,
-                        color: appBloc.isDarkMode ? Colors.white : Colors.black,
-                      ),
+                    Image.asset(
+                      '$imgPath/wallet.png',
+                      width: _iconSize + 10,
+                      height: _iconSize + 10,
                     ),
                     Expanded(
                       flex: 6,
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
+                        padding: const EdgeInsets.only(left: 15.0),
                         child: Text(
-                          'Cantidad a pagar',
-                          style: TextStyle(
-                            color: appBloc.isDarkMode ? Colors.white : Colors.black,
+                          'Total a pagar',
+                          style: GoogleFonts.montserrat(
                             fontSize: 18.0,
+                            fontWeight: FontWeight.w300,
+                            color: _color,
                           ),
                         ),
-                      )
+                      ),
                     ),
                     Expanded(
                       flex: 3,
                       child: Text(
                         '\$$_total',
                         style: TextStyle(
-                            color: appBloc.isDarkMode ? Colors.white : primaryColor,
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold
-                          ),
-                      )
-                    )
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.w900,
+                          color: primaryColor
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
               Expanded(
                 child: Row(
                   children: [
-                    Expanded(
-                      flex: 2,
-                      child: Image.asset(
-                        _metodoDePago == 'efectivo' ? '$iconPath/money.png' : '$iconPath/credit_card.png',
-                        width: iconSize,
-                        height: iconSize,
-                        color: _color,
-                      ),
+                    Image.asset(
+                      _metodoDePago == 'efectivo' ? '$imgPath/money.png' : '$imgPath/credit_card.png',
+                      width: _iconSize + 10,
+                      height: _iconSize + 10,
                     ),
                     Expanded(
                       flex: 6,
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
+                        padding: const EdgeInsets.only(left: 15.0),
                         child: Text(
-                          'Método de pago',
-                          style: TextStyle(
-                            color: _color,
+                          'Forma de pago',
+                          style: GoogleFonts.montserrat(
                             fontSize: 18.0,
+                            fontWeight: FontWeight.w300,
+                            color: _color,
                           ),
                         ),
-                      )
+                      ),
                     ),
                     Expanded(
                       flex: 3,
                       child: DropdownButton(
-                        dropdownColor: appBloc.isDarkMode ? Colors.blueGrey : null,
-                        isExpanded: true,
-                        value: _metodoDePago,
                         onChanged: (val) {},
+                        value: _metodoDePago,
                         items: [
                           DropdownMenuItem(
-                            child: Text('Efectivo', style: TextStyle(color: _color),),
+                            child: Text('Efectivo', style: TextStyle(color: primaryColor, fontWeight: FontWeight.w900),),
+                            value: 'efectivo',
                             onTap: () {
                               setState(() {
                                 _metodoDePago = 'efectivo';
                               });
                             },
-                            value: 'efectivo',
                           ),
                           DropdownMenuItem(
+                            child: Text('Tarjeta', style: TextStyle(color: primaryColor, fontWeight: FontWeight.w900)),
                             value: 'tarjeta',
-                            child: Text('Tarjeta', style: TextStyle(color: _color)),
                             onTap: () {
                               setState(() {
                                 _metodoDePago = 'tarjeta';
@@ -243,39 +242,47 @@ class _CartPageState extends State<CartPage> {
                           ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
               Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                child: Stack(
+                  alignment: Alignment.center,
                   children: [
-                    Image.asset(
-                      '$iconPath/location_user.png',
-                      width: iconSize,
-                      height: iconSize,
-                      color: _color,
+                    Text(
+                      'Tu ubicación'.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 40.0,
+                        color: appBloc.isDarkMode ? Colors.white.withOpacity(0.03) : Color(0XFFE4E2E2).withOpacity(0.3),
+                      ),
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Image.asset(
+                          '$imgPath/user_location.png',
+                          width: _iconSize,
+                          height: _iconSize,
+                        ),
+                        SizedBox(width: 10.0),
                         Text(
                           'A208',
-                          style: TextStyle(
-                            color: _color,
-                            fontSize: 18.0,
+                          style: GoogleFonts.montserrat(
+                            fontSize: 17.0,
+                            fontWeight: FontWeight.bold,
+                            color: primaryColor
                           ),
                         ),
                         SizedBox(width: 10.0),
                         InkWell(
                           onTap: () {},
                           child: Image.asset(
-                            '$iconPath/edit.png',
-                            width: iconSize / 3,
-                            height: iconSize / 3,
-                            color: _color,
+                            '$imgPath/pencil.png',
+                            width: _iconSize - 30,
+                            height: _iconSize - 30,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ],
@@ -286,16 +293,16 @@ class _CartPageState extends State<CartPage> {
                   children: [
                     Expanded(
                       child: TextButton(
-                        hintText: 'Realizar pedido',
-                        fontSize: 20.0,
+                        hintText: 'Confirmar pedido',
+                        fontSize: 18.0,
                         onPress: () {},
                       ),
                     ),
                     Expanded(
                       child: TextButton(
                         hintText: 'Cancelar',
-                        fontSize: 15.0,
                         color: Colors.red,
+                        fontSize: 12.0,
                         onPress: () {
                           setState(() {
                             notifierPagoVisible.value = false;
@@ -314,10 +321,10 @@ class _CartPageState extends State<CartPage> {
         return AnimatedPositioned(
           duration: const Duration(milliseconds: 600),
           curve: Curves.bounceOut,
-          bottom: value ? barSize / 5 : -( barSize + 20 ),
-          left: 20,
-          right: 20,
-          height: barSize,
+           height: barSize,
+          bottom: value ? barSize / 5 : - (barSize + 20),
+          left: 10,
+          right: 10,
           child: child,
         );
       }
