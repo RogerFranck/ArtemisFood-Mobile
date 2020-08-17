@@ -102,7 +102,6 @@ class _ListViewFoodState extends State<ListViewFood> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18.0,
-                                  color: appBloc.isDarkMode ? Colors.white : Colors.black,
                                 ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -129,7 +128,7 @@ class _ListViewFoodState extends State<ListViewFood> {
                             child: Text(
                               '\$${producto.precio.toDouble()}',
                               style: TextStyle(
-                                color: appBloc.isDarkMode ? Colors.white : primaryColor,
+                                color: primaryColor,
                                 fontSize: 18.0,
                                 fontWeight: FontWeight.bold
                               ),

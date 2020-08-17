@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-//Aqui es el contenido del text field (ícono, placeholder, etc), seh
+import 'package:artemisfood/src/static/const.dart';
 
 class RoundedInputField extends StatelessWidget {
-  //final Widget child;
   final ValueChanged<String> onChanged;
   final IconData icon;
   final bool passtype;
@@ -13,11 +12,13 @@ class RoundedInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       obscureText: passtype,
+      style: textFieldStyle,
       onChanged: onChanged,
       decoration: InputDecoration(
         icon: Icon( icon, color: Colors.black, size: 30.0 ),
         hintText: hintText,
         border: InputBorder.none,
+        hintStyle: TextStyle(color: Colors.grey)
       ),
     );
   }

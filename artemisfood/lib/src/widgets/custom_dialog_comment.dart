@@ -31,6 +31,7 @@ class CustomDialogComment extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               TextField(
+                style: textFieldStyle,
                 keyboardType: TextInputType.multiline,
                 minLines: 1,
                 maxLines: 7,

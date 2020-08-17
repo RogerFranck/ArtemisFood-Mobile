@@ -1,6 +1,7 @@
 import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:artemisfood/src/static/const.dart';
 
 class Comentarios extends StatelessWidget {
   const Comentarios({
@@ -24,11 +25,13 @@ class Comentarios extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: TextField(
+              style: textFieldStyle,
               keyboardType: TextInputType.multiline,
               minLines: 1,
               maxLines: 5,
                 decoration: InputDecoration(
                 hintText: 'Comentario...',
+                hintStyle: TextStyle(color: Colors.grey),
                 border: InputBorder.none,
             ),
             ),

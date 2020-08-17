@@ -15,35 +15,23 @@ class TitleAppBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Row(
-          children: <Widget>[
-            Text(
-              'Artemis',
-              style: TextStyle(fontSize: 20.0, color: appBloc.isDarkMode ? Colors.white : Colors.black,),
-            ),
-            Text(
-              'Food',
-              style: TextStyle(fontSize: 20.0, color: primaryColor,),
-            ),
-          ],
+        RichText(
+          text: TextSpan(
+            children: <TextSpan>[
+              TextSpan(
+                text: 'Artemis',
+                style: TextStyle(fontSize: 20.0, color: appBloc.isDarkMode ? Colors.white : Colors.black),
+              ),
+              TextSpan(
+                text: 'Food',
+                style: TextStyle(fontSize: 20.0, color: primaryColor,),
+              ),
+            ],
+          ),
         ),
-        // RichText(
-        //   text: TextSpan(
-        //     children: <TextSpan>[
-        //       TextSpan(
-        //         text: 'Artemis',
-        //         style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: appBloc.isDarkMode ? Colors.white : Colors.black,),
-        //       ),
-        //       TextSpan(
-        //         text: 'Food',
-        //         style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: primaryColor,),
-        //       ),
-        //     ],
-        //   ),
-        // ),
         CircleAvatar(
           radius: 20.0,
-          backgroundColor: appBloc.isDarkMode ? Color(0xFFFF334D5C): Colors.black87,
+          backgroundColor: Color(0xFFFF334D5C),
           child: IconButton(
             onPressed: () {},
             icon: Icon(

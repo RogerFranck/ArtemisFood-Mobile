@@ -7,7 +7,6 @@ import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatelessWidget {
@@ -26,12 +25,7 @@ class App extends StatelessWidget {
           return MaterialApp(
             initialRoute: 'Auth',
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              primaryColor: primaryColor,
-              scaffoldBackgroundColor: bloc.isDarkMode ? backgroundHomeDark : backgroundHome,
-              textTheme: GoogleFonts.montserratTextTheme(),
-              // fontFamily: 'Avenir',
-            ),
+            theme: bloc.isDarkMode ? darkTheme : lightTheme,
             // theme: bloc.isDarkMode ? ThemeData.dark() : ThemeData.light(),
             routes: {
               'Auth' :  (BuildContext context) => Auth(),

@@ -172,10 +172,9 @@ class _CartPageState extends State<CartPage> {
                         padding: const EdgeInsets.only(left: 15.0),
                         child: Text(
                           'Total a pagar',
-                          style: GoogleFonts.montserrat(
+                          style: TextStyle(
                             fontSize: 18.0,
                             fontWeight: FontWeight.w300,
-                            color: _color,
                           ),
                         ),
                       ),
@@ -185,8 +184,8 @@ class _CartPageState extends State<CartPage> {
                       child: Text(
                         '\$$_total',
                         style: TextStyle(
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.w900,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w800,
                           color: primaryColor
                         ),
                       ),
@@ -208,10 +207,9 @@ class _CartPageState extends State<CartPage> {
                         padding: const EdgeInsets.only(left: 15.0),
                         child: Text(
                           'Forma de pago',
-                          style: GoogleFonts.montserrat(
+                          style: TextStyle(
                             fontSize: 18.0,
                             fontWeight: FontWeight.w300,
-                            color: _color,
                           ),
                         ),
                       ),
@@ -223,7 +221,7 @@ class _CartPageState extends State<CartPage> {
                         value: _metodoDePago,
                         items: [
                           DropdownMenuItem(
-                            child: Text('Efectivo', style: TextStyle(color: primaryColor, fontWeight: FontWeight.w900),),
+                            child: Text('Efectivo', style: TextStyle(color: primaryColor, fontSize: 14, fontWeight: FontWeight.w800),),
                             value: 'efectivo',
                             onTap: () {
                               setState(() {
@@ -232,7 +230,7 @@ class _CartPageState extends State<CartPage> {
                             },
                           ),
                           DropdownMenuItem(
-                            child: Text('Tarjeta', style: TextStyle(color: primaryColor, fontWeight: FontWeight.w900)),
+                            child: Text('Tarjeta', style: TextStyle(color: primaryColor, fontSize: 14, fontWeight: FontWeight.w800)),
                             value: 'tarjeta',
                             onTap: () {
                               setState(() {
@@ -268,7 +266,7 @@ class _CartPageState extends State<CartPage> {
                         SizedBox(width: 10.0),
                         Text(
                           'A208',
-                          style: GoogleFonts.montserrat(
+                          style: TextStyle(
                             fontSize: 17.0,
                             fontWeight: FontWeight.bold,
                             color: primaryColor

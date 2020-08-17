@@ -40,7 +40,6 @@ class AboutPage extends StatelessWidget {
 
 Eiusmod consequat dolor laboris consectetur commodo ipsum aliquip minim aute est Lorem velit. Velit eu et dolor ullamco in dolor duis enim occaecat ut duis anim incididunt. Minim eu Lorem aute non culpa qui do eu aliqua laboris. Esse id ullamco enim enim culpa.""",
                           style: TextStyle(
-                            color: appBloc.isDarkMode ? Colors.white :  Colors.black,
                             fontSize: 16.0,
                             letterSpacing: 1.5
                           ),

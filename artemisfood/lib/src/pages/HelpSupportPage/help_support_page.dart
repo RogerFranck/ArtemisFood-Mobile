@@ -61,7 +61,6 @@ class HelpSupportPage extends StatelessWidget {
                             TextSpan(
                               text: 'Escribe tu ',
                               style: GoogleFonts.mrDeHaviland(
-                                color: _color,
                                 fontSize: 50.0
                               ),
                             ),

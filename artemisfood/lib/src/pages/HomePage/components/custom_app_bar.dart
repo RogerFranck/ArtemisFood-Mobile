@@ -28,7 +28,7 @@ class CustomAppBar extends StatelessWidget {
           child: bottomBody,
         ),
       ),
-      backgroundColor:  appBloc.isDarkMode ? Colors.black : Colors.white,
+      backgroundColor:  appBloc.isDarkMode ? Colors.black.withOpacity(0.8) : Colors.white,
       expandedHeight: 130.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(10.0),)

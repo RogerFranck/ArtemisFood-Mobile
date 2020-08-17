@@ -106,7 +106,6 @@ class AccountCard extends StatelessWidget {
                   Text(
                     title,
                     style: TextStyle(
-                      color: appBloc.isDarkMode ? Colors.white : Colors.black,
                       fontSize: _size
                     ),
                   ),

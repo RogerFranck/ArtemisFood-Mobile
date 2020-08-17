@@ -18,64 +18,6 @@ class BodyHome extends StatefulWidget {
 class _BodyHomeState extends State<BodyHome> {
   List<dynamic> categoryData;
 
-  // Future<List<Producto>> getProducts() async {
-  //   var url = '$server/producto';
-  //   var response = await http.get(url);
-
-  //   var productos = List<Producto>();
-
-  //   if (response.statusCode == 200) {
-  //     var productsJson = jsonDecode(response.body);
-  //     for (var i in productsJson["Producto"]) {
-  //       productos.add(Producto.fromJson(i));
-  //     }
-
-  //   }
-
-  //   return productos;
-  // }
-
-  // void getAllCategories() async {
-  //   http.Response response = await http.get('$server/categoria');
-  //   var data = jsonDecode(response.body);
-  //   categoryData = data;
-  //   for (var i = 0; i < categoryData.length; i++) {
-  //     setState(() {
-  //         category.add(categoryData[i]["categoria"]);
-  //     });
-  //   }
-  //   print('Recibí categoría');
-  // }
-
-  // Future<List<Producto>> getProductsPerCategory(String categoriaSeleccionada) async {
-  //   var productos = List<Producto>();
-
-  //   if (categoriaSeleccionada == 'All') {
-  //     getProducts().then((value) {
-  //       setState(() {
-  //         productos.addAll(value);
-  //         print('recibí los productos');
-  //       });
-  //     });
-      
-  //     return productos;
-  //   }
-
-  //   var url = '$server/producto/categoria/$categoriaSeleccionada';
-  //   var response = await http.get(url);
-
-  //   if (response.statusCode == 200) {
-  //     var productsJson = jsonDecode(response.body);
-  //     for (var i in productsJson) {
-  //       productos.add(Producto.fromJson(i));
-  //     }
-
-  //   }
-
-  //   return productos;
-
-  // }
-
   @override
   void initState() { 
     super.initState();
@@ -111,7 +53,6 @@ class _BodyHomeState extends State<BodyHome> {
                   style: TextStyle(
                     fontWeight: FontWeight.w500, 
                     fontSize: 20.0,
-                    color: appBloc.isDarkMode ? Colors.white : Colors.black,
                   ),
                   
                 ),
@@ -121,24 +62,8 @@ class _BodyHomeState extends State<BodyHome> {
               SizedBox(
                 height: 10.0,
               ),
-              // SingleChildScrollView(
-              //   scrollDirection: Axis.horizontal,
-              //   child: Row(
-              //     children: <Widget>[
-              //       CategoryTitle(title: "All", active: true),
-              //       CategoryTitle(title: "Italian"),
-              //       CategoryTitle(title: "Asian"),
-              //       CategoryTitle(title: "Chinese"),
-              //       CategoryTitle(title: "Burgers"),
-              //     ],
-              //   ),
-              // ),
               CategoryTitle(),
               BordeSeparador(),
-              // appBloc.searchText.isEmpty ? ListViewFood() 
-              //                            : appBloc.listadoBusqueda == null ? loadingCircular 
-              //                            : appBloc.listadoBusqueda.length == 0 ? SinResultados() 
-              //                            : SearchedFood(),
               appBloc.productosMostrados == null ? loadingCircular : appBloc.productosMostrados.length == 0 ? SinResultados() : ListViewFood(),
             ],
           ),
@@ -155,7 +80,6 @@ class SinResultados extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appBloc = Provider.of<AppBloc>(context, listen: false);
 
     return Padding(
       padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
@@ -168,9 +92,6 @@ class SinResultados extends StatelessWidget {
            SizedBox(height: 10.0,),
            Text(
              'Si tan sólo tuviéramos ese \nproducto pana...',
-             style: TextStyle(
-               color: appBloc.isDarkMode ? Colors.white : Colors.black,
-             ),
              textAlign: TextAlign.center,
            )
         ],

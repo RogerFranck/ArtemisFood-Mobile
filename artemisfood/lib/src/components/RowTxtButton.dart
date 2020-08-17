@@ -15,7 +15,8 @@ class RowTxtButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            hintText
+            hintText,
+            style: TextStyle(color: Colors.black),
           ),
           TextButton(
             hintText: hintTextButton,

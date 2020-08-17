@@ -1,8 +1,6 @@
-import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
 import 'package:artemisfood/src/static/lista_temporal_categorias.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ListViewFavorites extends StatelessWidget {
   const ListViewFavorites({
@@ -44,7 +42,6 @@ class FavoriteItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final appBloc = Provider.of<AppBloc>(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -109,7 +106,6 @@ class FavoriteItem extends StatelessWidget {
                             nombre,
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              color: appBloc.isDarkMode ? Colors.white : Colors.black,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -120,7 +116,7 @@ class FavoriteItem extends StatelessWidget {
                           child: Text(
                             '\$$precio',
                             style: TextStyle(
-                              color: appBloc.isDarkMode ? Colors.white : primaryColor,
+                              color: primaryColor,
                               fontWeight: FontWeight.bold
                             ),
                           ),

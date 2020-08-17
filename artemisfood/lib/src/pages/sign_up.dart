@@ -10,6 +10,8 @@ class SignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle blackColor = TextStyle(color: Colors.black);
+
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -27,6 +29,7 @@ class SignUp extends StatelessWidget {
                   ),
                   Text(
                     'Sign up to continue',
+                    style: blackColor,
                   ),
                   TextFieldContainer(
                     child: RoundedInputField(

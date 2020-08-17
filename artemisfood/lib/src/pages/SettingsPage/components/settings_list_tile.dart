@@ -1,5 +1,4 @@
 import 'package:artemisfood/src/providers/app_bloc.dart';
-import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,13 +26,13 @@ class SettingListTile extends StatelessWidget {
             title: Text(
               texto,
               style: TextStyle(
-                color: appBloc.isDarkMode ? Colors.white : primaryColor,
-                fontSize: 20.0
+                fontSize: 20.0,
+                fontWeight: FontWeight.w500
               ),
             ),
             trailing: Icon(
               Icons.arrow_forward_ios,
-              color: appBloc.isDarkMode ? Colors.white :  Colors.black,
+              color: appBloc.isDarkMode ? Colors.white : Colors.black,
               size: 30.0
             ),
             onTap: onTap,

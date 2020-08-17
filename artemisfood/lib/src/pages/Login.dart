@@ -21,6 +21,7 @@ class _LoginState extends State<Login> {
 
   String username;
   String password;
+  TextStyle blackColor = TextStyle(color: Colors.black);
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +43,7 @@ class _LoginState extends State<Login> {
                   ),
                   Text(
                     'Login to continue',
+                    style: blackColor,
                   ),
                   TextFieldContainer(
                     child: RoundedInputField(

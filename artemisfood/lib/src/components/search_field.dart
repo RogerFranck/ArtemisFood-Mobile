@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:artemisfood/src/static/const.dart';
 
 class SearchField extends StatelessWidget {
   final ValueChanged<String> onChanged;
@@ -20,8 +21,10 @@ class SearchField extends StatelessWidget {
           width: size.width * 0.9,
           color: Color(0xFFF5F5F5),
           child: TextField(
+            style: textFieldStyle,
             decoration: InputDecoration(
               hintText: 'Search',
+              hintStyle: TextStyle(color: Colors.grey),
               icon: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.0),
                 child: Icon(
