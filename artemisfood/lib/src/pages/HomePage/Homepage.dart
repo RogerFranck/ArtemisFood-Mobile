@@ -5,7 +5,7 @@ import 'package:artemisfood/src/static/const.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'components/body.dart';
+import 'package:artemisfood/src/pages/HomePage/components/custom_body.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -87,12 +87,12 @@ class _HomePageState extends State<HomePage> {
 
   Widget _paginaActual(int paginaActual) {
     switch (paginaActual) {
-      case 0: return BodyHome();
+      case 0: return CustomBody();
       case 1: return CartPage();
       case 2: return SettingsPage();
         
       default:
-        return BodyHome();
+        return CustomBody();
     }
   }
 

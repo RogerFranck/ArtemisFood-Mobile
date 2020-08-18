@@ -39,7 +39,7 @@ class _CategoryTitleState extends State<CategoryTitle> {
                 appBloc.category[index],
                 style: TextStyle(
                    color:  appBloc.selected == appBloc.category[index] ? primaryColor : appBloc.isDarkMode ? Colors.white : Colors.black.withOpacity(0.6),
-                   fontWeight: appBloc.selected == appBloc.category[index] ? FontWeight.bold : null,
+                   fontWeight: appBloc.selected == appBloc.category[index] ? FontWeight.bold : FontWeight.w500,
                 )
               ),
             ),
