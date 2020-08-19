@@ -1,6 +1,5 @@
 import 'package:artemisfood/src/components/TextButton.dart';
 import 'package:artemisfood/src/components/custom_bottom_body.dart';
-import 'package:artemisfood/src/model/producto.dart';
 import 'package:artemisfood/src/pages/CartPage/components/cartCards.dart';
 import 'package:artemisfood/src/pages/HomePage/components/custom_app_bar.dart';
 import 'package:artemisfood/src/providers/app_bloc.dart';
@@ -19,13 +18,9 @@ class _CartPageState extends State<CartPage> {
   String _metodoDePago = 'efectivo';
   ValueNotifier<bool> notifierPagoVisible = ValueNotifier(false);
   String opcionSeleccionada;
-  double _total = 0.00;
 
   @override
-  void initState() { 
-    setState(() {
-      _total = _getTotal(Provider.of<AppBloc>(context, listen: false).carrito);
-    });
+  void initState() {
     super.initState();
   }
 
@@ -182,7 +177,7 @@ class _CartPageState extends State<CartPage> {
                     Expanded(
                       flex: 3,
                       child: Text(
-                        '\$$_total',
+                        '\$${appBloc.total.toDouble()}',
                         style: TextStyle(
                           fontSize: 14.0,
                           fontWeight: FontWeight.w800,
@@ -327,15 +322,6 @@ class _CartPageState extends State<CartPage> {
         );
       }
     );
-  }
-
-  double _getTotal(List<Producto> carrito) {
-    double _suma = 0.00;
-
-    for (var i = 0; i < carrito.length; i++) {
-      _suma = _suma + carrito[i].precio;
-    }
-    return _suma;
   }
 
   Widget _customFloatingButton() {

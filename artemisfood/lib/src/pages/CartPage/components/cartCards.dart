@@ -132,6 +132,7 @@ class CartItem extends StatelessWidget {
               ),
               onTap: () {
                 appBloc.deleteInCart(producto);
+                appBloc.getTotal();
               }
             ),
           ),

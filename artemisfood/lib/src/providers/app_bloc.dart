@@ -9,6 +9,7 @@ class AppBloc extends ChangeNotifier {
   final debouncer = Debouncer();
   bool isDarkMode = false;
   String searchText = '';
+  double total = 0;
   List<dynamic> listadoBusqueda;
   List<Producto> productosActual;
   List<Producto> productosMostrados;
@@ -111,6 +112,16 @@ class AppBloc extends ChangeNotifier {
 
   void deleteInCart(Producto producto) {
     carrito.remove(producto);
+    notifyListeners();
+  }
+
+  void getTotal() {
+    double _suma = 0.00;
+
+    for (var i = 0; i < carrito.length; i++) {
+      _suma = _suma + carrito[i].precio;
+    }
+    total = _suma;
     notifyListeners();
   }
 

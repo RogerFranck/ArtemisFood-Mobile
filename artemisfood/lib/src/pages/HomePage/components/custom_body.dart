@@ -67,7 +67,7 @@ class _CustomBodyState extends State<CustomBody> {
                       highlightColor: Color(0xffe100ff),
                       child: Text(
                         'Tus Favoritos',
-                        style: TextStyle(color: primaryColor, fontSize: 24.0, fontWeight: FontWeight.w700),
+                        style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w700,),
                       ),
                     )
                   ),
@@ -100,18 +100,23 @@ class SinResultados extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-      child: Column(
-        children: <Widget>[
-          FractionallySizedBox(
-            widthFactor: .4,
-            child: Image.asset('$imgPath/dino_triste.png')
-           ),
-           SizedBox(height: 10.0,),
-           Text(
-             'Si tan sólo tuviéramos ese \nproducto pana...',
-             textAlign: TextAlign.center,
-           )
-        ],
+      child: Center(
+        child: Column(
+          children: <Widget>[
+            FractionallySizedBox(
+              widthFactor: .4,
+              child: Image.asset('$imgPath/dino_triste.png')
+             ),
+             SizedBox(height: 10.0,),
+             Text(
+               'Si tan sólo tuviéramos ese \nproducto pana...',
+               textAlign: TextAlign.center,
+               style: TextStyle(
+                 fontWeight: FontWeight.w500
+               ),
+             )
+          ],
+        ),
       ),
     );
   }

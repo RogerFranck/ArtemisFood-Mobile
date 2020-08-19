@@ -116,6 +116,7 @@ class _FoodPageState extends State<FoodPage> {
                                         FlatButton(
                                           onPressed: () {
                                             appBloc.pushToCart(producto);
+                                            appBloc.getTotal();
                                             Navigator.pop(context);
                                           }, 
                                           child: Text('Aceptar', style: TextStyle(color: Colors.green[400]),),

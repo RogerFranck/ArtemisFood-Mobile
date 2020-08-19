@@ -30,6 +30,7 @@ class SearchField extends StatelessWidget {
                 child: Icon(
                   Icons.search,
                   size: 30.0,
+                  color: Colors.grey,
                 ),
               ),
               border: InputBorder.none
