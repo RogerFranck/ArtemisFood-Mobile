@@ -23,7 +23,8 @@ ThemeData darkTheme = ThemeData.dark().copyWith(
     bodyColor: Colors.white
   ),
   iconTheme: IconThemeData(color: Colors.white),
-  primaryColor: primaryColor
+  primaryColor: primaryColor,
+  scaffoldBackgroundColor: backgroundHomeDark,
 );
 
 ThemeData lightTheme = ThemeData.light().copyWith(
@@ -32,7 +33,8 @@ ThemeData lightTheme = ThemeData.light().copyWith(
     bodyColor: Colors.black
   ),
   iconTheme: IconThemeData(color: Colors.black),
-  primaryColor: primaryColor
+  primaryColor: primaryColor,
+  scaffoldBackgroundColor: backgroundHome,
 );
 
 String server = "https://artemisfoodapi.herokuapp.com";

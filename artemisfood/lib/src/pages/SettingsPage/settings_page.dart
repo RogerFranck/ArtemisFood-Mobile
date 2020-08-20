@@ -153,10 +153,8 @@ class SettingsPage extends StatelessWidget {
                     onPressed: () async {
                       sharedPreferences = await SharedPreferences.getInstance();
                       sharedPreferences.remove("token");
-                      Navigator.pushReplacementNamed(
-                        context, 'login'
-                      );
-                    } ,
+                      Navigator.pushReplacementNamed(context, 'login');
+                    },
                     child: Text(
                       "Close Session",
                       style: TextStyle(

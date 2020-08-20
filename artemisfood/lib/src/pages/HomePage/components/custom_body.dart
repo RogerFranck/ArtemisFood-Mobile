@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/rendering.dart';
 import 'package:artemisfood/src/components/borde_separador.dart';
 import 'package:artemisfood/src/components/search_field.dart';
 import 'custom_app_bar.dart';
@@ -18,21 +19,22 @@ class CustomBody extends StatefulWidget {
   _CustomBodyState createState() => _CustomBodyState();
 }
 
-PageController _pageController;
 double pageOffset = 0;
 double _viewPortFraction = 0.77;
-
+PageController _pageController = PageController(viewportFraction: _viewPortFraction, initialPage: 0);
 
 class _CustomBodyState extends State<CustomBody> {
 
+  void _listenScroll() {
+    setState(() {
+      pageOffset = _pageController.page;
+    });
+  }
+
   @override
   void initState() { 
-    _pageController = PageController(viewportFraction: _viewPortFraction, initialPage: 0)
-    ..addListener(() {
-      setState(() {
-        pageOffset = _pageController.page;
-      });
-    });
+    
+    _pageController.addListener(_listenScroll);
     if (Provider.of<AppBloc>(context, listen: false).category.length == 1) {
       Provider.of<AppBloc>(context, listen: false).getAllCategories();
     }
@@ -40,6 +42,14 @@ class _CustomBodyState extends State<CustomBody> {
       Provider.of<AppBloc>(context, listen: false).getProducts();
     }
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // ignore: todo
+    // TODO: implement dispose
+    _pageController.removeListener(_listenScroll);
+    super.dispose();
   }
 
   @override
@@ -72,13 +82,8 @@ class _CustomBodyState extends State<CustomBody> {
                     )
                   ),
                 ),
-                Container(
-                  height: 300.0,
-                  child: CustomFavoriteList(),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
+                Container(height: 300.0, child: CustomFavoriteList(),),
+                SizedBox(height: 10.0,),
                 CategoryTitle(),
                 BordeSeparador(),
                 appBloc.productosMostrados == null ? loadingCircular : appBloc.productosMostrados.length == 0 ? SinResultados() : ListViewFood(),
@@ -130,111 +135,105 @@ class CustomFavoriteList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
-      physics: BouncingScrollPhysics(),
+      physics: AlwaysScrollableScrollPhysics(),
       controller: _pageController,
       itemCount: listaCategorias.length,
       itemBuilder: (_, index) {
         double scale = max(_viewPortFraction, (1 - (pageOffset - index).abs()) + _viewPortFraction);
-        double angle = (pageOffset - index).abs();
+        double angle = (pageOffset - index).abs().clamp(0.0, 1.0);
+        final factor = _pageController.position.userScrollDirection == ScrollDirection.forward ? 1.0 : -1.0;
         angle > 0.5 ? angle = 1 - angle : null;
 
-        return CustomFavoriteItem(scale: scale, angle: angle, index: index,);
-      }
-    );
-  }
-}
-
-class CustomFavoriteItem extends StatelessWidget {
-  const CustomFavoriteItem({
-    Key key,
-    @required this.scale,
-    @required this.angle,
-    @required this.index,
-  }) : super(key: key);
-
-  final double scale;
-  final double angle;
-  final int index;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(
-        right: 10.0,
-        left: 10.0,
-        top: 60 - scale * 25,
-        bottom: 60 - scale * 25,
-      ),
-      child: Transform(
-        transform: Matrix4.identity()..setEntry(3, 2, 0.001)..rotateY(angle),
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return Column(
-              children: [
-                FractionallySizedBox(
-                  widthFactor: 1,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: Material(
-                      elevation: 5,
-                      child: Image.network(
-                        listaCategorias[index].imagen,
-                        height: constraints.maxHeight * 0.7,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        listaCategorias[index].nombre,
-                        style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        '\$${listaCategorias[index].precio}',
-                        style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700, color: primaryColor),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 8,
-                        child: Text(
-                          'Ullamco aliquip eu sit laboris sunt non aliquip id. Ullamco aliquip eu sit laboris sunt non aliquip id',
-                          style: TextStyle(fontSize: 11.0, color: Colors.grey, fontWeight: FontWeight.w500),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+        return Container(
+          padding: EdgeInsets.only(
+            right: 10.0,
+            left: 10.0,
+            top: 60 - scale * 25,
+            bottom: 60 - scale * 25,
+          ),
+          child: Transform(
+            transform: Matrix4.identity()
+                              ..setEntry(3, 2, 0.001)
+                              ..rotateY(factor * angle),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Column(
+                  children: [
+                    FractionallySizedBox(
+                      widthFactor: 1,
+                      child: Opacity(
+                        opacity: 1 - angle,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: Material(
+                            elevation: 5,
+                            child: Image.network(
+                              listaCategorias[index].imagen,
+                              height: constraints.maxHeight * 0.7,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       ),
-                       Flexible(
-                         flex: 3,
-                         child: Padding(
-                           padding: const EdgeInsets.only(right: 10.0),
-                           child: Image.asset(
-                             '$iconPath/favorite_angel.png',
-                             width: 24.0,
-                             color: Colors.red,
-                           ),
-                         )
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 8,
+                            child: Text(
+                              listaCategorias[index].nombre,
+                              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              '\$${listaCategorias[index].precio}',
+                              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700, color: primaryColor),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
-      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 8,
+                            child: Text(
+                              'Ullamco aliquip eu sit laboris sunt non aliquip id. Ullamco aliquip eu sit laboris sunt non aliquip id',
+                              style: TextStyle(fontSize: 11.0, color: Colors.grey, fontWeight: FontWeight.w500),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Flexible(
+                            flex: 3,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 10.0),
+                              child: Image.asset(
+                                '$iconPath/favorite_angel.png',
+                                width: 24.0,
+                                color: Colors.red,
+                              ),
+                            )
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        );
+      }
     );
   }
 }
