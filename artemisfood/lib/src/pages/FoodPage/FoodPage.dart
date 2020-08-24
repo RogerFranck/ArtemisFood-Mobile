@@ -1,10 +1,10 @@
+import 'package:artemisfood/src/animations/add_to_cart.dart';
 import 'package:artemisfood/src/animations/shake_transition.dart';
 import 'package:artemisfood/src/components/TextButton.dart';
 import 'package:artemisfood/src/model/producto.dart';
 import 'package:artemisfood/src/pages/FoodPage/components/ButtonRoudend.dart';
 import 'package:artemisfood/src/providers/app_bloc.dart';
 import 'package:artemisfood/src/static/const.dart';
-import 'package:artemisfood/src/widgets/custom_dialog_food.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'components/Comentarios.dart';
@@ -23,7 +23,7 @@ class _FoodPageState extends State<FoodPage> {
   @override
   Widget build(BuildContext context) {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
-    final _color =  appBloc.isDarkMode ? backgroundHomeDark : backgroundHome;
+    final _color = appBloc.isDarkMode ? backgroundHomeDark : backgroundHome;
     final Producto producto = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
@@ -34,7 +34,7 @@ class _FoodPageState extends State<FoodPage> {
             children: <Widget>[
               ImageFood(
                 imagen: producto.foto,
-                hero:'food_item${producto.id}',
+                hero: 'food_item${producto.id}',
               ),
               ShakeTransition(
                 child: Description(
@@ -43,7 +43,7 @@ class _FoodPageState extends State<FoodPage> {
                 ),
               ),
               ShakeTransition(
-                  child: PriceFood(
+                child: PriceFood(
                   precio: producto.precio,
                 ),
               ),
@@ -55,14 +55,28 @@ class _FoodPageState extends State<FoodPage> {
                 child: ButtonRoundend(
                   hintText: 'Añadir al carrito',
                   onPress: () {
-                    return showDialog(
-                      context: context,
-                      barrierColor: Colors.black.withOpacity(0.5),
-                      builder: (_) {
-                        return CustomDialogFood(producto: producto);
-                      }
-                    );
+                    // return showDialog(
+                    //   context: context,
+                    //   barrierColor: Colors.black.withOpacity(0.5),
+                    //   builder: (_) {
+                    //     return CustomDialogFood(producto: producto);
+                    //   }
+                    // );
                     // print(appBloc.carrito);
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        transitionDuration: const Duration(milliseconds: 250),
+                        opaque: false,
+                        pageBuilder: (context, animation1, animation2) {
+                          return FadeTransition(
+                            opacity: animation1,
+                            child: AnimatedDialogFood(
+                              producto: producto,
+                            ),
+                          );
+                        },
+                      ),
+                    );
                   },
                 ),
               ),
@@ -82,9 +96,6 @@ class _FoodPageState extends State<FoodPage> {
     );
   }
 }
-
-
-
 
 
 
