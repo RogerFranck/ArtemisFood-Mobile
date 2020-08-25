@@ -10,7 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'Category.dart';
-import 'food.dart';
+import 'custom_food.dart';
+// import 'food.dart';
 
 class CustomBody extends StatefulWidget {
   CustomBody({Key key}) : super(key: key);
@@ -29,10 +30,12 @@ PageController _pageController =
 
 class _CustomBodyState extends State<CustomBody> {
   void _listenScroll() {
+
     setState(() {
       pageOffset = _pageController.page;
       _scrollOffset = _scrollController.offset;
       isFavoriteScrolled = _scrollOffset > 150.0;
+
     });
   }
 
@@ -106,11 +109,13 @@ class _CustomBodyState extends State<CustomBody> {
               ),
               CategoryTitle(),
               BordeSeparador(),
+              const SizedBox(height: 10.0),
               appBloc.productosMostrados == null
                   ? loadingCircular
                   : appBloc.productosMostrados.length == 0
-                      ? SinResultados()
-                      : ListViewFood(),
+                  ? SinResultados()
+                  : CustomFoodList(),
+                  //ListViewFood()
             ],
           ),
         ),
@@ -118,6 +123,8 @@ class _CustomBodyState extends State<CustomBody> {
     );
   }
 }
+
+
 
 class SinResultados extends StatelessWidget {
   const SinResultados({
@@ -157,120 +164,119 @@ class CustomFavoriteList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
-        physics: AlwaysScrollableScrollPhysics(),
-        controller: _pageController,
-        itemCount: listaCategorias.length,
-        itemBuilder: (_, index) {
-          double scale = max(_viewPortFraction,
-              (1 - (pageOffset - index).abs()) + _viewPortFraction);
-          double angle = (pageOffset - index).abs().clamp(0.0, 1.0);
-          final factor = _pageController.position.userScrollDirection ==
-                  ScrollDirection.forward
-              ? 1.0
-              : -1.0;
-          angle > 0.5 ? angle = 1 - angle : null;
+      physics: AlwaysScrollableScrollPhysics(),
+      controller: _pageController,
+      itemCount: listaCategorias.length,
+      itemBuilder: (_, index) {
+        double scale = max(_viewPortFraction, (1 - (pageOffset - index).abs()) + _viewPortFraction);
+        double angle = (pageOffset - index).abs().clamp(0.0, 1.0);
+        final factor = _pageController.position.userScrollDirection == ScrollDirection.forward
+                                                                      ? 1.0
+                                                                      : -1.0;
+        angle > 0.5 ? angle = 1 - angle : null;
 
-          return Container(
-            padding: EdgeInsets.only(
-              right: 10.0,
-              left: 10.0,
-              top: 60 - scale * 25,
-              bottom: 60 - scale * 25,
-            ),
-            child: Transform(
-              transform: Matrix4.identity()
-                ..setEntry(3, 2, 0.001)
-                ..rotateY(factor * angle),
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  return Column(
-                    children: [
-                      FractionallySizedBox(
-                        widthFactor: 1,
-                        child: Opacity(
-                          opacity: 1 - angle,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Material(
-                              elevation: 5,
-                              child: Image.network(
-                                listaCategorias[index].imagen,
-                                height: constraints.maxHeight * 0.7,
-                                fit: BoxFit.cover,
-                              ),
+        return Container(
+          padding: EdgeInsets.only(
+            right: 10.0,
+            left: 10.0,
+            top: 60 - scale * 25,
+            bottom: 60 - scale * 25,
+          ),
+          child: Transform(
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.001)
+              ..rotateY(factor * angle),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Column(
+                  children: [
+                    FractionallySizedBox(
+                      widthFactor: 1,
+                      child: Opacity(
+                        opacity: 1 - angle,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: Material(
+                            elevation: 5,
+                            child: Image.network(
+                              listaCategorias[index].imagen,
+                              height: constraints.maxHeight * 0.7,
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 8,
-                              child: Shimmer.fromColors(
-                                child: Text(
-                                  listaCategorias[index].nombre,
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w700
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                baseColor: Colors.redAccent,
-                                highlightColor: primaryColor,
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 8,
+                            child: Shimmer.fromColors(
                               child: Text(
-                                '\$${listaCategorias[index].precio}',
+                                listaCategorias[index].nombre,
                                 style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w700,
-                                    color: primaryColor),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 8,
-                              child: Text(
-                                'Ullamco aliquip eu sit laboris sunt non aliquip id. Ullamco aliquip eu sit laboris sunt non aliquip id',
-                                style: TextStyle(
-                                    fontSize: 11.0,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w500),
-                                maxLines: 2,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w700),
+                                maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
+                              baseColor: Colors.redAccent,
+                              highlightColor: primaryColor,
                             ),
-                            Flexible(
-                                flex: 3,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 10.0),
-                                  child: Image.asset(
-                                    '$iconPath/favorite_angel.png',
-                                    width: 24.0,
-                                    color: Colors.red,
-                                  ),
-                                )),
-                          ],
-                        ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              '\$${listaCategorias[index].precio}',
+                              style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w700,
+                                  color: primaryColor),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  );
-                },
-              ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 8,
+                            child: Text(
+                              'Ullamco aliquip eu sit laboris sunt non aliquip id. Ullamco aliquip eu sit laboris sunt non aliquip id',
+                              style: TextStyle(
+                                  fontSize: 11.0,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w500),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Flexible(
+                            flex: 3,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 10.0),
+                              child: Image.asset(
+                                '$iconPath/favorite_angel.png',
+                                width: 24.0,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

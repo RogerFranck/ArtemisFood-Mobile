@@ -25,7 +25,7 @@ class AnimatedDialogFoodState extends State<AnimatedDialogFood> with SingleTicke
   Animation _rotatedCart2;
   Animation _dropProduct;
   Animation _animationFinished;
-  double _iconSize = 45.0;
+  double _iconSize = 100.0;
   double _minImageSize = 15.0;
   double _imageSize = 50.0;
   double _number = 350.0;
@@ -146,7 +146,7 @@ class AnimatedDialogFoodState extends State<AnimatedDialogFood> with SingleTicke
                 ),
               ),
               Positioned(
-                bottom: ((_size.height / 2 - height / 2) - (_dropProduct.value * _number)).clamp(130.0, (_size.height / 2 - height / 2)),
+                bottom: ((_size.height / 2 - height / 2) - (_dropProduct.value * _number)).clamp(140.0, (_size.height / 2 - height / 2)),
                 left: _size.width / 2 - width / 2 + (_animationFinished.value * _number),
                 child: Container(
                   alignment: Alignment.center,
@@ -263,7 +263,6 @@ class AnimatedDialogFoodState extends State<AnimatedDialogFood> with SingleTicke
                     '$iconPath/cart.png',
                     width: _iconSize,
                     height: _iconSize,
-                    color: primaryColor
                   ),
                 ),
               ),
