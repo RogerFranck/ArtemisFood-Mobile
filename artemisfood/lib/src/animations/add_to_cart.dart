@@ -120,9 +120,9 @@ class AnimatedDialogFoodState extends State<AnimatedDialogFood> with SingleTicke
     double _maxIconPosition = _size.width / 2 - _iconSize / 2;
     double _minIconPosition = -(_iconSize * 2);
     double _preferedAngle = .5;
-    double _maxHeight = _size.height * 0.4;
+    double _maxHeight = _size.height * 0.45;
     double _maxWidth = _size.width * 0.8;
-    double _minSize = 45.0;
+    double _minSize = 30.0;
 
     return Material(
       color: Colors.transparent,
@@ -156,97 +156,99 @@ class AnimatedDialogFoodState extends State<AnimatedDialogFood> with SingleTicke
                     color: Colors.white,
                     borderRadius: BorderRadius.circular((25 * (_animationInitialized.value * _number)).clamp(25.0, 180.0)),
                   ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                          radius:  (_imageSize - (_animationInitialized.value * _number)).clamp(_minImageSize, _imageSize),
-                          backgroundImage: NetworkImage(widget.producto.foto),
-                        ),
-                        if (_animationInitialized.value == 0) ...[
-                          _separador,
-                          ShaderMask(
-                            blendMode: BlendMode.srcIn,
-                            shaderCallback: (bounds) {
-                              return RadialGradient(
-                                center: Alignment.bottomRight,
-                                radius: 1.0,
-                                colors: <Color>[Colors.pink.withOpacity(0.5), primaryColor],
-                                tileMode: TileMode.mirror,
-                              ).createShader(bounds);
-                            },
-                            child: Text(
-                              widget.producto.nombre,
-                              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                            ),
+                  child: Padding(
+                    padding: height < 200 ? const EdgeInsets.symmetric(vertical: 0) : const EdgeInsets.symmetric(vertical: 20),
+                    child: SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius:  (_imageSize - (_animationInitialized.value * _number)).clamp(_minImageSize, _imageSize),
+                            backgroundImage: NetworkImage(widget.producto.foto),
                           ),
-                          _separador,
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          if (_animationInitialized.value == 0) ...[
+                            _separador,
+                            ShaderMask(
+                              blendMode: BlendMode.srcIn,
+                              shaderCallback: (bounds) {
+                                return RadialGradient(
+                                  center: Alignment.bottomRight,
+                                  radius: 1.0,
+                                  colors: <Color>[Colors.pink.withOpacity(0.5), primaryColor],
+                                  tileMode: TileMode.mirror,
+                                ).createShader(bounds);
+                              },
+                              child: Text(
+                                widget.producto.nombre,
+                                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            _separador,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Cantidad deseada', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),),
+                                  DropdownButton(
+                                    value: _elementoSeleccionado,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        _elementoSeleccionado = val;
+                                      });
+                                    },
+                                    items: [
+                                      _customDropdown('1', 1),
+                                      _customDropdown('2', 2),
+                                      _customDropdown('3', 3),
+                                      _customDropdown('4', 4),
+                                      _customDropdown('5', 5),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            _separador,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Costo', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),),
+                                  Text('\$${(widget.producto.precio * _elementoSeleccionado).toDouble()}', style: TextStyle(fontSize: 16.0, color: primaryColor, fontWeight: FontWeight.bold),)
+                                ],
+                              ),
+                            ),
+                            _separador,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text('Cantidad deseada', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),),
-                                DropdownButton(
-                                  value: _elementoSeleccionado,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      _elementoSeleccionado = val;
-                                    });
+                                InkWell(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                  splashColor: primaryColor.withOpacity(0.4),
+                                  onTap: () {
+                                    _controller.forward();
+                                    appBloc.pushToCart(widget.producto);
+                                    appBloc.getTotal();
                                   },
-                                  items: [
-                                    _customDropdown('1', 1),
-                                    _customDropdown('2', 2),
-                                    _customDropdown('3', 3),
-                                    _customDropdown('4', 4),
-                                    _customDropdown('5', 5),
-                                  ],
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text('Aceptar', style: TextStyle(color: Colors.green[400], fontSize: 18.0, fontWeight: FontWeight.w500),),
+                                  ),
+                                ),
+                                const SizedBox(width: 25.0),
+                                _boton(
+                                  'Cancelar', 
+                                  Colors.red[400],
+                                  () {
+                                    Navigator.pop(context);
+                                  },
                                 ),
                               ],
                             ),
-                          ),
-                          _separador,
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('Costo', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),),
-                                Text('\$${(widget.producto.precio * _elementoSeleccionado).toDouble()}', style: TextStyle(fontSize: 16.0, color: primaryColor, fontWeight: FontWeight.bold),)
-                              ],
-                            ),
-                          ),
-                          _separador,
-                          _separador,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                borderRadius: BorderRadius.circular(30.0),
-                                splashColor: primaryColor.withOpacity(0.4),
-                                onTap: () {
-                                  _controller.forward();
-                                  appBloc.pushToCart(widget.producto);
-                                  appBloc.getTotal();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text('Aceptar', style: TextStyle(color: Colors.green[400], fontSize: 18.0, fontWeight: FontWeight.w500),),
-                                ),
-                              ),
-                              const SizedBox(width: 25.0),
-                              _boton(
-                                'Cancelar', 
-                                Colors.red[400],
-                                () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ],
-                          ),
-                          _separador
+                          ],
                         ],
-                      ],
+                      ),
                     ),
                   ),
                 ),

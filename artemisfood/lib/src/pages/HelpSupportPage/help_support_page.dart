@@ -61,7 +61,8 @@ class HelpSupportPage extends StatelessWidget {
                             TextSpan(
                               text: 'Escribe tu ',
                               style: GoogleFonts.mrDeHaviland(
-                                fontSize: 50.0
+                                fontSize: 50.0,
+                                color: appBloc.isDarkMode ? Colors.white : Colors.black,
                               ),
                             ),
                             TextSpan(
