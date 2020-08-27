@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'Category.dart';
 import 'custom_food.dart';
+import 'food.dart';
 // import 'food.dart';
 
 class CustomBody extends StatefulWidget {
@@ -30,12 +31,10 @@ PageController _pageController =
 
 class _CustomBodyState extends State<CustomBody> {
   void _listenScroll() {
-
     setState(() {
       pageOffset = _pageController.page;
       _scrollOffset = _scrollController.offset;
       isFavoriteScrolled = _scrollOffset > 150.0;
-
     });
   }
 
@@ -76,46 +75,49 @@ class _CustomBodyState extends State<CustomBody> {
             appBloc.onChanged(val);
           },
         )),
-        SliverFillRemaining(
-          hasScrollBody: false,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Padding(
-                    padding: EdgeInsets.only(top: 20.0, bottom: 10.0),
-                    child: Shimmer.fromColors(
-                      baseColor: primaryColor,
-                      highlightColor: Color(0xffe100ff),
-                      child: Text(
-                        'Tus Favoritos',
-                        style: TextStyle(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    )),
+        SliverFillViewport(
+          delegate: SliverChildListDelegate(
+            [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Padding(
+                        padding: EdgeInsets.only(top: 20.0, bottom: 10.0),
+                        child: Shimmer.fromColors(
+                          baseColor: primaryColor,
+                          highlightColor: Color(0xffe100ff),
+                          child: Text(
+                            'Tus Favoritos',
+                            style: TextStyle(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        )),
+                  ),
+                  AnimatedOpacity(
+                    duration: duration,
+                    opacity: isFavoriteScrolled ? 0.2 : 1,
+                    child: Container(
+                      height: 300.0,
+                      child: CustomFavoriteList(),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  CategoryTitle(),
+                  BordeSeparador(),
+                  const SizedBox(height: 10.0),
+                  appBloc.productosMostrados == null
+                      ? loadingCircular
+                      : appBloc.productosMostrados.length == 0
+                          ? SinResultados()
+                          : CustomFoodList(),
+                  // ListViewFood()
+                ],
               ),
-              AnimatedOpacity(
-                duration: duration,
-                opacity: isFavoriteScrolled ? 0.2 : 1,
-                child: Container(
-                  height: 300.0,
-                  child: CustomFavoriteList(),
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              CategoryTitle(),
-              BordeSeparador(),
-              const SizedBox(height: 10.0),
-              appBloc.productosMostrados == null
-                  ? loadingCircular
-                  : appBloc.productosMostrados.length == 0
-                  ? SinResultados()
-                  : CustomFoodList(),
-                  //ListViewFood()
             ],
           ),
         ),
@@ -123,8 +125,6 @@ class _CustomBodyState extends State<CustomBody> {
     );
   }
 }
-
-
 
 class SinResultados extends StatelessWidget {
   const SinResultados({
@@ -168,11 +168,13 @@ class CustomFavoriteList extends StatelessWidget {
       controller: _pageController,
       itemCount: listaCategorias.length,
       itemBuilder: (_, index) {
-        double scale = max(_viewPortFraction, (1 - (pageOffset - index).abs()) + _viewPortFraction);
+        double scale = max(_viewPortFraction,
+            (1 - (pageOffset - index).abs()) + _viewPortFraction);
         double angle = (pageOffset - index).abs().clamp(0.0, 1.0);
-        final factor = _pageController.position.userScrollDirection == ScrollDirection.forward
-                                                                      ? 1.0
-                                                                      : -1.0;
+        final factor = _pageController.position.userScrollDirection ==
+                ScrollDirection.forward
+            ? 1.0
+            : -1.0;
         angle > 0.5 ? angle = 1 - angle : null;
 
         return Container(

@@ -44,11 +44,11 @@ class _CustomFoodListState extends State<CustomFoodList> {
       builder: (context, bloc, widget) {
         return Expanded(
           child: Container(
-            height: bloc.productosMostrados.length > 3
-                ? 400
-                : bloc.productosMostrados.length >= 2
-                    ? 300
-                    : bloc.productosMostrados.length == 1 ? 200 : 0,
+            // height: bloc.productosMostrados.length > 3
+            //     ? 400
+            //     : bloc.productosMostrados.length >= 2
+            //         ? 300
+            //         : bloc.productosMostrados.length == 1 ? 200 : 0,
             child: ListView.builder(
               controller: _listController,
               physics: BouncingScrollPhysics(),
