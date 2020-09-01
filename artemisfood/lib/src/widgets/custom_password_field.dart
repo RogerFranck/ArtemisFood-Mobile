@@ -24,7 +24,7 @@ class CustomPasswordField extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.0),
           child: TextField(
-            // obscureText: _isVisible,
+            obscureText: isVisible,
             decoration: InputDecoration(
               border: InputBorder.none,
               icon: Icon(Icons.lock, color: Colors.black, size: 30,),

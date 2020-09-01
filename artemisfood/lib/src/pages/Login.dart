@@ -18,61 +18,92 @@ class Login extends StatefulWidget {
 }
 
 bool isVisible = false;
-String username;
-String password;
+String username = '';
+String password = '';
 
 class _LoginState extends State<Login> {
-  @override 
+  @override
   Widget build(BuildContext context) {
-    final _separator = const  SizedBox(height: 30.0);
+    final _separator = const SizedBox(height: 30.0);
+    final Size _size = MediaQuery.of(context).size;
+    final double containerHeight = 350.0;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
-          child: Column(
+          width: _size.width,
+          height: _size.height,
+          child: Stack(
             children: [
-              TopBackground(),
-              Text('Welcome', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0, color: Colors.black),),
-              SizedBox(height: 5.0),
-              Text('Login to continue', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12.0, color: Colors.grey),),
-              _separator,
-              CustomTextField(
-                onChanged: (value) {
-                  setState(() {
-                    username = value;
-                  });
-                },
+              TopBackground(
+                containerHeight: containerHeight,
               ),
-              _separator,
-              CustomPasswordField(
-                onChanged: (value) {
-                  setState(() {
-                    password = value;
-                  });
-                },
-                onPressed: () {
-                  isVisible = !isVisible;
-                },
-                isVisible: isVisible,
+              Positioned.fill(
+                top: containerHeight - 20,
+                child: Column(
+                  children: [
+                    Text(
+                      'Welcome',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30.0,
+                          color: Colors.black),
+                    ),
+                    SizedBox(height: 5.0),
+                    Text(
+                      'Login to continue',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12.0,
+                          color: Colors.grey),
+                    ),
+                    _separator,
+                    CustomTextField(
+                      onChanged: (value) {
+                        setState(() {
+                          username = value;
+                        });
+                      },
+                    ),
+                    _separator,
+                    CustomPasswordField(
+                      onChanged: (value) {
+                        setState(() {
+                          password = value;
+                        });
+                      },
+                      onPressed: () {
+                        isVisible = !isVisible;
+                      },
+                      isVisible: isVisible,
+                    ),
+                    _separator,
+                    FractionallySizedBox(
+                      widthFactor: .6,
+                      child: RoundedButton(
+                        hintText: 'Login',
+                        onPress: () => signIn(username, password, context),
+                      ),
+                    ),
+                    TextButton(
+                      hintText: 'Forgot password?',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ],
+                ),
               ),
-               _separator,
-               FractionallySizedBox(
-                 widthFactor: .6,
-                 child: RoundedButton(
-                   hintText: 'Login',
-                   onPress: () => signIn(username,password,context),
-                 ),
-               ),
-               TextButton(
-                 hintText: 'Forgot password?',
-                 fontWeight: FontWeight.w500,
-               ),
-               const SizedBox(height: 20.0),
-               CustomRowTextWithButton(
-                 onTap: () {
-                  Navigator.pushNamed(context, 'Sign_up');
-                },
-               ),
+              Positioned(
+                bottom: 40,
+                left: _size.width / 2 - 150.0 / 2,
+                child: Container(
+                  child: CustomRowTextWithButton(
+                    onTap: () {
+                      Navigator.pushNamed(context, 'Sign_up');
+                    },
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -82,21 +113,49 @@ class _LoginState extends State<Login> {
 }
 
 signIn(String username, String password, BuildContext context) async {
+  // if (password == '' && username == '') {
+  //   return;
+  // }
+
+  Navigator.push(
+    context,
+    PageRouteBuilder(
+      transitionDuration: const Duration(milliseconds: 100),
+      opaque: false,
+      pageBuilder: (context, animation1, animation2) {
+        final Size _size = MediaQuery.of(context).size;
+
+        return FadeTransition(
+          opacity: animation1,
+          child: Material(
+            color: Colors.transparent,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Positioned.fill(
+                  child: Container(
+                    color: Colors.black38,
+                  ),
+                ),
+                Positioned(
+                  top: _size.height / 2 + 36,
+                  left: _size.width / 2 - 15,
+                  child: CircularProgressIndicator(),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    ),
+  );
+
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  Map data = {
-    'usuario': username,
-    'password': password
-  };
+  Map data = {'usuario': username, 'password': password};
   Map jsonResponse;
   http.Response response = await http.post('$server/login', body: data);
   jsonResponse = json.decode(response.body);
   sharedPreferences.setString("token", jsonResponse['token']);
+  Navigator.pop(context);
   Navigator.popAndPushNamed(context, 'Home');
 }
-
-
-
-
-
-
-

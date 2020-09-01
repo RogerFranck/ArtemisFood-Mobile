@@ -15,51 +15,78 @@ class SignUp extends StatefulWidget {
 bool isVisible = false;
 
 class _SignUpState extends State<SignUp> {
-  @override 
+  @override
   Widget build(BuildContext context) {
-    final _separator = const  SizedBox(height: 30.0);
+    final _separator = const SizedBox(height: 30.0);
+    final double containerHeight = 350.0;
+    final Size _size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
-          child: Column(
+          width: _size.width,
+          height: _size.height,
+          child: Stack(
             children: [
-              TopBackground(),
-              Text('Create Account', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0, color: Colors.black),),
-              SizedBox(height: 5.0),
-              Text('Sign up to continue', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12.0, color: Colors.grey),),
-              _separator,
-              CustomTextField(
-                onChanged: (value) {
-
-                },
+              TopBackground(
+                containerHeight: containerHeight,
               ),
-              _separator,
-              CustomPasswordField(
-                onChanged: (value) {
-
-                },
-                onPressed: () {
-                  isVisible = !isVisible;
-                },
-                isVisible: isVisible,
+              Positioned.fill(
+                top: containerHeight - 20,
+                child: Column(
+                  children: [
+                    Text(
+                      'Create Account',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30.0,
+                          color: Colors.black),
+                    ),
+                    SizedBox(height: 5.0),
+                    Text(
+                      'Sign up to continue',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12.0,
+                          color: Colors.grey),
+                    ),
+                    _separator,
+                    CustomTextField(
+                      onChanged: (value) {},
+                    ),
+                    _separator,
+                    CustomPasswordField(
+                      onChanged: (value) {},
+                      onPressed: () {
+                        setState(() {
+                          isVisible = !isVisible;
+                        });
+                      },
+                      isVisible: isVisible,
+                    ),
+                    _separator,
+                    FractionallySizedBox(
+                      widthFactor: .6,
+                      child: RoundedButton(
+                        hintText: 'Sign Up',
+                        onPress: () {},
+                      ),
+                    ),
+                  ],
+                ),
               ),
-               _separator,
-               FractionallySizedBox(
-                 widthFactor: .6,
-                 child: RoundedButton(
-                   hintText: 'Sign Up',
-                   onPress: () {},
-                 ),
-               ),
-               const SizedBox(height: 20.0),
-               CustomRowTextWithButton(
-                 text: 'Already have an account? ',
-                 buttonText: 'Login',
-                 onTap: () {
-                  Navigator.pushNamed(context, 'login');
-                },
-               ),
+              Positioned(
+                bottom: 40.0,
+                left: _size.width / 5,
+                child: CustomRowTextWithButton(
+                  text: 'Already have an account? ',
+                  buttonText: 'Login',
+                  onTap: () {
+                    Navigator.pushNamed(context, 'login');
+                  },
+                ),
+              ),
             ],
           ),
         ),

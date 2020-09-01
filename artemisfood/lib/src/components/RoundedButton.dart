@@ -8,15 +8,23 @@ class RoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final radius = BorderRadius.circular(20.0);
+
     return Container(
         width: size.width * 0.70,
         margin: EdgeInsets.only( top: 25.0 ),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.0),
+          borderRadius: radius,
           color: Color(0xFF4525a4)
         ),
         child: FlatButton(
+          hoverColor: Colors.pink,
+          autofocus: true,
+          clipBehavior: Clip.antiAlias,
           onPressed: onPress ,
+          shape: RoundedRectangleBorder(
+            borderRadius: radius,
+          ),
           child: Text(
             hintText,
             style: TextStyle(
