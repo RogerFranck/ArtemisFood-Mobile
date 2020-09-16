@@ -34,6 +34,7 @@ dependencies:
   provider: ^4.3.1
   google_fonts: ^1.1.0
   shimmer: ^1.1.1
+  animate_do: ^1.7.3
 
 dev_dependencies:
   flutter_test:

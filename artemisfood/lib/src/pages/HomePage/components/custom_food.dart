@@ -175,8 +175,9 @@ class CustomFoodItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.0),
                       child: Hero(
                         tag: 'food_item${producto.id}',
-                        child: Image(
+                        child: FadeInImage(
                           image: NetworkImage(producto.foto),
+                          placeholder: AssetImage('$imgPath/burger_loading.gif'),
                         ),
                       ),
                     ),

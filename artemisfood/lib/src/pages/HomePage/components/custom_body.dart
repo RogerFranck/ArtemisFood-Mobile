@@ -21,26 +21,19 @@ class CustomBody extends StatefulWidget {
   _CustomBodyState createState() => _CustomBodyState();
 }
 
-bool isFavoriteScrolled = false;
 double pageOffset = 0;
 double _viewPortFraction = 0.77;
-ScrollController _scrollController = ScrollController();
-double _scrollOffset;
-PageController _pageController =
-    PageController(viewportFraction: _viewPortFraction, initialPage: 0);
+PageController _pageController = PageController(viewportFraction: _viewPortFraction, initialPage: 0);
 
 class _CustomBodyState extends State<CustomBody> {
   void _listenScroll() {
     setState(() {
       pageOffset = _pageController.page;
-      _scrollOffset = _scrollController.offset;
-      isFavoriteScrolled = _scrollOffset > 150.0;
     });
   }
 
   @override
   void initState() {
-    _scrollController.addListener(_listenScroll);
     _pageController.addListener(_listenScroll);
     if (Provider.of<AppBloc>(context, listen: false).category.length == 1) {
       Provider.of<AppBloc>(context, listen: false).getAllCategories();
@@ -54,9 +47,6 @@ class _CustomBodyState extends State<CustomBody> {
 
   @override
   void dispose() {
-    // ignore: todo
-    // TODO: implement dispose
-    _scrollController.removeListener(_listenScroll);
     _pageController.removeListener(_listenScroll);
     super.dispose();
   }
@@ -64,10 +54,8 @@ class _CustomBodyState extends State<CustomBody> {
   @override
   Widget build(BuildContext context) {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
-    const duration = Duration(milliseconds: 600);
 
     return CustomScrollView(
-      controller: _scrollController,
       slivers: [
         CustomAppBar(bottomBody: SearchField(
           onChanged: (val) {
@@ -96,13 +84,9 @@ class _CustomBodyState extends State<CustomBody> {
                           ),
                         )),
                   ),
-                  AnimatedOpacity(
-                    duration: duration,
-                    opacity: isFavoriteScrolled ? 0.2 : 1,
-                    child: Container(
-                      height: 300.0,
-                      child: CustomFavoriteList(),
-                    ),
+                  Container(
+                    height: 300.0,
+                    child: CustomFavoriteList(),
                   ),
                   SizedBox(
                     height: 10.0,
@@ -156,10 +140,22 @@ class SinResultados extends StatelessWidget {
   }
 }
 
-class CustomFavoriteList extends StatelessWidget {
+class CustomFavoriteList extends StatefulWidget {
   const CustomFavoriteList({
     Key key,
   }) : super(key: key);
+
+  @override
+  _CustomFavoriteListState createState() => _CustomFavoriteListState();
+}
+
+class _CustomFavoriteListState extends State<CustomFavoriteList> {
+
+  @override
+  void initState() {
+    print('Se inicializaron los favoritos');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -200,8 +196,11 @@ class CustomFavoriteList extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10.0),
                           child: Material(
                             elevation: 5,
-                            child: Image.network(
-                              listaCategorias[index].imagen,
+                            child: FadeInImage(
+                              image: NetworkImage(
+                                listaCategorias[index].imagen,
+                              ),
+                              placeholder: AssetImage('$imgPath/burger_loading.gif'),
                               height: constraints.maxHeight * 0.7,
                               fit: BoxFit.cover,
                             ),
